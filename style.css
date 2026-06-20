@@ -109,24 +109,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   padding: 0 clamp(32px, 6vw, 80px) clamp(64px, 11vh, 130px);
   position: relative;
   overflow: hidden;
-  background-image: url('images/hero.png');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-/* FV 暗幕オーバーレイ — テキスト可読性確保 */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(12, 10, 8, 0.72) 0%,
-    rgba(12, 10, 8, 0.38) 55%,
-    rgba(12, 10, 8, 0.18) 100%
-  );
-  z-index: 0;
 }
 
 /* 縦書きタグライン */
