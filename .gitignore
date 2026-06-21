@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+.idea/
+
+# dopaminelabtv (separate git repo — managed independently)
+dopaminelabtv/
