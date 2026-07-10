@@ -5,25 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ZENERA — 間を知る占い</title>
   <meta name="description" content="生年月日を入力するだけ。数秘術×タロットの複合診断で「今、動くべきか待つべきか」を判定。平田拓也によるZENERA間診断。">
+  <link rel="canonical" href="https://takuyahirata.com/fortune/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ZENERA","description":"日本哲学 × AI による無料間診断","url":"https://takuyahirata.com/fortune/","applicationCategory":"EntertainmentApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"author":{"@type":"Person","name":"Takuya Hirata","url":"https://takuyahirata.com"}}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;800&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;800&family=Inter:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    /* ── Tokens ──────────────────────────────────────────────── */
+    /* ── Tokens (shared with takuyahirata.com/style.css) ───────── */
     :root {
-      --bg:      #090720;
-      --surface: #120e32;
-      --gold:    #c9a44e;
-      --gold-lt: #e8c870;
-      --fg:      #ede8f5;
-      --muted:   #6b5e8a;
-      --border:  rgba(201,164,78,0.22);
-      --glow:    rgba(100,60,200,0.16);
-      --ease:    cubic-bezier(0.25,0.46,0.45,0.94);
-      --ease-out:cubic-bezier(0.16,1,0.3,1);
-      --j: 'Shippori Mincho B1','Yu Mincho','Hiragino Mincho ProN',serif;
-      --s: 'Noto Sans JP',-apple-system,sans-serif;
+      --bg:       #0c0a08;
+      --surface:  #141210;
+      --fg:       #ede9e1;
+      --muted:    #6b6560;
+      --muted-fg: rgba(237, 233, 225, 0.65);
+      --gold:     #a8936a;
+      --gold-lt:  #c9b98c;
+      --border:   rgba(168, 147, 106, 0.22);
+      --ease:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --j: 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+      --s: 'Inter', -apple-system, sans-serif;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -35,24 +37,14 @@
     }
     a{color:inherit;text-decoration:none}
 
-    /* ── Atmosphere ──────────────────────────────────────────── */
-    /* Purple nebula glow at top */
-    .atm-glow{
-      position:fixed;top:-20vh;left:50%;transform:translateX(-50%);
-      width:120vw;height:80vh;
-      background:radial-gradient(ellipse 60% 60% at 50% 0%,
-        rgba(100,55,220,0.22) 0%, rgba(60,20,140,0.1) 40%, transparent 100%);
-      pointer-events:none;z-index:0;
+    /* 和紙テクスチャ — matches takuyahirata.com/style.css body::after */
+    body::after{
+      content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size:180px;background-repeat:repeat;
     }
-    /* Gold shimmer at bottom */
-    .atm-shimmer{
-      position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-      width:100vw;height:30vh;
-      background:radial-gradient(ellipse 80% 80% at 50% 100%,
-        rgba(201,164,78,0.06) 0%, transparent 70%);
-      pointer-events:none;z-index:0;
-    }
-    /* Stars */
+
+    /* Stars — quiet cosmic backdrop, tokens only (no purple) */
     .star{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:twinkle ease-in-out infinite}
     @keyframes twinkle{0%,100%{opacity:0.08}50%{opacity:1}}
 
@@ -61,8 +53,9 @@
       position:fixed;top:0;left:0;right:0;z-index:100;
       display:flex;align-items:center;justify-content:space-between;
       padding:0 clamp(20px,5vw,60px);height:56px;
-      background:rgba(9,7,32,0.85);backdrop-filter:blur(24px);
-      border-bottom:1px solid rgba(201,164,78,0.1);
+      background:rgba(12,10,8,0.65);backdrop-filter:blur(24px) saturate(140%);
+      -webkit-backdrop-filter:blur(24px) saturate(140%);
+      border-bottom:1px solid rgba(168,147,106,0.12);
     }
     .nav-brand{font-family:var(--j);font-size:14px;letter-spacing:0.5em;color:var(--gold)}
     .nav-back{
@@ -83,8 +76,8 @@
 
     /* Moon emblem */
     .moon-wrap{position:relative;width:110px;height:110px;margin:0 auto 28px}
-    .moon-svg{width:100%;height:100%;filter:drop-shadow(0 0 18px rgba(201,164,78,0.55));animation:moon-pulse 7s ease-in-out infinite}
-    @keyframes moon-pulse{0%,100%{filter:drop-shadow(0 0 12px rgba(201,164,78,0.4))}50%{filter:drop-shadow(0 0 30px rgba(201,164,78,0.8))}}
+    .moon-svg{width:100%;height:100%;filter:drop-shadow(0 0 18px rgba(168,147,106,0.55));animation:moon-pulse 7s ease-in-out infinite}
+    @keyframes moon-pulse{0%,100%{filter:drop-shadow(0 0 12px rgba(168,147,106,0.4))}50%{filter:drop-shadow(0 0 30px rgba(168,147,106,0.8))}}
     .moon-sparks{
       position:absolute;inset:-18px;
       display:flex;align-items:center;justify-content:center;
@@ -104,7 +97,7 @@
       animation:fade-up 1s var(--ease-out) 0.35s both;
     }
     .hero-desc{
-      font-size:13px;line-height:1.9;color:rgba(237,232,245,0.65);
+      font-size:13px;line-height:1.9;color:var(--muted-fg);
       margin-top:14px;
       animation:fade-up 1s var(--ease-out) 0.5s both;
     }
@@ -150,8 +143,8 @@
     }
     .form-input{
       width:100%;padding:14px 16px;
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(201,164,78,0.18);
+      background:rgba(237,233,225,0.05);
+      border:1px solid rgba(168,147,106,0.18);
       color:var(--fg);font-family:var(--s);
       /* 16px prevents iOS Safari auto-zoom on focus */
       font-size:16px;
@@ -159,16 +152,16 @@
       transition:border-color 0.2s,background 0.2s;
       -webkit-appearance:none;appearance:none;
     }
-    .form-input:focus{border-color:var(--gold);background:rgba(201,164,78,0.04)}
+    .form-input:focus{border-color:var(--gold);background:rgba(168,147,106,0.04)}
     .form-input::placeholder{color:var(--muted)}
     input[type="date"]::-webkit-calendar-picker-indicator{
-      filter:invert(0.6) sepia(0.6) hue-rotate(220deg) saturate(1.2);
+      filter:invert(0.6) sepia(0.3) saturate(1.3) hue-rotate(0deg);
     }
 
     /* Submit */
     .submit-btn{
       width:100%;padding:18px;margin-top:4px;
-      background:linear-gradient(135deg,rgba(201,164,78,0.12) 0%,rgba(201,164,78,0.06) 100%);
+      background:linear-gradient(135deg,rgba(168,147,106,0.12) 0%,rgba(168,147,106,0.06) 100%);
       border:1px solid var(--gold);
       color:var(--gold);font-family:var(--j);
       font-size:14px;letter-spacing:0.3em;cursor:pointer;
@@ -179,7 +172,7 @@
     }
     .submit-btn::before{
       content:'';position:absolute;inset:0;
-      background:linear-gradient(135deg,rgba(201,164,78,0.2),rgba(201,164,78,0.08));
+      background:linear-gradient(135deg,rgba(168,147,106,0.2),rgba(168,147,106,0.08));
       opacity:0;transition:opacity 0.22s;
     }
     .submit-btn:hover:not(:disabled)::before{opacity:1}
@@ -209,8 +202,8 @@
       animation:kanji-breath 5s ease-in-out infinite;
     }
     @keyframes kanji-breath{
-      0%,100%{filter:drop-shadow(0 0 8px rgba(201,164,78,0.3))}
-      50%{filter:drop-shadow(0 0 24px rgba(201,164,78,0.7))}
+      0%,100%{filter:drop-shadow(0 0 8px rgba(168,147,106,0.3))}
+      50%{filter:drop-shadow(0 0 24px rgba(168,147,106,0.7))}
     }
     .ma-state-name{
       font-family:var(--j);font-size:1.05rem;
@@ -219,51 +212,53 @@
     .ma-tags{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
     .ma-tag{
       font-size:9px;letter-spacing:0.18em;color:var(--muted);
-      border:1px solid rgba(201,164,78,0.16);padding:3px 10px;border-radius:20px;
+      border:1px solid rgba(168,147,106,0.16);padding:3px 10px;border-radius:20px;
     }
 
     /* Reading text */
     .result-body{position:relative;margin-bottom:18px}
     .result-teaser{
       font-family:var(--j);font-size:14px;line-height:2.2;
-      color:rgba(237,232,245,0.9);max-height:6em;overflow:hidden;
+      color:rgba(237,233,225,0.9);max-height:6em;overflow:hidden;
     }
     .result-fade{
       position:absolute;bottom:0;left:0;right:0;height:3.5em;
       background:linear-gradient(transparent,var(--surface));pointer-events:none;
     }
     .result-hook{
-      font-size:11px;color:var(--muted);font-style:italic;
+      font-size:11px;color:var(--muted-fg);font-style:italic;
       letter-spacing:0.06em;line-height:1.8;margin-bottom:16px;
     }
     .result-cta{
       display:block;text-align:center;padding:16px;
-      border:1px solid rgba(201,164,78,0.3);border-radius:2px;
+      border:1px solid rgba(168,147,106,0.3);border-radius:2px;
       color:var(--gold);font-family:var(--j);
       font-size:13px;letter-spacing:0.15em;
-      background:rgba(201,164,78,0.04);
+      background:rgba(168,147,106,0.04);
       touch-action:manipulation;
       transition:all 0.22s var(--ease);
     }
-    .result-cta:hover{background:rgba(201,164,78,0.1);border-color:var(--gold);color:var(--gold-lt)}
+    .result-cta:hover{background:rgba(168,147,106,0.1);border-color:var(--gold);color:var(--gold-lt)}
 
     /* ── Pricing ─────────────────────────────────────────────── */
     .pricing{margin-bottom:52px;animation:fade-up 1s var(--ease-out) 0.9s both}
     .pricing-label{font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
     .pricing-row{
       display:flex;justify-content:space-between;align-items:center;
-      padding:12px 0;border-bottom:1px solid rgba(201,164,78,0.08);
+      padding:12px 0;border-bottom:1px solid rgba(168,147,106,0.08);
     }
-    .pricing-row:first-of-type{border-top:1px solid rgba(201,164,78,0.08)}
-    .pricing-name{font-family:var(--j);font-size:13px;color:rgba(237,232,245,0.85)}
+    .pricing-row:first-of-type{border-top:1px solid rgba(168,147,106,0.08)}
+    .pricing-name{font-family:var(--j);font-size:13px;color:rgba(237,233,225,0.85)}
     .pricing-price{font-size:12px;color:var(--gold);font-variant-numeric:tabular-nums}
 
     /* ── Footer ──────────────────────────────────────────────── */
     .page-footer{
       text-align:center;padding:20px 24px 48px;
-      border-top:1px solid rgba(201,164,78,0.07);
+      border-top:1px solid rgba(168,147,106,0.07);
     }
-    .page-footer p{font-size:9px;letter-spacing:0.1em;color:rgba(107,94,138,0.55);line-height:2.4}
+    .page-footer p{font-size:9px;letter-spacing:0.1em;line-height:2.4}
+    .page-footer .disclaimer{color:var(--muted-fg)}
+    .page-footer .copyright{color:rgba(107,101,96,0.4)}
     .page-footer a{color:var(--muted);transition:color 0.2s}
     .page-footer a:hover{color:var(--gold)}
 
@@ -339,13 +334,9 @@
 </head>
 <body>
 
-  <!-- Atmosphere layers -->
-  <div class="atm-glow" aria-hidden="true"></div>
-  <div class="atm-shimmer" aria-hidden="true"></div>
-
   <nav class="nav">
     <span class="nav-brand">ZENERA</span>
-    <a href="/" class="nav-back">← takuyahirata.com</a>
+    <a href="/" class="nav-back">← Takuya Hirata</a>
   </nav>
 
   <main>
@@ -360,10 +351,10 @@
               <circle cx="76" cy="50" r="47" fill="black"/>
             </mask>
           </defs>
-          <circle cx="60" cy="60" r="50" fill="#c9a44e" mask="url(#crescent)"/>
+          <circle cx="60" cy="60" r="50" fill="#a8936a" mask="url(#crescent)"/>
           <!-- Small star near tip -->
-          <circle cx="88" cy="32" r="2.5" fill="#e8c870"/>
-          <circle cx="96" cy="52" r="1.5" fill="#e8c870" opacity="0.7"/>
+          <circle cx="88" cy="32" r="2.5" fill="#c9b98c"/>
+          <circle cx="96" cy="52" r="1.5" fill="#c9b98c" opacity="0.7"/>
         </svg>
         <div class="moon-sparks" aria-hidden="true">✦ · ✦ · ✦ · ✦ · ✦ · ✦ · ✦ · </div>
       </div>
@@ -444,8 +435,8 @@
   </main>
 
   <footer class="page-footer">
-    <p>占いはエンターテインメントです。診断結果は意思決定の補助としてのみご利用ください。</p>
-    <p>&copy; 2026 Takuya Hirata &nbsp;&middot;&nbsp; <a href="/">takuyahirata.com</a></p>
+    <p class="disclaimer">占いはエンターテインメントです。診断結果は意思決定の補助としてのみご利用ください。</p>
+    <p class="copyright">&copy; 2026 Takuya Hirata &nbsp;&middot;&nbsp; <a href="/">takuyahirata.com</a></p>
   </footer>
 
   <script>
@@ -463,7 +454,7 @@
       s.style.cssText =
         `width:${sz}px;height:${sz}px;` +
         `top:${Math.random()*100}%;left:${Math.random()*100}%;` +
-        `background:${gold ? '#c9a44e' : '#ede8f5'};` +
+        `background:${gold ? '#a8936a' : '#ede9e1'};` +
         `animation-duration:${dur}s;animation-delay:${Math.random()*dur}s;opacity:0;`;
       document.body.appendChild(s);
     }
@@ -471,7 +462,7 @@
     // ── Mandala SVG ──────────────────────────────────────────────
     function drawMandala(svgEl) {
       const ns = 'http://www.w3.org/2000/svg';
-      const cx = 100, cy = 100, G = '#c9a44e';
+      const cx = 100, cy = 100, G = '#a8936a';
 
       // Outer dashed ring
       const od = document.createElementNS(ns, 'circle');
