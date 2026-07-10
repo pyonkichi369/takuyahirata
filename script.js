@@ -6,7 +6,7 @@ document.addEventListener('mousemove', (e) => {
   cursor.style.top  = e.clientY + 'px';
 });
 
-document.querySelectorAll('a, button, .gallery-item').forEach((el) => {
+document.querySelectorAll('a, button, .gallery-item, .series-link, .contact-cta-link').forEach((el) => {
   el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
   el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
 });
@@ -25,8 +25,8 @@ window.addEventListener('scroll', () => {
   lastY = y;
 }, { passive: true });
 
-/* ── Scroll reveal (gallery + about) ───────────────────── */
-const revealTargets = document.querySelectorAll('.gallery-item, .about-content');
+/* ── Scroll reveal (gallery + about + contact-cta) ─────── */
+const revealTargets = document.querySelectorAll('.gallery-item, .about-content, .contact-cta-content');
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {

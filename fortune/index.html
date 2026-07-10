@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ZENERA — 間を知る占い</title>
+  <meta name="description" content="生年月日を入力するだけ。数秘術×タロットの複合診断で「今、動くべきか待つべきか」を判定。平田拓也によるZENERA間診断。">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ZENERA","description":"日本哲学 × AI による無料間診断","url":"https://takuyahirata.com/fortune/","applicationCategory":"EntertainmentApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"author":{"@type":"Person","name":"Takuya Hirata","url":"https://takuyahirata.com"}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;800&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Tokens ──────────────────────────────────────────────── */
+    :root {
+      --bg:      #090720;
+      --surface: #120e32;
+      --gold:    #c9a44e;
+      --gold-lt: #e8c870;
+      --fg:      #ede8f5;
+      --muted:   #6b5e8a;
+      --border:  rgba(201,164,78,0.22);
+      --glow:    rgba(100,60,200,0.16);
+      --ease:    cubic-bezier(0.25,0.46,0.45,0.94);
+      --ease-out:cubic-bezier(0.16,1,0.3,1);
+      --j: 'Shippori Mincho B1','Yu Mincho','Hiragino Mincho ProN',serif;
+      --s: 'Noto Sans JP',-apple-system,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--bg);color:var(--fg);
+      font-family:var(--s);font-weight:300;
+      -webkit-font-smoothing:antialiased;
+      min-height:100vh;overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* ── Atmosphere ──────────────────────────────────────────── */
+    /* Purple nebula glow at top */
+    .atm-glow{
+      position:fixed;top:-20vh;left:50%;transform:translateX(-50%);
+      width:120vw;height:80vh;
+      background:radial-gradient(ellipse 60% 60% at 50% 0%,
+        rgba(100,55,220,0.22) 0%, rgba(60,20,140,0.1) 40%, transparent 100%);
+      pointer-events:none;z-index:0;
+    }
+    /* Gold shimmer at bottom */
+    .atm-shimmer{
+      position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+      width:100vw;height:30vh;
+      background:radial-gradient(ellipse 80% 80% at 50% 100%,
+        rgba(201,164,78,0.06) 0%, transparent 70%);
+      pointer-events:none;z-index:0;
+    }
+    /* Stars */
+    .star{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:twinkle ease-in-out infinite}
+    @keyframes twinkle{0%,100%{opacity:0.08}50%{opacity:1}}
+
+    /* ── Nav ─────────────────────────────────────────────────── */
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 clamp(20px,5vw,60px);height:56px;
+      background:rgba(9,7,32,0.85);backdrop-filter:blur(24px);
+      border-bottom:1px solid rgba(201,164,78,0.1);
+    }
+    .nav-brand{font-family:var(--j);font-size:14px;letter-spacing:0.5em;color:var(--gold)}
+    .nav-back{
+      font-size:9px;letter-spacing:0.22em;text-transform:uppercase;
+      color:var(--muted);transition:color 0.2s;
+    }
+    .nav-back:hover{color:var(--fg)}
+
+    /* ── Main ────────────────────────────────────────────────── */
+    main{
+      position:relative;z-index:1;
+      max-width:560px;margin:0 auto;
+      padding:90px clamp(20px,5vw,40px) 60px;
+    }
+
+    /* ── Hero ────────────────────────────────────────────────── */
+    .hero{text-align:center;margin-bottom:40px}
+
+    /* Moon emblem */
+    .moon-wrap{position:relative;width:110px;height:110px;margin:0 auto 28px}
+    .moon-svg{width:100%;height:100%;filter:drop-shadow(0 0 18px rgba(201,164,78,0.55));animation:moon-pulse 7s ease-in-out infinite}
+    @keyframes moon-pulse{0%,100%{filter:drop-shadow(0 0 12px rgba(201,164,78,0.4))}50%{filter:drop-shadow(0 0 30px rgba(201,164,78,0.8))}}
+    .moon-sparks{
+      position:absolute;inset:-18px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:11px;color:var(--gold-lt);letter-spacing:2px;
+      animation:sparks-spin 20s linear infinite;
+    }
+    @keyframes sparks-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+    .hero-eyebrow{
+      font-size:9px;letter-spacing:0.35em;text-transform:uppercase;
+      color:var(--muted);margin-bottom:14px;
+      animation:fade-up 1s var(--ease-out) 0.2s both;
+    }
+    .hero-title{
+      font-family:var(--j);font-size:clamp(1.5rem,5.5vw,2.4rem);
+      font-weight:800;line-height:1.6;letter-spacing:0.05em;
+      animation:fade-up 1s var(--ease-out) 0.35s both;
+    }
+    .hero-desc{
+      font-size:13px;line-height:1.9;color:rgba(237,232,245,0.65);
+      margin-top:14px;
+      animation:fade-up 1s var(--ease-out) 0.5s both;
+    }
+
+    /* Ornament */
+    .ornament{
+      display:flex;align-items:center;gap:12px;margin:28px 0;
+      animation:fade-up 1s var(--ease-out) 0.65s both;
+    }
+    .ornament::before,.ornament::after{content:'';flex:1;height:1px;background:var(--border)}
+    .ornament span{font-size:10px;color:var(--gold);letter-spacing:4px}
+
+    /* ── Card frame ──────────────────────────────────────────── */
+    .card{
+      position:relative;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:2px;
+      padding:clamp(22px,5vw,34px);
+      margin-bottom:16px;
+    }
+    /* Corner ornaments */
+    .card::before,.card::after{
+      content:'';position:absolute;
+      width:8px;height:8px;border-radius:50%;
+      border:1px solid var(--gold);background:var(--bg);
+    }
+    .card::before{top:-4px;left:-4px}
+    .card::after{top:-4px;right:-4px}
+    .cn-bl,.cn-br{
+      position:absolute;width:8px;height:8px;border-radius:50%;
+      border:1px solid var(--gold);background:var(--bg);
+    }
+    .cn-bl{bottom:-4px;left:-4px}
+    .cn-br{bottom:-4px;right:-4px}
+    #form-card{animation:fade-up 1s var(--ease-out) 0.75s both}
+
+    /* ── Form ────────────────────────────────────────────────── */
+    .form-group{margin-bottom:18px}
+    .form-label{
+      display:block;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;
+      color:var(--muted);margin-bottom:9px;
+    }
+    .form-input{
+      width:100%;padding:14px 16px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(201,164,78,0.18);
+      color:var(--fg);font-family:var(--s);
+      /* 16px prevents iOS Safari auto-zoom on focus */
+      font-size:16px;
+      outline:none;border-radius:2px;
+      transition:border-color 0.2s,background 0.2s;
+      -webkit-appearance:none;appearance:none;
+    }
+    .form-input:focus{border-color:var(--gold);background:rgba(201,164,78,0.04)}
+    .form-input::placeholder{color:var(--muted)}
+    input[type="date"]::-webkit-calendar-picker-indicator{
+      filter:invert(0.6) sepia(0.6) hue-rotate(220deg) saturate(1.2);
+    }
+
+    /* Submit */
+    .submit-btn{
+      width:100%;padding:18px;margin-top:4px;
+      background:linear-gradient(135deg,rgba(201,164,78,0.12) 0%,rgba(201,164,78,0.06) 100%);
+      border:1px solid var(--gold);
+      color:var(--gold);font-family:var(--j);
+      font-size:14px;letter-spacing:0.3em;cursor:pointer;
+      border-radius:2px;
+      /* Remove 300ms tap delay on mobile */
+      touch-action:manipulation;
+      transition:all 0.22s var(--ease);position:relative;overflow:hidden;
+    }
+    .submit-btn::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(201,164,78,0.2),rgba(201,164,78,0.08));
+      opacity:0;transition:opacity 0.22s;
+    }
+    .submit-btn:hover:not(:disabled)::before{opacity:1}
+    .submit-btn:hover:not(:disabled){color:var(--gold-lt);letter-spacing:0.35em}
+    .submit-btn:disabled{opacity:0.35;cursor:not-allowed}
+    .submit-btn span{position:relative;z-index:1}
+
+    /* ── Result ──────────────────────────────────────────────── */
+    .result{display:none;margin-bottom:16px}
+    .result.visible{display:block;animation:fade-up 0.6s var(--ease-out)}
+
+    /* Mandala + 間 kanji */
+    .ma-display{text-align:center;padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid var(--border)}
+    .ma-mandala-wrap{position:relative;width:190px;height:190px;margin:0 auto 14px}
+    .ma-mandala-svg{
+      position:absolute;inset:0;width:100%;height:100%;
+      animation:mandala-spin 60s linear infinite;
+    }
+    @keyframes mandala-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    .ma-kanji{
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--j);font-weight:800;
+      font-size:5.5rem;
+      background:linear-gradient(180deg,var(--gold-lt) 0%,var(--gold) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      animation:kanji-breath 5s ease-in-out infinite;
+    }
+    @keyframes kanji-breath{
+      0%,100%{filter:drop-shadow(0 0 8px rgba(201,164,78,0.3))}
+      50%{filter:drop-shadow(0 0 24px rgba(201,164,78,0.7))}
+    }
+    .ma-state-name{
+      font-family:var(--j);font-size:1.05rem;
+      letter-spacing:0.35em;color:var(--gold);margin-bottom:10px;
+    }
+    .ma-tags{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+    .ma-tag{
+      font-size:9px;letter-spacing:0.18em;color:var(--muted);
+      border:1px solid rgba(201,164,78,0.16);padding:3px 10px;border-radius:20px;
+    }
+
+    /* Reading text */
+    .result-body{position:relative;margin-bottom:18px}
+    .result-teaser{
+      font-family:var(--j);font-size:14px;line-height:2.2;
+      color:rgba(237,232,245,0.9);max-height:6em;overflow:hidden;
+    }
+    .result-fade{
+      position:absolute;bottom:0;left:0;right:0;height:3.5em;
+      background:linear-gradient(transparent,var(--surface));pointer-events:none;
+    }
+    .result-hook{
+      font-size:11px;color:var(--muted);font-style:italic;
+      letter-spacing:0.06em;line-height:1.8;margin-bottom:16px;
+    }
+    .result-cta{
+      display:block;text-align:center;padding:16px;
+      border:1px solid rgba(201,164,78,0.3);border-radius:2px;
+      color:var(--gold);font-family:var(--j);
+      font-size:13px;letter-spacing:0.15em;
+      background:rgba(201,164,78,0.04);
+      touch-action:manipulation;
+      transition:all 0.22s var(--ease);
+    }
+    .result-cta:hover{background:rgba(201,164,78,0.1);border-color:var(--gold);color:var(--gold-lt)}
+
+    /* ── Pricing ─────────────────────────────────────────────── */
+    .pricing{margin-bottom:52px;animation:fade-up 1s var(--ease-out) 0.9s both}
+    .pricing-label{font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+    .pricing-row{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px 0;border-bottom:1px solid rgba(201,164,78,0.08);
+    }
+    .pricing-row:first-of-type{border-top:1px solid rgba(201,164,78,0.08)}
+    .pricing-name{font-family:var(--j);font-size:13px;color:rgba(237,232,245,0.85)}
+    .pricing-price{font-size:12px;color:var(--gold);font-variant-numeric:tabular-nums}
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    .page-footer{
+      text-align:center;padding:20px 24px 48px;
+      border-top:1px solid rgba(201,164,78,0.07);
+    }
+    .page-footer p{font-size:9px;letter-spacing:0.1em;color:rgba(107,94,138,0.55);line-height:2.4}
+    .page-footer a{color:var(--muted);transition:color 0.2s}
+    .page-footer a:hover{color:var(--gold)}
+
+    @keyframes fade-up{
+      from{opacity:0;transform:translateY(16px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    /* Result card — scroll offset accounts for fixed nav */
+    .result{scroll-margin-top:72px}
+
+    /* ── Mobile ──────────────────────────────────────────────── */
+    @media(max-width:600px){
+      /* Compact nav on small screens */
+      .nav-back{font-size:9px;letter-spacing:0.15em}
+
+      /* Main layout: safe-area-aware bottom padding for iPhone home bar */
+      main{
+        padding-top:72px;
+        padding-left:18px;
+        padding-right:18px;
+        padding-bottom:max(60px, calc(44px + env(safe-area-inset-bottom)));
+      }
+
+      /* Hero: tighter vertical spacing */
+      .hero{margin-bottom:24px}
+      .moon-wrap{width:88px;height:88px}
+      .hero-eyebrow{font-size:10px;letter-spacing:0.2em}
+      .hero-title{font-size:clamp(1.35rem,7vw,1.75rem);line-height:1.7}
+      .hero-desc{font-size:13px;margin-top:12px}
+
+      /* Ornament: tighter */
+      .ornament{margin:18px 0}
+
+      /* Card: less horizontal padding on small screens */
+      .card{padding:20px 18px}
+
+      /* Labels: bigger, less letter-spacing — easier to read on small screen */
+      .form-label{font-size:11px;letter-spacing:0.18em;margin-bottom:8px}
+      .form-group{margin-bottom:16px}
+
+      /* Mandala + kanji: scale down */
+      .ma-mandala-wrap{width:160px;height:160px}
+      .ma-kanji{font-size:4.5rem}
+      .ma-display{padding-bottom:18px;margin-bottom:18px}
+
+      /* Reading text: slightly smaller, more readable leading */
+      .result-teaser{font-size:14px;line-height:2.0}
+
+      /* Pricing rows: comfortable touch height */
+      .pricing-row{padding:14px 0}
+      .pricing-label{font-size:11px;letter-spacing:0.2em}
+      .pricing-name{font-size:13px}
+
+      /* Footer safe area */
+      .page-footer{
+        padding-bottom:max(48px, calc(28px + env(safe-area-inset-bottom)));
+      }
+    }
+
+    /* Extra small (SE, 320px) */
+    @media(max-width:360px){
+      .hero-title{font-size:1.3rem}
+      .ma-mandala-wrap{width:140px;height:140px}
+      .ma-kanji{font-size:3.8rem}
+    }
+
+    /* Reduce motion: disable all animations for accessibility */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation:none!important;transition:none!important}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Atmosphere layers -->
+  <div class="atm-glow" aria-hidden="true"></div>
+  <div class="atm-shimmer" aria-hidden="true"></div>
+
+  <nav class="nav">
+    <span class="nav-brand">ZENERA</span>
+    <a href="/" class="nav-back">← takuyahirata.com</a>
+  </nav>
+
+  <main>
+
+    <div class="hero">
+      <!-- Crescent moon emblem -->
+      <div class="moon-wrap">
+        <svg class="moon-svg" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+          <defs>
+            <mask id="crescent">
+              <rect width="120" height="120" fill="white"/>
+              <circle cx="76" cy="50" r="47" fill="black"/>
+            </mask>
+          </defs>
+          <circle cx="60" cy="60" r="50" fill="#c9a44e" mask="url(#crescent)"/>
+          <!-- Small star near tip -->
+          <circle cx="88" cy="32" r="2.5" fill="#e8c870"/>
+          <circle cx="96" cy="52" r="1.5" fill="#e8c870" opacity="0.7"/>
+        </svg>
+        <div class="moon-sparks" aria-hidden="true">✦ · ✦ · ✦ · ✦ · ✦ · ✦ · ✦ · </div>
+      </div>
+
+      <p class="hero-eyebrow">ZENERA オリジナル複合診断</p>
+      <h1 class="hero-title">「間」を知ると、<br>動くべき時がわかる。</h1>
+      <p class="hero-desc">生年月日を入力するだけ。数秘術とタロットを掛け合わせた独自診断で、今の「間」—— 動く・待つ・深める・転換 —— を判定します。</p>
+    </div>
+
+    <div class="ornament" aria-hidden="true"><span>✦</span></div>
+
+    <!-- Form -->
+    <div class="card" id="form-card">
+      <span class="cn-bl" aria-hidden="true"></span>
+      <span class="cn-br" aria-hidden="true"></span>
+
+      <div class="form-group">
+        <label class="form-label" for="birth-input">生年月日</label>
+        <input type="date" id="birth-input" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="q-input">今、気になっていること（任意）</label>
+        <input type="text" id="q-input" class="form-input"
+          placeholder="例：仕事の方向性、転機のタイミング…" maxlength="200">
+      </div>
+
+      <button class="submit-btn" id="submit-btn" onclick="runReading()">
+        <span>間を診断する</span>
+      </button>
+    </div>
+
+    <!-- Result -->
+    <div class="result card" id="result">
+      <span class="cn-bl" aria-hidden="true"></span>
+      <span class="cn-br" aria-hidden="true"></span>
+
+      <div class="ma-display">
+        <div class="ma-mandala-wrap">
+          <svg class="ma-mandala-svg" viewBox="0 0 200 200" fill="none" id="mandala-svg" aria-hidden="true"></svg>
+          <div class="ma-kanji" id="r-kanji">解</div>
+        </div>
+        <div class="ma-state-name" id="r-state-name">動く時</div>
+        <div class="ma-tags">
+          <span class="ma-tag" id="r-card-jp"></span>
+          <span class="ma-tag" id="r-lp-tag"></span>
+        </div>
+      </div>
+
+      <div class="result-body">
+        <div class="result-teaser" id="r-teaser"></div>
+        <div class="result-fade"></div>
+      </div>
+      <p class="result-hook" id="r-hook"></p>
+      <a class="result-cta" id="r-cta"
+        href="https://note.com/pyonkichi369" target="_blank" rel="noopener">
+        詳しい鑑定書を読む →
+      </a>
+    </div>
+
+    <!-- Pricing -->
+    <div class="pricing">
+      <p class="pricing-label">詳しい鑑定</p>
+      <div class="pricing-row">
+        <span class="pricing-name">Lite 鑑定書（PDF）</span>
+        <span class="pricing-price">¥500</span>
+      </div>
+      <div class="pricing-row">
+        <span class="pricing-name">Standard 鑑定書（PDF）</span>
+        <span class="pricing-price">¥1,980</span>
+      </div>
+      <div class="pricing-row">
+        <span class="pricing-name">月次レポート（サブスク）</span>
+        <span class="pricing-price">¥980/月</span>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="page-footer">
+    <p>占いはエンターテインメントです。診断結果は意思決定の補助としてのみご利用ください。</p>
+    <p>&copy; 2026 Takuya Hirata &nbsp;&middot;&nbsp; <a href="/">takuyahirata.com</a></p>
+  </footer>
+
+  <script>
+    // ── Star field ───────────────────────────────────────────────
+    // Reduce particle count on mobile to avoid GPU jank during scroll
+    const isMobile = window.innerWidth < 600;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const STARS = prefersReducedMotion ? 0 : (isMobile ? 55 : 120);
+    for (let i = 0; i < STARS; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const sz = Math.random() < 0.65 ? 1 : Math.random() < 0.6 ? 1.5 : 2.5;
+      const dur = 2.5 + Math.random() * 5;
+      const gold = Math.random() < 0.18;
+      s.style.cssText =
+        `width:${sz}px;height:${sz}px;` +
+        `top:${Math.random()*100}%;left:${Math.random()*100}%;` +
+        `background:${gold ? '#c9a44e' : '#ede8f5'};` +
+        `animation-duration:${dur}s;animation-delay:${Math.random()*dur}s;opacity:0;`;
+      document.body.appendChild(s);
+    }
+
+    // ── Mandala SVG ──────────────────────────────────────────────
+    function drawMandala(svgEl) {
+      const ns = 'http://www.w3.org/2000/svg';
+      const cx = 100, cy = 100, G = '#c9a44e';
+
+      // Outer dashed ring
+      const od = document.createElementNS(ns, 'circle');
+      od.setAttribute('cx', cx); od.setAttribute('cy', cy);
+      od.setAttribute('r', '88'); od.setAttribute('stroke', G);
+      od.setAttribute('stroke-width', '0.5'); od.setAttribute('stroke-dasharray', '2 6');
+      od.setAttribute('fill', 'none'); od.setAttribute('opacity', '0.35');
+      svgEl.appendChild(od);
+
+      // 8 diamond points at compass + diagonal
+      for (let i = 0; i < 8; i++) {
+        const a = (i * 45 - 90) * Math.PI / 180;
+        const dist = 76;
+        const px = cx + dist * Math.cos(a), py = cy + dist * Math.sin(a);
+
+        // Line from mid-ring to diamond
+        const innerDist = 54;
+        const ix = cx + innerDist * Math.cos(a), iy = cy + innerDist * Math.sin(a);
+        const ln = document.createElementNS(ns, 'line');
+        ln.setAttribute('x1', ix.toFixed(1)); ln.setAttribute('y1', iy.toFixed(1));
+        ln.setAttribute('x2', px.toFixed(1)); ln.setAttribute('y2', py.toFixed(1));
+        ln.setAttribute('stroke', G); ln.setAttribute('stroke-width', '0.5');
+        ln.setAttribute('opacity', '0.4');
+        svgEl.appendChild(ln);
+
+        // Diamond (rotated square)
+        const isCardinal = i % 2 === 0;
+        const diaSize = isCardinal ? 5 : 3.5;
+        const dia = document.createElementNS(ns, 'rect');
+        dia.setAttribute('x', px - diaSize); dia.setAttribute('y', py - diaSize);
+        dia.setAttribute('width', String(diaSize * 2)); dia.setAttribute('height', String(diaSize * 2));
+        dia.setAttribute('fill', G);
+        dia.setAttribute('transform', `rotate(45 ${px.toFixed(1)} ${py.toFixed(1)})`);
+        dia.setAttribute('opacity', isCardinal ? '0.9' : '0.6');
+        svgEl.appendChild(dia);
+      }
+
+      // Middle ring (solid)
+      const mr = document.createElementNS(ns, 'circle');
+      mr.setAttribute('cx', cx); mr.setAttribute('cy', cy);
+      mr.setAttribute('r', '54'); mr.setAttribute('stroke', G);
+      mr.setAttribute('stroke-width', '0.8'); mr.setAttribute('fill', 'none');
+      svgEl.appendChild(mr);
+
+      // Inner ring (dashed)
+      const ir = document.createElementNS(ns, 'circle');
+      ir.setAttribute('cx', cx); ir.setAttribute('cy', cy);
+      ir.setAttribute('r', '42'); ir.setAttribute('stroke', G);
+      ir.setAttribute('stroke-width', '0.5'); ir.setAttribute('stroke-dasharray', '3 3');
+      ir.setAttribute('fill', 'none'); ir.setAttribute('opacity', '0.5');
+      svgEl.appendChild(ir);
+
+      // 4 small sparkle circles at cardinal intercepts on middle ring
+      for (let i = 0; i < 4; i++) {
+        const a = (i * 90 - 90) * Math.PI / 180;
+        const px = cx + 54 * Math.cos(a), py = cy + 54 * Math.sin(a);
+        const dot = document.createElementNS(ns, 'circle');
+        dot.setAttribute('cx', px.toFixed(1)); dot.setAttribute('cy', py.toFixed(1));
+        dot.setAttribute('r', '2.5'); dot.setAttribute('fill', G);
+        svgEl.appendChild(dot);
+      }
+    }
+
+    drawMandala(document.getElementById('mandala-svg'));
+
+    // ── Config ──────────────────────────────────────────────────
+    // TODO: Update after deploying services/x402_fortune/
+    //   fly.io:     fly launch → fly deploy → https://<app>.fly.dev
+    //   render.com: Start = uvicorn services.x402_fortune.app:app --host 0.0.0.0 --port $PORT
+    const API_BASE = 'http://localhost:8402';
+
+    // ── Reading ──────────────────────────────────────────────────
+    async function runReading() {
+      const btn = document.getElementById('submit-btn');
+      const bSpan = btn.querySelector('span');
+      const birthDate = document.getElementById('birth-input').value;
+      const question = document.getElementById('q-input').value.trim();
+
+      if (!birthDate) { document.getElementById('birth-input').focus(); return; }
+
+      btn.disabled = true;
+      bSpan.textContent = '読み解いています…';
+
+      const resultEl = document.getElementById('result');
+      resultEl.classList.remove('visible');
+      resultEl.style.display = 'none';
+
+      try {
+        const params = new URLSearchParams({ birth_date: birthDate });
+        if (question) params.set('question', question);
+
+        const res = await fetch(`${API_BASE}/preview/ma?${params}`);
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        document.getElementById('r-kanji').textContent      = data.state;
+        document.getElementById('r-state-name').textContent = data.state_name;
+        document.getElementById('r-card-jp').textContent    = data.card_jp;
+        document.getElementById('r-lp-tag').textContent     = `ライフパス ${data.life_path}`;
+        document.getElementById('r-teaser').textContent     = data.teaser;
+        document.getElementById('r-hook').textContent       = data.cta_hook;
+        document.querySelector('.result-fade').style.display = '';
+        document.getElementById('r-cta').style.display = '';
+
+        resultEl.style.display = '';
+        resultEl.classList.add('visible');
+        resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      } catch {
+        document.getElementById('r-kanji').textContent      = '—';
+        document.getElementById('r-state-name').textContent = '';
+        document.getElementById('r-card-jp').textContent    = '';
+        document.getElementById('r-lp-tag').textContent     = '';
+        document.getElementById('r-teaser').textContent =
+          '診断サービスに接続できませんでした。しばらくしてから再試行してください。';
+        document.getElementById('r-hook').textContent = '';
+        document.querySelector('.result-fade').style.display = 'none';
+        document.getElementById('r-cta').style.display = 'none';
+        resultEl.style.display = '';
+        resultEl.classList.add('visible');
+      } finally {
+        btn.disabled = false;
+        bSpan.textContent = '間を診断する';
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && document.activeElement !== document.getElementById('submit-btn')) {
+        runReading();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -80,6 +80,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;800&family=Inter:wght@300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <!-- Analytics: Umami (privacy-first, no cookies, GDPR compliant) -->
+  <!-- Step 1: Sign up free at https://umami.is → Add Website → copy script tag -->
+  <!-- Step 2: Replace src domain + data-website-id below, then remove these comment lines -->
+  <!-- <script async src="https://analytics.umami.is/script.js" data-website-id="REPLACE_WITH_YOUR_ID"></script> -->
 </head>
 <body>
   <div class="cursor" id="cursor"></div>
@@ -148,6 +153,24 @@
       </div>
     </section>
 
+    <!-- YOHAKU: 連載テザー（EP.01公開後にURLを @yohaku_art_official の実URLに更新） -->
+    <div class="series-teaser">
+      <a href="https://note.com/pyonkichi369" target="_blank" rel="noopener" class="series-link" aria-label="YOHAKU 無声アートIP">
+        <span class="series-label">YOHAKU</span>
+        <span class="series-desc">余白を描く無声アートIP — 連載中</span>
+        <span class="series-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ZENERA: 占い診断 -->
+    <div class="series-teaser" style="border-top:none;">
+      <a href="/fortune/" class="series-link" aria-label="ZENERA 間の占い">
+        <span class="series-label">ZENERA</span>
+        <span class="series-desc">「間」を知ると、動くべき時がわかる — 無料診断</span>
+        <span class="series-arrow">→</span>
+      </a>
+    </div>
+
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="画像拡大">
       <button class="lightbox-close" aria-label="閉じる">✕</button>
@@ -169,10 +192,19 @@
 
   </main>
 
-  <footer class="footer" id="contact" aria-label="連絡先">
+  <!-- お仕事依頼 -->
+  <section class="contact-cta" id="contact" aria-label="お仕事依頼">
+    <div class="contact-cta-content">
+      <p class="contact-cta-label">お仕事について</p>
+      <p class="contact-cta-text">AI動画制作・コンテンツ制作のご依頼を承っています。</p>
+      <a href="mailto:belle.official369@gmail.com" class="contact-cta-link">メールで問い合わせる</a>
+    </div>
+  </section>
+
+  <footer class="footer" aria-label="フッター">
     <div class="footer-links">
       <a href="https://x.com/pyonkichi369" target="_blank" rel="noopener me">X</a>
-      <a href="https://note.com/pyonkichi369" target="_blank" rel="noopener me">note</a>
+      <a href="https://note.com/pyonkichi369" target="_blank" rel="noopener me">note — 有料記事 ¥500〜</a>
     </div>
     <p class="footer-copy">&copy; 2026 Takuya Hirata</p>
   </footer>
