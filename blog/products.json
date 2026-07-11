@@ -1,0 +1,30 @@
+[
+  {
+    "id": "zafu-cushion",
+    "name": "座禅用坐布（座蒲）",
+    "blurb": "座る姿勢を安定させるための、円形の座禅用坐布。",
+    "url": "https://example.com/REPLACE-WITH-AFFILIATE-LINK-zafu",
+    "matchKeywords": ["禅", "瞑想", "曼荼羅", "密教", "マインドフルネス", "坐禅"]
+  },
+  {
+    "id": "analog-timer",
+    "name": "アナログキッチンタイマー",
+    "blurb": "スマホ画面を見ずに作業時間を区切るための、シンプルな機械式タイマー。",
+    "url": "https://example.com/REPLACE-WITH-AFFILIATE-LINK-analog-timer",
+    "matchKeywords": ["集中", "生産性", "タスク", "効率", "注意"]
+  },
+  {
+    "id": "solopreneur-book",
+    "name": "ひとり起業ノート術（書籍）",
+    "blurb": "ひとりで事業を回す人向けに、記録と意思決定の型を扱う書籍。",
+    "url": "https://example.com/REPLACE-WITH-AFFILIATE-LINK-solopreneur-book",
+    "matchKeywords": ["独立", "経営", "フリーランス", "ひとり起業", "起業"]
+  },
+  {
+    "id": "adhd-planner",
+    "name": "実行機能サポート手帳",
+    "blurb": "タスクの分解と優先順位づけを助ける構成の、実行機能サポート手帳。",
+    "url": "https://example.com/REPLACE-WITH-AFFILIATE-LINK-adhd-planner",
+    "matchKeywords": ["ADHD", "発達障害", "実行機能", "タスク管理"]
+  }
+]
