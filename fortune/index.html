@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ZENERA — 間を知る占い</title>
-  <meta name="description" content="生年月日を入力するだけ。数秘術×タロットの複合診断で「今、動くべきか待つべきか」を判定。平田拓也によるZENERA間診断。">
+  <title>占い — Takuya Hirata</title>
+  <meta name="description" content="生年月日を入力すると、いまの「間」——動く・待つ・深める・転換——を映します。もっと詳しく占ってほしいときは、気軽に連絡してください。平田拓也がお応えします。">
   <link rel="canonical" href="https://takuyahirata.com/fortune/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ZENERA","description":"日本哲学 × AI による無料間診断","url":"https://takuyahirata.com/fortune/","applicationCategory":"EntertainmentApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"author":{"@type":"Person","name":"Takuya Hirata","url":"https://takuyahirata.com"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"占い — Takuya Hirata","description":"いまの「間」を映す、じぶんのための小さな占い。詳しく占ってほしいときは連絡を。","url":"https://takuyahirata.com/fortune/","author":{"@type":"Person","name":"Takuya Hirata","url":"https://takuyahirata.com"}}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;800&family=Inter:wght@300;400&display=swap" rel="stylesheet">
@@ -250,6 +250,14 @@
     .pricing-row:first-of-type{border-top:1px solid rgba(168,147,106,0.08)}
     .pricing-name{font-family:var(--j);font-size:13px;color:rgba(237,233,225,0.85)}
     .pricing-price{font-size:12px;color:var(--gold);font-variant-numeric:tabular-nums}
+    .contact-note{font-family:var(--j);font-size:14px;line-height:2;color:var(--muted-fg);margin:14px 0 20px}
+    .contact-links{display:flex;flex-wrap:wrap;gap:12px}
+    .contact-link{
+      font-family:var(--s);font-size:12px;letter-spacing:0.08em;color:var(--gold);
+      text-decoration:none;padding:9px 18px;border:1px solid var(--border);border-radius:2px;
+      transition:background 0.4s var(--ease),border-color 0.4s var(--ease),color 0.4s var(--ease);
+    }
+    .contact-link:hover{background:rgba(168,147,106,0.1);border-color:var(--gold);color:var(--gold-lt)}
 
     /* ── Footer ──────────────────────────────────────────────── */
     .page-footer{
@@ -335,7 +343,7 @@
 <body>
 
   <nav class="nav">
-    <span class="nav-brand">ZENERA</span>
+    <span class="nav-brand">占い</span>
     <a href="/" class="nav-back">← Takuya Hirata</a>
   </nav>
 
@@ -359,9 +367,9 @@
         <div class="moon-sparks" aria-hidden="true">✦ · ✦ · ✦ · ✦ · ✦ · ✦ · ✦ · </div>
       </div>
 
-      <p class="hero-eyebrow">ZENERA オリジナル複合診断</p>
+      <p class="hero-eyebrow">平田拓也の小さな占い</p>
       <h1 class="hero-title">「間」を知ると、<br>動くべき時がわかる。</h1>
-      <p class="hero-desc">生年月日を入力するだけ。数秘術とタロットを掛け合わせた独自診断で、今の「間」—— 動く・待つ・深める・転換 —— を判定します。</p>
+      <p class="hero-desc">生年月日を入れると、いまの「間」—— 動く・待つ・深める・転換 —— を映します。数秘とタロットを、ぼくなりに掛け合わせた小さな占いです。もっと詳しく占ってほしいときは、気軽に連絡してください。</p>
     </div>
 
     <div class="ornament" aria-hidden="true"><span>✦</span></div>
@@ -410,25 +418,19 @@
       </div>
       <p class="result-hook" id="r-hook"></p>
       <a class="result-cta" id="r-cta"
-        href="https://note.com/th19930828" target="_blank" rel="noopener">
-        詳しい鑑定書を読む →
+        href="https://x.com/th19930828" target="_blank" rel="noopener">
+        もっと詳しく占ってほしいときは、連絡してください →
       </a>
     </div>
 
-    <!-- Pricing -->
+    <!-- Contact -->
     <div class="pricing">
-      <p class="pricing-label">詳しい鑑定</p>
-      <div class="pricing-row">
-        <span class="pricing-name">Lite 鑑定書（PDF）</span>
-        <span class="pricing-price">¥500</span>
-      </div>
-      <div class="pricing-row">
-        <span class="pricing-name">Standard 鑑定書（PDF）</span>
-        <span class="pricing-price">¥1,980</span>
-      </div>
-      <div class="pricing-row">
-        <span class="pricing-name">月次レポート（サブスク）</span>
-        <span class="pricing-price">¥980/月</span>
+      <p class="pricing-label">もっと詳しく占ってほしいとき</p>
+      <p class="contact-note">この占いは、いまの「間」を映すだけの小さなものです。<br>
+        じぶんのことをちゃんと占ってほしい、というときは気軽に連絡してください。ぼくがお応えします。</p>
+      <div class="contact-links">
+        <a class="contact-link" href="https://x.com/th19930828" target="_blank" rel="noopener me">X で連絡する</a>
+        <a class="contact-link" href="https://note.com/th19930828" target="_blank" rel="noopener me">note を見る</a>
       </div>
     </div>
 
@@ -528,65 +530,55 @@
 
     drawMandala(document.getElementById('mandala-svg'));
 
-    // ── Config ──────────────────────────────────────────────────
-    // TODO: Update after deploying services/x402_fortune/
-    //   fly.io:     fly launch → fly deploy → https://<app>.fly.dev
-    //   render.com: Start = uvicorn services.x402_fortune.app:app --host 0.0.0.0 --port $PORT
-    const API_BASE = 'http://localhost:8402';
+    // ── Reading (client-side, no backend — deterministic from birthdate) ──
+    // The four "間" states. Deterministic so the same birthdate always reads the same.
+    const STATES = [
+      { k:'動', name:'動くとき',
+        teaser:'いまは、動くことが答えになる時期です。迷いは準備が足りないからではなく、じゅうぶん整っているのに、じぶんで許可を出せずにいるだけかもしれません。完璧を待つより、半分の確信で踏み出したほうが、景色は早く変わります。',
+        hook:'小さく一歩、動いてみる。それだけで、たぶん十分です。' },
+      { k:'待', name:'待つとき',
+        teaser:'いまは、待つことが力になる時期です。動かないことと、待つことは違います。焦って動くと、せっかく育ちかけた流れを、じぶんで乱してしまう。何もしていないように見えて、じつは静かに種を育てている——そういう時間の中にいます。',
+        hook:'急がなくていい。いまは、余白を守るとき。' },
+      { k:'深', name:'深めるとき',
+        teaser:'いまは、広げるより深める時期です。新しいものを増やすより、すでに手のなかにあるものを、もう一段ていねいに扱う。浅く十を持つより、深く一を知るほうが、これからのじぶんを支えてくれます。',
+        hook:'いま在るものを、もう少しだけ深く。' },
+      { k:'転', name:'転換のとき',
+        teaser:'いまは、切り替わりの時期です。これまでのやり方が、少しずつ合わなくなってきていませんか。それは失敗ではなく、次の器に移るサインです。手放すことを、負けだと思わなくていい。終わりは、静かなはじまりでもあります。',
+        hook:'終わらせることは、はじめることでもある。' },
+    ];
+    const CARDS = ['愚者','魔術師','女教皇','女帝','皇帝','法王','恋人','戦車','力','隠者','運命の輪','正義','吊された男','死神','節制','悪魔','塔','星','月','太陽','審判','世界'];
 
-    // ── Reading ──────────────────────────────────────────────────
-    async function runReading() {
-      const btn = document.getElementById('submit-btn');
-      const bSpan = btn.querySelector('span');
-      const birthDate = document.getElementById('birth-input').value;
+    const digitsSum = s => s.split('').reduce((a,c) => a + (/[0-9]/.test(c) ? +c : 0), 0);
+    function lifePath(birth) {            // 'YYYY-MM-DD' → 1-9 or master 11/22/33
+      let n = digitsSum(birth);
+      while (n > 9 && n !== 11 && n !== 22 && n !== 33) n = digitsSum(String(n));
+      return n;
+    }
+    const hashStr = s => { let h = 0; for (let i=0;i<s.length;i++) h = (h*31 + s.charCodeAt(i)) >>> 0; return h; };
+
+    function runReading() {
+      const birth = document.getElementById('birth-input').value;
+      if (!birth) { document.getElementById('birth-input').focus(); return; }
       const question = document.getElementById('q-input').value.trim();
 
-      if (!birthDate) { document.getElementById('birth-input').focus(); return; }
+      const lp = lifePath(birth);
+      const state = STATES[(digitsSum(birth) + hashStr(question)) % STATES.length];
+      const card = CARDS[(hashStr(birth) + (question ? hashStr(question) : 0)) % CARDS.length];
 
-      btn.disabled = true;
-      bSpan.textContent = '読み解いています…';
+      document.getElementById('r-kanji').textContent      = state.k;
+      document.getElementById('r-state-name').textContent = state.name;
+      document.getElementById('r-card-jp').textContent    = card;
+      document.getElementById('r-lp-tag').textContent     = `ライフパス ${lp}`;
+      document.getElementById('r-teaser').textContent     = state.teaser;
+      document.getElementById('r-hook').textContent       = state.hook;
+      // No paywall fade — the small reading is shown in full.
+      document.querySelector('.result-fade').style.display = 'none';
+      document.getElementById('r-cta').style.display = '';
 
       const resultEl = document.getElementById('result');
-      resultEl.classList.remove('visible');
-      resultEl.style.display = 'none';
-
-      try {
-        const params = new URLSearchParams({ birth_date: birthDate });
-        if (question) params.set('question', question);
-
-        const res = await fetch(`${API_BASE}/preview/ma?${params}`);
-        if (!res.ok) throw new Error(res.status);
-        const data = await res.json();
-
-        document.getElementById('r-kanji').textContent      = data.state;
-        document.getElementById('r-state-name').textContent = data.state_name;
-        document.getElementById('r-card-jp').textContent    = data.card_jp;
-        document.getElementById('r-lp-tag').textContent     = `ライフパス ${data.life_path}`;
-        document.getElementById('r-teaser').textContent     = data.teaser;
-        document.getElementById('r-hook').textContent       = data.cta_hook;
-        document.querySelector('.result-fade').style.display = '';
-        document.getElementById('r-cta').style.display = '';
-
-        resultEl.style.display = '';
-        resultEl.classList.add('visible');
-        resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-      } catch {
-        document.getElementById('r-kanji').textContent      = '—';
-        document.getElementById('r-state-name').textContent = '';
-        document.getElementById('r-card-jp').textContent    = '';
-        document.getElementById('r-lp-tag').textContent     = '';
-        document.getElementById('r-teaser').textContent =
-          '診断サービスに接続できませんでした。しばらくしてから再試行してください。';
-        document.getElementById('r-hook').textContent = '';
-        document.querySelector('.result-fade').style.display = 'none';
-        document.getElementById('r-cta').style.display = 'none';
-        resultEl.style.display = '';
-        resultEl.classList.add('visible');
-      } finally {
-        btn.disabled = false;
-        bSpan.textContent = '間を診断する';
-      }
+      resultEl.style.display = '';
+      resultEl.classList.add('visible');
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     document.addEventListener('keydown', e => {
