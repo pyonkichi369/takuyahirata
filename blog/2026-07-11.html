@@ -26,20 +26,29 @@
   <style>
     body { margin: 0; background: #faf9f7; color: #1a1a1a; font-family: 'Shippori Mincho B1', serif; line-height: 2.1; }
     .wrap { max-width: 40rem; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
-    .top a { color: #5f5a54; text-decoration: none; font-family: Inter, sans-serif; font-size: .85rem; letter-spacing: .1em; transition: color .2s; }
+    .top a { color: #5f5a54; text-decoration: none; font-family: Inter, sans-serif; font-size: .85rem; letter-spacing: .1em; transition: color .2s; display: inline-block; padding: 10px 6px; margin: -10px -6px; }
     .top a:hover { color: #7d6840; }
     h1 { font-weight: 800; font-size: 1.6rem; line-height: 1.8; margin: 2.5rem 0 .5rem; color: #7d6840; }
     .date { color: #5f5a54; font-family: Inter, sans-serif; font-size: .8rem; letter-spacing: .08em; }
     article { margin-top: 3rem; }
-    article p { margin: 0 0 2rem; }
+    article p { margin: 0 0 2rem; overflow-wrap: break-word; }
     .foot { margin-top: 5rem; border-top: 1px solid #e5e2dc; padding-top: 2rem; }
     .product { margin-top: 4rem; padding: 1.5rem 1.75rem; background: #f3efe8; border: 1px solid #e5e2dc; border-radius: 2px; }
     .product-badge { display: inline-block; font-family: Inter, sans-serif; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: #5f5a54; background: #e5e2dc; border-radius: 1px; padding: 2px 7px; margin-bottom: .6rem; }
     .product-name { font-weight: 800; font-size: 1rem; color: #7d6840; margin: 0 0 .4rem; }
     .product-blurb { font-size: .85rem; color: #5f5a54; line-height: 1.7; margin: 0 0 .8rem; }
-    .product-link { font-family: Inter, sans-serif; font-size: .82rem; color: #7d6840; }
+    .product-link { font-family: Inter, sans-serif; font-size: .82rem; color: #7d6840; display: inline-block; padding: 8px 4px; margin: -8px -4px; }
     .product-link:hover { opacity: .75; }
     .product-disclosure { font-family: Inter, sans-serif; font-size: .68rem; color: #5f5a54; opacity: .8; line-height: 1.6; margin: 1rem 0 0; padding-top: .8rem; border-top: 1px solid #e5e2dc; }
+
+    @media (max-width: 600px) {
+      .wrap { padding: 3rem 1.25rem 4rem; }
+      h1 { font-size: 1.35rem; }
+      .product { padding: 1.25rem 1.4rem; margin-top: 3rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>

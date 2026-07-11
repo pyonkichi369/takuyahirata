@@ -57,8 +57,9 @@
       -webkit-backdrop-filter:blur(24px) saturate(140%);
       border-bottom:1px solid rgba(168,147,106,0.12);
     }
-    .nav-brand{font-family:var(--j);font-size:14px;letter-spacing:0.5em;color:var(--gold)}
+    .nav-brand{font-family:var(--j);font-size:14px;letter-spacing:0.5em;color:var(--gold);display:flex;align-items:center;height:100%}
     .nav-back{
+      display:flex;align-items:center;height:100%;
       font-size:9px;letter-spacing:0.22em;text-transform:uppercase;
       color:var(--muted);transition:color 0.2s;
     }
@@ -280,8 +281,8 @@
 
     /* ── Mobile ──────────────────────────────────────────────── */
     @media(max-width:600px){
-      /* Compact nav on small screens */
-      .nav-back{font-size:9px;letter-spacing:0.15em}
+      /* Compact nav on small screens — bigger, more legible tap label */
+      .nav-back{font-size:12px;letter-spacing:0.1em}
 
       /* Main layout: safe-area-aware bottom padding for iPhone home bar */
       main{

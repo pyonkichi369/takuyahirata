@@ -16,15 +16,24 @@
   <style>
     body { margin: 0; background: #faf9f7; color: #1a1a1a; font-family: 'Shippori Mincho B1', serif; line-height: 2; }
     .wrap { max-width: 40rem; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
-    .top a { color: #5f5a54; text-decoration: none; font-family: Inter, sans-serif; font-size: .85rem; letter-spacing: .1em; transition: color .2s; }
+    .top a { color: #5f5a54; text-decoration: none; font-family: Inter, sans-serif; font-size: .85rem; letter-spacing: .1em; transition: color .2s; display: inline-block; padding: 10px 6px; margin: -10px -6px; }
     .top a:hover { color: #7d6840; }
     h1 { font-weight: 800; font-size: 1.5rem; margin: 2.5rem 0 3rem; color: #7d6840; }
     ul { list-style: none; padding: 0; }
     li { margin-bottom: 2.2rem; }
-    li a { color: #1a1a1a; text-decoration: none; font-size: 1.1rem; transition: color .2s; }
+    li a { color: #1a1a1a; text-decoration: none; font-size: 1.1rem; transition: color .2s; display: inline-block; padding: 6px 0; margin: -6px 0; overflow-wrap: break-word; }
     li a:hover { color: #7d6840; opacity: 1; }
     .d { display: block; color: #5f5a54; font-family: Inter, sans-serif; font-size: .75rem; letter-spacing: .08em; margin-top: .3rem; }
     .foot { margin-top: 5rem; border-top: 1px solid #e5e2dc; padding-top: 2rem; }
+
+    @media (max-width: 600px) {
+      .wrap { padding: 3rem 1.25rem 4rem; }
+      h1 { font-size: 1.35rem; margin: 2rem 0 2.25rem; }
+      li a { font-size: 1.05rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
