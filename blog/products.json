@@ -1,30 +1,119 @@
 [
   {
-    "id": "zafu-cushion",
-    "name": "座禅用坐布（座蒲）",
-    "blurb": "座る姿勢を安定させるための、円形の座禅用坐布。",
-    "url": "https://example.com/REPLACE-WITH-AFFILIATE-LINK-zafu",
-    "matchKeywords": ["禅", "瞑想", "曼荼羅", "密教", "マインドフルネス", "坐禅"]
+    "id": "awarefy-mental-care",
+    "name": "Awarefy（メンタルケアアプリ）",
+    "blurb": "認知行動療法とAIを組み合わせた、日々の気分と思考を記録するメンタルケアアプリ。100万ダウンロード突破。",
+    "programId": "s00000024926001",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000024926001",
+    "matchKeywords": ["ADHD", "うつ", "断れない", "自己肯定感", "メンタルケア", "自己理解", "心の余裕"]
   },
   {
-    "id": "analog-timer",
-    "name": "アナログキッチンタイマー",
-    "blurb": "スマホ画面を見ずに作業時間を区切るための、シンプルな機械式タイマー。",
-    "url": "https://example.com/REPLACE-WITH-AFFILIATE-LINK-analog-timer",
-    "matchKeywords": ["集中", "生産性", "タスク", "効率", "注意"]
+    "id": "hikiutsu-egao",
+    "name": "ヒキウツ笑顔（心のつらさをサポートするサプリ）",
+    "blurb": "気分の落ち込みや、心のつらさに寄り添うことを目的にした前向きサプリメント。",
+    "programId": "s00000020459002",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000020459002",
+    "matchKeywords": ["うつ症状", "心のつらさ", "気分の落ち込み"]
   },
   {
-    "id": "solopreneur-book",
-    "name": "ひとり起業ノート術（書籍）",
-    "blurb": "ひとりで事業を回す人向けに、記録と意思決定の型を扱う書籍。",
-    "url": "https://example.com/REPLACE-WITH-AFFILIATE-LINK-solopreneur-book",
-    "matchKeywords": ["独立", "経営", "フリーランス", "ひとり起業", "起業"]
+    "id": "kimochi-counseling",
+    "name": "Kimochi（オンライン心理カウンセリング）",
+    "blurb": "公認心理師（国家資格保持者）のみが登録する、オンライン完結の心理カウンセリングサービス。",
+    "programId": "s00000026504001",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000026504001",
+    "matchKeywords": ["カウンセリング", "心理", "話を聞いてほしい", "誰にも言えない"]
   },
   {
-    "id": "adhd-planner",
-    "name": "実行機能サポート手帳",
-    "blurb": "タスクの分解と優先順位づけを助ける構成の、実行機能サポート手帳。",
-    "url": "https://example.com/REPLACE-WITH-AFFILIATE-LINK-adhd-planner",
-    "matchKeywords": ["ADHD", "発達障害", "実行機能", "タスク管理"]
+    "id": "highfive-creative-career",
+    "name": "HIGHFIVE（クリエイター専門転職エージェント）",
+    "blurb": "クリエイティブ職に特化した転職エージェント。働き方を変えたい人向け。",
+    "programId": "s00000025215001",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000025215001",
+    "matchKeywords": ["転職", "キャリア", "クリエイティブな仕事", "会社員"]
+  },
+  {
+    "id": "atgp-jobtore-utsu",
+    "name": "atGPジョブトレ（うつ症状コース）",
+    "blurb": "うつ症状のある人向けの、休職・復職を見据えた就労移行支援サービス。",
+    "programId": "s00000017969002",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000017969002",
+    "matchKeywords": ["休職", "復職", "うつ症状", "就労移行"]
+  },
+  {
+    "id": "consul-databank-freelance",
+    "name": "コンサルデータバンク（副業・フリーランスプラットフォーム）",
+    "blurb": "副業コンサルタント・フリーランスコンサルタント向けの案件マッチングプラットフォーム。",
+    "programId": "s00000024182001",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000024182001",
+    "matchKeywords": ["副業", "経営", "ひとり起業", "仕組み化"]
+  },
+  {
+    "id": "potepan-freelance-engineer",
+    "name": "ポテパンフリーランス（エンジニア独立支援）",
+    "blurb": "フリーランスエンジニア向けの無料カウンセリング。独立後の案件探しをサポートする。",
+    "programId": "s00000017938001",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000017938001",
+    "matchKeywords": ["フリーランス", "エンジニア", "独立", "コードを書く", "ソフトウェア"]
+  },
+  {
+    "id": "totonoe-light",
+    "name": "トトノエライトプレーン（光目覚まし時計）",
+    "blurb": "光の力で自然に目を覚まし、生活リズムを整えることを目的にした目覚まし時計。",
+    "programId": "s00000011588036",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000011588036",
+    "matchKeywords": ["休むこと", "生活リズム", "朝", "目覚め", "睡眠"]
+  },
+  {
+    "id": "kitano-daichi-yumeshizuku",
+    "name": "北の大地の夢しずく（不眠対策サプリ）",
+    "blurb": "眠れない夜のための、機能性表示食品の不眠対策サプリメント。",
+    "programId": "s00000000204015",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000000204015",
+    "matchKeywords": ["不眠", "眠れない", "休む", "疲労"]
+  },
+  {
+    "id": "fastcampus-learning",
+    "name": "Fast campus（学び直し教育コンテンツ）",
+    "blurb": "AI・ビジネススキルなど、望みを叶えるための学び直し教育コンテンツ。",
+    "programId": "s00000026713002",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000026713002",
+    "matchKeywords": ["学び直し", "スキルアップ", "AI活用", "新しい学び"]
+  },
+  {
+    "id": "shikaku-square",
+    "name": "資格スクエア（資格試験オンライン対策）",
+    "blurb": "資格試験のオンライン対策サービス。すきま時間での学びをサポートする。",
+    "programId": "s00000014916001",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000014916001",
+    "matchKeywords": ["資格", "学び", "勉強"]
+  },
+  {
+    "id": "estore-sns-school",
+    "name": "エストレ（SNSマーケティングスクール）",
+    "blurb": "「働き方に自由を」を掲げるSNSマーケティングスクール。ひとりで仕事を組み立てたい人向け。",
+    "programId": "s00000026481001",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000026481001",
+    "matchKeywords": ["自由な働き方", "ひとり起業", "独立", "仕組みで働く"]
+  },
+  {
+    "id": "verni-phone-fortune",
+    "name": "電話占いヴェルニ",
+    "blurb": "年間鑑定数50万件、占い師在籍数1400名を超える電話占いサービス。今すぐ話を聞いてほしいときに。",
+    "programId": "s00000011537004",
+    "network": "a8",
+    "url": "A8-PASTE-LINK:s00000011537004",
+    "matchKeywords": ["占い", "鑑定師", "運勢"]
   }
 ]

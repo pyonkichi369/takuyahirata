@@ -260,6 +260,29 @@
     }
     .contact-link:hover{background:rgba(168,147,106,0.1);border-color:var(--gold);color:var(--gold-lt)}
 
+    /* ── A8 sponsored slot (secondary, below personal offer) ─── */
+    .sponsor{margin-bottom:52px;animation:fade-up 1s var(--ease-out) 1s both}
+    .sponsor-label{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+    .sponsor-card{
+      position:relative;background:var(--surface);border:1px solid var(--border);
+      border-radius:2px;padding:clamp(18px,4vw,26px);
+    }
+    .sponsor-badge{
+      display:inline-block;font-family:var(--s);font-size:9px;letter-spacing:0.14em;
+      text-transform:uppercase;color:var(--muted);background:rgba(168,147,106,0.1);
+      border:1px solid var(--border);border-radius:1px;padding:3px 8px;margin-bottom:10px;
+    }
+    .sponsor-lead{font-family:var(--j);font-size:13px;color:var(--muted-fg);line-height:1.9;margin-bottom:12px}
+    .sponsor-name{font-family:var(--j);font-size:14px;font-weight:800;color:var(--gold);margin-bottom:6px}
+    .sponsor-desc{font-size:12px;color:var(--muted-fg);line-height:1.8;margin-bottom:14px}
+    .sponsor-cta{
+      display:inline-block;padding:11px 20px;border:1px solid var(--gold);border-radius:2px;
+      color:var(--gold);font-family:var(--s);font-size:12px;letter-spacing:0.1em;
+      transition:all 0.22s var(--ease);touch-action:manipulation;
+    }
+    .sponsor-cta:hover{background:rgba(168,147,106,0.1);color:var(--gold-lt)}
+    .sponsor-disclosure{font-size:9px;color:var(--muted);opacity:0.75;line-height:1.7;margin-top:14px;padding-top:12px;border-top:1px solid rgba(168,147,106,0.1)}
+
     /* ── Footer ──────────────────────────────────────────────── */
     .page-footer{
       text-align:center;padding:20px 24px 48px;
@@ -432,6 +455,19 @@
       <div class="contact-links">
         <a class="contact-link" href="https://x.com/th19930828" target="_blank" rel="noopener me">X で連絡する</a>
         <a class="contact-link" href="https://note.com/th19930828" target="_blank" rel="noopener me">note を見る</a>
+      </div>
+    </div>
+
+    <!-- Sponsored: complementary to the personal offer above, not competing with it -->
+    <div class="sponsor">
+      <p class="sponsor-label">今すぐ占ってほしい人は</p>
+      <div class="sponsor-card">
+        <span class="sponsor-badge">広告</span>
+        <p class="sponsor-lead">ぼくへの連絡は、返信までに少し時間がかかります。いま、この場ですぐに話を聞いてほしいときは、こちらも一つの選択肢です。</p>
+        <p class="sponsor-name">電話占いヴェルニ</p>
+        <p class="sponsor-desc">年間鑑定数50万件、占い師在籍数1400名を超える電話占いサービス。24時間、今すぐ相談できます。</p>
+        <a class="sponsor-cta" href="A8-PASTE-LINK:s00000011537004" target="_blank" rel="sponsored nofollow noopener">今すぐ占ってもらう →</a>
+        <p class="sponsor-disclosure">この枠にはプロモーションを含みます。紹介するサービスは本ページの内容に関連するものであり、推奨・保証するものではありません。</p>
       </div>
     </div>
 
