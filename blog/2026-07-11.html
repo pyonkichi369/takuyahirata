@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ぼくが会社のオフィスに座っていたとき、机の上にあるのは大量のタスクシートと、背中に負った「やらなければならない」という重みだけだった。  
+朝早くから深夜まで働いても、どこかでじぶんの時間が抜け落ちている感覚があった。 …">
+  <title>密教の曼荼羅とソフトウェアアーキテクチャの相似 — Takuya Hirata</title>
+  <link rel="canonical" href="https://takuyahirata.com/blog/2026-07-11.html">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="密教の曼荼羅とソフトウェアアーキテクチャの相似">
+  <meta property="og:description" content="ぼくが会社のオフィスに座っていたとき、机の上にあるのは大量のタスクシートと、背中に負った「やらなければならない」という重みだけだった。  
+朝早くから深夜まで働いても、どこかでじぶんの時間が抜け落ちている感覚があった。 …">
+  <meta property="og:url" content="https://takuyahirata.com/blog/2026-07-11.html">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@th19930828">
+  <meta name="twitter:title" content="密教の曼荼羅とソフトウェアアーキテクチャの相似">
+  <meta name="twitter:description" content="ぼくが会社のオフィスに座っていたとき、机の上にあるのは大量のタスクシートと、背中に負った「やらなければならない」という重みだけだった。  
+朝早くから深夜まで働いても、どこかでじぶんの時間が抜け落ちている感覚があった。 …">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;800&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"密教の曼荼羅とソフトウェアアーキテクチャの相似","datePublished":"2026-07-11","inLanguage":"ja","author":{"@type":"Person","name":"Takuya Hirata","url":"https://takuyahirata.com"}}</script>
+  <style>
+    body { margin: 0; background: #faf9f7; color: #1a1a1a; font-family: 'Shippori Mincho B1', serif; line-height: 2.1; }
+    .wrap { max-width: 40rem; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
+    .top a { color: #5f5a54; text-decoration: none; font-family: Inter, sans-serif; font-size: .85rem; letter-spacing: .1em; transition: color .2s; }
+    .top a:hover { color: #7d6840; }
+    h1 { font-weight: 800; font-size: 1.6rem; line-height: 1.8; margin: 2.5rem 0 .5rem; color: #7d6840; }
+    .date { color: #5f5a54; font-family: Inter, sans-serif; font-size: .8rem; letter-spacing: .08em; }
+    article { margin-top: 3rem; }
+    article p { margin: 0 0 2rem; }
+    .foot { margin-top: 5rem; border-top: 1px solid #e5e2dc; padding-top: 2rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top"><a href="/blog/">← Essays</a>　<a href="/">Takuya Hirata</a></nav>
+    <h1>密教の曼荼羅とソフトウェアアーキテクチャの相似</h1>
+    <p class="date">2026-07-11</p>
+    <article>
+      <p>ぼくが会社のオフィスに座っていたとき、机の上にあるのは大量のタスクシートと、背中に負った「やらなければならない」という重みだけだった。  
+朝早くから深夜まで働いても、どこかでじぶんの時間が抜け落ちている感覚があった。  
+そんなとき、心の中に小さな灯がともった――それは、かつて大学の講義で見た密教の曼荼羅の映像だった。</p>
+      <p>曼荼羅は円形の絵で、中心に大日如来が描かれ、そこから放射状に様々なシンボルが広がっていく。  
+見ていると、遠くにある星々が一つの円に収まっているように感じられた。  
+「すべては一つの中心から出ている」というシンプルな感覚が、ぼくの胸に温かく残った。</p>
+      <p>そのイメージをソフトウェアの世界で考えてみると、システムの構造と似通う部分があったことに気づいた。  
+まず、コードはモジュールやクラスという小さな部品に分かれる。それらは独立しつつも、相互に通信し合うことで全体を形作る。  
+中心にある「コアロジック」は、まさに曼荼羅の中心に立つ大日如来だ。そこから各モジュールへと機能が流れ、アプリケーション全体が一つの目的に向かって回転する。</p>
+      <p>ぼくは、かつては「システム全体を一瞬で作り上げる」ことだけに意識を向け、モジュール同士の関係性や相互依存を見落としていた。  
+結果として、バグが山積みになるたびに修正に追われ、時間がどんどん失われていく。  
+そのとき、曼荼羅のように全体像を俯瞰し、中心と周辺の役割をはっきりさせると、どこに手を入れるべきかが見えてきた。</p>
+      <p>「モジュールはそれぞれ独立した世界だ」と思い込むと、依存関係が見えずに重複コードが増えてしまう。  
+逆に、周辺のシンボルが中心に向かって収束するように設計すれば、変更があったときも影響範囲が限定され、システムは柔軟になる。  
+このプロセスは、じぶん自身が「何を選び、何を手放す」かを考える作業に通じていると感じた。</p>
+      <p>会社でうつ病を経験したとき、ぼくはじぶんの時間を失ったと感じた。  
+仕事というシステムが、あたかも中心から放たれた命令のように自覚なく従わせていたのだ。  
+しかし、退職してフリーランスとして独立した瞬間、ぼくは自らのシステムを再構築できる自由を得た。  
+今度はじぶんでレイヤーを設計し、必要なモジュールだけを選んで組み立てることができる。</p>
+      <p>この経験は、密教の曼荼羅が示す「円の中に全体がある」という教えと重なる。  
+中心は変わらないが、周辺の模様や色合いを変えることで、同じシステムでも全く別の景色になるのだ。  
+じぶんの人生も同様に、時間を管理し、心の余裕を取り戻し、選択する力を手に入れることで、同じ日常に新たな意味を与えることができる。</p>
+      <p>ぼくは今、コードを書くときも、心の中で曼荼羅を描きながら作業する。  
+「このモジュールはどの層に属すべきか」「どこが中心で、どこが周辺か」を問いかけることで、システム全体のバランスを保つ。  
+そのプロセスは、じぶん自身の選択と向き合う時間でもある。</p>
+      <p>解放とは、外部から与えられた枠組みを受け入れることではなく、じぶんでその枠組みを再構築し直す行為だ。  
+密教の曼荼羅のように、中心が揺るがない限り、周辺は自由に変化できる。  
+ソフトウェアのアーキテクチャも同様に、正しい中心と適切なレイヤーがあれば、柔軟で強靭なシステムになる。</p>
+      <p>ぼくが今、パソコンに向かってコードを書きながら思うのは、まだ答えは見つかっていないということだ。  
+でも、曼荼羅の一筆一筆にじぶんの時間と心を戻すことができたら、解放という名の光は自然と広がっていくだろう。</p>
+      <p>――――――――――――――――――――――――――――――――――――――――――――――</p>
+      <p>じぶんの時間を取り戻すために、今どこに第一歩を踏み出すべきか、静かに問いかけます。</p>
+    </article>
+    <div class="foot top"><a href="/blog/">← Essays</a>　<a href="https://dopaminelabtv.com" target="_blank" rel="noopener me">Dopamine Lab TV</a></div>
+  </div>
+</body>
+</html>
