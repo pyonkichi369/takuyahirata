@@ -5,8 +5,16 @@
     "blurb": "認知行動療法とAIを組み合わせた、日々の気分と思考を記録するメンタルケアアプリ。100万ダウンロード突破。",
     "programId": "s00000024926001",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000024926001",
-    "matchKeywords": ["ADHD", "うつ", "断れない", "自己肯定感", "メンタルケア", "自己理解", "心の余裕"]
+    "url": "https://www.awarefy.com/",
+    "matchKeywords": [
+      "ADHD",
+      "うつ",
+      "断れない",
+      "自己肯定感",
+      "メンタルケア",
+      "自己理解",
+      "心の余裕"
+    ]
   },
   {
     "id": "hikiutsu-egao",
@@ -14,8 +22,12 @@
     "blurb": "気分の落ち込みや、心のつらさに寄り添うことを目的にした前向きサプリメント。",
     "programId": "s00000020459002",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000020459002",
-    "matchKeywords": ["うつ症状", "心のつらさ", "気分の落ち込み"]
+    "url": "https://kanpolabo.com/all-products/hikiutu",
+    "matchKeywords": [
+      "うつ症状",
+      "心のつらさ",
+      "気分の落ち込み"
+    ]
   },
   {
     "id": "kimochi-counseling",
@@ -23,8 +35,13 @@
     "blurb": "公認心理師（国家資格保持者）のみが登録する、オンライン完結の心理カウンセリングサービス。",
     "programId": "s00000026504001",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000026504001",
-    "matchKeywords": ["カウンセリング", "心理", "話を聞いてほしい", "誰にも言えない"]
+    "url": "https://kimochi-mental.com/",
+    "matchKeywords": [
+      "カウンセリング",
+      "心理",
+      "話を聞いてほしい",
+      "誰にも言えない"
+    ]
   },
   {
     "id": "highfive-creative-career",
@@ -32,8 +49,13 @@
     "blurb": "クリエイティブ職に特化した転職エージェント。働き方を変えたい人向け。",
     "programId": "s00000025215001",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000025215001",
-    "matchKeywords": ["転職", "キャリア", "クリエイティブな仕事", "会社員"]
+    "url": "https://high-five.careers/",
+    "matchKeywords": [
+      "転職",
+      "キャリア",
+      "クリエイティブな仕事",
+      "会社員"
+    ]
   },
   {
     "id": "atgp-jobtore-utsu",
@@ -41,8 +63,13 @@
     "blurb": "うつ症状のある人向けの、休職・復職を見据えた就労移行支援サービス。",
     "programId": "s00000017969002",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000017969002",
-    "matchKeywords": ["休職", "復職", "うつ症状", "就労移行"]
+    "url": "https://www.atgp.jp/training/course/utsu",
+    "matchKeywords": [
+      "休職",
+      "復職",
+      "うつ症状",
+      "就労移行"
+    ]
   },
   {
     "id": "consul-databank-freelance",
@@ -50,8 +77,13 @@
     "blurb": "副業コンサルタント・フリーランスコンサルタント向けの案件マッチングプラットフォーム。",
     "programId": "s00000024182001",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000024182001",
-    "matchKeywords": ["副業", "経営", "ひとり起業", "仕組み化"]
+    "url": "https://consul-data-bank.com/",
+    "matchKeywords": [
+      "副業",
+      "経営",
+      "ひとり起業",
+      "仕組み化"
+    ]
   },
   {
     "id": "potepan-freelance-engineer",
@@ -59,8 +91,14 @@
     "blurb": "フリーランスエンジニア向けの無料カウンセリング。独立後の案件探しをサポートする。",
     "programId": "s00000017938001",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000017938001",
-    "matchKeywords": ["フリーランス", "エンジニア", "独立", "コードを書く", "ソフトウェア"]
+    "url": "https://freelance.potepan.com/",
+    "matchKeywords": [
+      "フリーランス",
+      "エンジニア",
+      "独立",
+      "コードを書く",
+      "ソフトウェア"
+    ]
   },
   {
     "id": "totonoe-light",
@@ -68,8 +106,14 @@
     "blurb": "光の力で自然に目を覚まし、生活リズムを整えることを目的にした目覚まし時計。",
     "programId": "s00000011588036",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000011588036",
-    "matchKeywords": ["休むこと", "生活リズム", "朝", "目覚め", "睡眠"]
+    "url": "https://intiinti.com/lp/totonoelight_plain/",
+    "matchKeywords": [
+      "休むこと",
+      "生活リズム",
+      "朝",
+      "目覚め",
+      "睡眠"
+    ]
   },
   {
     "id": "kitano-daichi-yumeshizuku",
@@ -77,8 +121,13 @@
     "blurb": "眠れない夜のための、機能性表示食品の不眠対策サプリメント。",
     "programId": "s00000000204015",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000000204015",
-    "matchKeywords": ["不眠", "眠れない", "休む", "疲労"]
+    "url": "https://www.ys-suimin.com/pc/",
+    "matchKeywords": [
+      "不眠",
+      "眠れない",
+      "休む",
+      "疲労"
+    ]
   },
   {
     "id": "fastcampus-learning",
@@ -86,8 +135,13 @@
     "blurb": "AI・ビジネススキルなど、望みを叶えるための学び直し教育コンテンツ。",
     "programId": "s00000026713002",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000026713002",
-    "matchKeywords": ["学び直し", "スキルアップ", "AI活用", "新しい学び"]
+    "url": "https://fastcampus.jp/",
+    "matchKeywords": [
+      "学び直し",
+      "スキルアップ",
+      "AI活用",
+      "新しい学び"
+    ]
   },
   {
     "id": "shikaku-square",
@@ -95,8 +149,12 @@
     "blurb": "資格試験のオンライン対策サービス。すきま時間での学びをサポートする。",
     "programId": "s00000014916001",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000014916001",
-    "matchKeywords": ["資格", "学び", "勉強"]
+    "url": "https://www.shikaku-square.com/",
+    "matchKeywords": [
+      "資格",
+      "学び",
+      "勉強"
+    ]
   },
   {
     "id": "estore-sns-school",
@@ -104,8 +162,13 @@
     "blurb": "「働き方に自由を」を掲げるSNSマーケティングスクール。ひとりで仕事を組み立てたい人向け。",
     "programId": "s00000026481001",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000026481001",
-    "matchKeywords": ["自由な働き方", "ひとり起業", "独立", "仕組みで働く"]
+    "url": "https://estre-official.com/",
+    "matchKeywords": [
+      "自由な働き方",
+      "ひとり起業",
+      "独立",
+      "仕組みで働く"
+    ]
   },
   {
     "id": "verni-phone-fortune",
@@ -113,7 +176,11 @@
     "blurb": "年間鑑定数50万件、占い師在籍数1400名を超える電話占いサービス。今すぐ話を聞いてほしいときに。",
     "programId": "s00000011537004",
     "network": "a8",
-    "url": "A8-PASTE-LINK:s00000011537004",
-    "matchKeywords": ["占い", "鑑定師", "運勢"]
+    "url": "https://vernis.co.jp/",
+    "matchKeywords": [
+      "占い",
+      "鑑定師",
+      "運勢"
+    ]
   }
 ]
