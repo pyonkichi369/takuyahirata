@@ -7,13 +7,14 @@ import {
   CLOSING_MORNING, CLOSING_NIGHT,
 } from './data.js';
 import * as S from './state.js';
+import { todayUnki } from './unki.js';
 import { drawSigil, drawMandala } from './mandala.js';
 import { ringBell, fireCrackle, startDrone, stopDrone, droneActive } from './audio.js';
 
 const $ = (id) => document.getElementById(id);
 
 // ── view switching — places, not pages ───────────────
-const VIEWS = ['gate', 'honden', 'gogyo', 'goma', 'shikigami', 'kudoku', 'genjitsu'];
+const VIEWS = ['gate', 'honden', 'ganden', 'gogyo', 'goma', 'shikigami', 'kudoku', 'juyosho', 'genjitsu'];
 let current = 'gate';
 
 function show(view) {
@@ -80,21 +81,68 @@ function renderHonden() {
   const dayN = Math.floor(Date.now() / 86400000);
   $('declaration').textContent = DECLARATIONS[dayN % DECLARATIONS.length];
 
+  renderUnki();
+  renderMantraBlock();
   renderOracle();
   renderActionZone();
   renderGogyoMini();
 }
 
+function renderMantraBlock() {
+  const m = S.todayMantra();
+  $('mantra-text').textContent = m ? m.text : '';
+  const done = S.todayRitual().chanted;
+  $('btn-chant').hidden = false;
+  $('btn-chant').disabled = !!done;
+  const after = $('mantra-after');
+  after.hidden = !done;
+  if (done) after.textContent = '唱えた言葉は、少しずつ我の声になる。';
+}
+$('btn-chant').addEventListener('click', () => {
+  const text = $('mantra-text');
+  let count = 0;
+  text.classList.add('chanting');
+  const pulse = setInterval(() => {
+    count++;
+    text.classList.remove('chanting');
+    void text.offsetWidth; // restart the pulse animation
+    text.classList.add('chanting');
+    if (count >= 2) {
+      clearInterval(pulse);
+      setTimeout(() => {
+        text.classList.remove('chanting');
+        S.chantToday();
+        renderHonden();
+      }, 900);
+    }
+  }, 900);
+  $('btn-chant').disabled = true;
+});
+
+function renderUnki() {
+  const u = todayUnki();
+  $('unki-kanshi').textContent = u.kanshi;
+  $('unki-grade').textContent = u.grade;
+  $('unki-line').textContent = u.line;
+  $('unki-lucky').textContent =
+    `今日の吉の気は「${u.luckyName}」— ${ELEMENTS[u.luckyElement].domain}`;
+}
+
 function renderOracle() {
   const r = S.todayRitual();
+  const share = $('oracle-share');
   if (r.oracle) {
     $('btn-oracle').hidden = true;
     const q = $('oracle-text');
     q.hidden = false;
     q.textContent = r.oracle;
+    share.hidden = false;
+    share.href = 'https://x.com/intent/post?text=' +
+      encodeURIComponent('今日の託宣 —「' + r.oracle + '」\n#天照界\nhttps://takuyahirata.com');
   } else {
     $('btn-oracle').hidden = false;
     $('oracle-text').hidden = true;
+    share.hidden = true;
   }
 }
 $('btn-oracle').addEventListener('click', () => {
@@ -149,7 +197,9 @@ function renderActionZone() {
   if (r.completed) {
     const done = document.createElement('p');
     done.className = 'action-done-line';
-    done.textContent = '果たされた。世界に霊力が満ちる（+3）';
+    done.textContent = r.unkiBonus
+      ? `果たされた。満ちる日の行い、霊力が余分に満ちる（+${3 + r.unkiBonus}）`
+      : '果たされた。世界に霊力が満ちる（+3）';
     card.appendChild(done);
   } else {
     const btn = document.createElement('button');
@@ -191,6 +241,159 @@ $('btn-close-world').addEventListener('click', () => {
   const hasEvidenceToday = S.getState().evidence.some(
     (e) => e.date.slice(0, 10) === S.todayKey());
   line.textContent = (r.completed || hasEvidenceToday) ? CLOSING_NIGHT : CLOSING_MORNING;
+});
+
+// ── 願殿 ─────────────────────────────────────────────
+let wishElement = 'fire';
+
+function renderGanden() {
+  renderWishes();
+  renderWishForm();
+  renderMantraBoard();
+}
+
+function renderWishes() {
+  const list = $('wish-list');
+  list.replaceChildren();
+  const all = S.wishes();
+  const active = all.filter((w) => !w.fulfilled);
+  const fulfilled = all.filter((w) => w.fulfilled);
+
+  if (!all.length) {
+    const p = document.createElement('p');
+    p.className = 'empty-line';
+    p.textContent = 'まだ願いは刻まれていない。最初の一願を。';
+    list.appendChild(p);
+  }
+
+  for (const w of active) {
+    const card = document.createElement('div');
+    card.className = 'wish-card';
+    const head = document.createElement('div');
+    head.className = 'wish-head';
+    const mark = document.createElement('span');
+    mark.className = 'el-mark el-' + w.element;
+    mark.textContent = ELEMENTS[w.element].name;
+    const days = Math.max(0, Math.floor((Date.now() - new Date(w.vowedAt).getTime()) / 86400000));
+    const meta = document.createElement('span');
+    meta.className = 'wish-meta';
+    meta.textContent = `刻んで${days === 0 ? '今日' : days + '日'}`;
+    head.appendChild(mark);
+    head.appendChild(meta);
+    card.appendChild(head);
+    const text = document.createElement('p');
+    text.className = 'wish-text';
+    text.textContent = w.text;
+    card.appendChild(text);
+    if (w.firstStep) {
+      const step = document.createElement('p');
+      step.className = 'wish-step';
+      step.textContent = '一歩: ' + w.firstStep;
+      card.appendChild(step);
+    }
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn-fuda btn-fulfill';
+    btn.textContent = '成就した';
+    btn.addEventListener('click', () => {
+      S.fulfillWish(w.id);
+      renderGanden();
+    });
+    card.appendChild(btn);
+    list.appendChild(card);
+  }
+
+  if (fulfilled.length) {
+    const label = document.createElement('p');
+    label.className = 'block-label wish-done-label';
+    label.textContent = `成就の帳 — ${fulfilled.length}願`;
+    list.appendChild(label);
+    for (const w of fulfilled.slice().reverse()) {
+      const row = document.createElement('p');
+      row.className = 'wish-fulfilled';
+      row.textContent = `${(w.fulfilledAt || '').slice(0, 10)} — ${w.text}`;
+      list.appendChild(row);
+    }
+  }
+}
+
+function renderWishForm() {
+  const form = $('wish-form');
+  const limitReached = S.activeWishes().length >= 3;
+  $('wish-limit').hidden = !limitReached;
+  form.querySelectorAll('textarea, input, button').forEach((n) => { n.disabled = limitReached; });
+  if (limitReached) return;
+  $('btn-vow').disabled = $('wish-text').value.trim().length === 0;
+
+  const elWrap = $('wish-el');
+  if (!elWrap.childElementCount) {
+    for (const key of ELEMENT_ORDER) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'el-mark el-' + key + (key === wishElement ? ' is-on' : '');
+      b.textContent = ELEMENTS[key].name;
+      b.title = ELEMENTS[key].domain;
+      b.addEventListener('click', () => {
+        wishElement = key;
+        elWrap.querySelectorAll('button').forEach((x) =>
+          x.classList.toggle('is-on', x.textContent === ELEMENTS[key].name));
+      });
+      elWrap.appendChild(b);
+    }
+  }
+}
+
+$('wish-text').addEventListener('input', () => {
+  $('btn-vow').disabled = $('wish-text').value.trim().length === 0;
+});
+$('wish-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const added = S.addWish({
+    text: $('wish-text').value.trim(),
+    firstStep: $('wish-step').value.trim(),
+    element: wishElement,
+  });
+  if (added) {
+    $('wish-text').value = '';
+    $('wish-step').value = '';
+    renderGanden();
+  }
+});
+
+function renderMantraBoard() {
+  const list = $('mantra-list');
+  list.replaceChildren();
+  const today = S.todayMantra();
+  for (const m of S.mantras()) {
+    const row = document.createElement('div');
+    row.className = 'mantra-row' + (today && m.id === today.id ? ' is-today' : '');
+    const text = document.createElement('p');
+    text.textContent = m.text;
+    row.appendChild(text);
+    const meta = document.createElement('span');
+    meta.className = 'mantra-meta';
+    meta.textContent = m.chants ? `唱和 ${m.chants}` : '';
+    row.appendChild(meta);
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'mantra-del';
+    del.textContent = '納';
+    del.title = 'この言葉は役目を終えた（帳から外す）';
+    del.addEventListener('click', () => { S.removeMantra(m.id); renderGanden(); });
+    row.appendChild(del);
+    list.appendChild(row);
+  }
+}
+
+$('mantra-input').addEventListener('input', () => {
+  $('btn-mantra-add').disabled = $('mantra-input').value.trim().length === 0;
+});
+$('btn-mantra-add').addEventListener('click', () => {
+  if (S.addMantra($('mantra-input').value, 'direct')) {
+    $('mantra-input').value = '';
+    $('btn-mantra-add').disabled = true;
+    renderMantraBoard();
+  }
 });
 
 // ── 五行の間 ─────────────────────────────────────────
@@ -255,6 +458,18 @@ function initGoma() {
     $('btn-goma').disabled = $('goma-input').value.trim().length === 0;
   });
   $('btn-goma').addEventListener('click', burnGoma);
+
+  // 書き換えの儀 — the replacement belief becomes a mantra
+  $('goma-rewrite-input').addEventListener('input', () => {
+    $('btn-goma-rewrite').disabled = $('goma-rewrite-input').value.trim().length === 0;
+  });
+  $('btn-goma-rewrite').addEventListener('click', () => {
+    if (S.addMantra($('goma-rewrite-input').value, 'goma')) {
+      $('goma-rewrite-input').value = '';
+      $('btn-goma-rewrite').disabled = true;
+      $('goma-rewrite-done').hidden = false;
+    }
+  });
 }
 
 function burnGoma() {
@@ -272,6 +487,9 @@ function burnGoma() {
     fire.classList.remove('burning');
     const after = $('goma-after');
     after.hidden = false;
+    $('goma-rewrite-input').value = '';
+    $('btn-goma-rewrite').disabled = true;
+    $('goma-rewrite-done').hidden = true;
     const next = $('goma-next');
     next.replaceChildren();
     const label = document.createElement('p');
@@ -485,13 +703,31 @@ $('btn-drone').addEventListener('click', () => {
 
 const RENDERERS = {
   honden: renderHonden,
+  ganden: renderGanden,
   gogyo: renderGogyo,
   shikigami: renderShikigami,
   kudoku: renderKudoku,
   genjitsu: renderLedger,
 };
 
+// ── 授与所 — a preparing item wakes up once data-href holds a real URL ──
+function initJuyosho() {
+  document.querySelectorAll('.juyo-item.is-preparing').forEach((item) => {
+    const href = (item.dataset.href || '').trim();
+    if (!href) return;
+    const a = document.createElement('a');
+    a.className = 'juyo-item';
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    while (item.firstChild) a.appendChild(item.firstChild);
+    a.querySelector('.juyo-cta').textContent = '授与を受ける';
+    item.replaceWith(a);
+  });
+}
+
 // ── boot ─────────────────────────────────────────────
 initGate();
 initGoma();
 initKudoku();
+initJuyosho();

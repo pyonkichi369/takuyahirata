@@ -44,8 +44,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/tenshokai.css?v=1">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/tenshokai.css?v=4">
 </head>
 <body>
   <div class="haze" aria-hidden="true"></div>
@@ -76,10 +76,12 @@
   <!-- ═══ 場所の帳 (nav) ═══ -->
   <nav class="places" id="places" aria-label="場所" hidden>
     <button data-view="honden" class="is-here" type="button">本殿</button>
+    <button data-view="ganden" type="button">願殿</button>
     <button data-view="gogyo" type="button">五行の間</button>
     <button data-view="goma" type="button">護摩壇</button>
     <button data-view="shikigami" type="button">式神殿</button>
     <button data-view="kudoku" type="button">功徳帳</button>
+    <button data-view="juyosho" type="button">授与所</button>
     <button data-view="genjitsu" type="button">現世の帳</button>
     <button id="btn-drone" class="places-sound" type="button" aria-pressed="false">音</button>
   </nav>
@@ -102,10 +104,30 @@
     </div>
 
     <div class="hall-block">
+      <p class="block-label">今日の運気 — 界主の気</p>
+      <div class="unki" id="unki">
+        <p class="unki-head"><span class="unki-kanshi" id="unki-kanshi"></span><span class="unki-grade" id="unki-grade"></span></p>
+        <p class="unki-line" id="unki-line"></p>
+        <p class="unki-lucky" id="unki-lucky"></p>
+        <p class="unki-more"><a href="/fortune/">深く知りたい時は、占殿へ</a></p>
+      </div>
+    </div>
+
+    <div class="hall-block">
+      <p class="block-label">今日の呪 — 潜在意識に刻む言葉</p>
+      <p class="mantra-text" id="mantra-text"></p>
+      <div class="mantra-actions">
+        <button class="btn-fuda btn-chant" id="btn-chant" type="button">三度、唱える</button>
+        <p class="mantra-after" id="mantra-after" hidden></p>
+      </div>
+    </div>
+
+    <div class="hall-block">
       <p class="block-label">今日の託宣</p>
       <div id="oracle-zone">
         <button class="btn-fuda" id="btn-oracle" type="button">託宣を受け取る</button>
         <blockquote class="oracle" id="oracle-text" hidden></blockquote>
+        <a class="oracle-share" id="oracle-share" target="_blank" rel="noopener" hidden>この託宣をXに示す</a>
       </div>
     </div>
 
@@ -124,6 +146,38 @@
       <button class="btn-fuda" id="btn-close-world" type="button">閉界する</button>
       <p class="close-line" id="close-line" hidden></p>
     </div>
+  </section>
+
+  <!-- ═══ 願殿 ═══ -->
+  <section class="view" id="view-ganden" aria-label="願殿" hidden>
+    <h2 class="view-title">願殿</h2>
+    <p class="view-sub">願いは、すでに始まっているものとして刻む。世界は保証しない — 行動と証拠が、これを現実にする</p>
+
+    <div id="wish-list"></div>
+
+    <form class="wish-form" id="wish-form">
+      <p class="block-label">願いを刻む</p>
+      <p class="wish-guide">「〜したい」ではなく、すでに始まっているものとして書く</p>
+      <textarea id="wish-text" rows="2" maxlength="140" placeholder="例: 価値と対価が循環し始めている"></textarea>
+      <label class="wish-step-label">最初の小さな一歩（今日できる大きさで）
+        <input type="text" id="wish-step" maxlength="80" placeholder="例: 商品ページの下書きを1枚書く">
+      </label>
+      <div class="wish-el" id="wish-el"></div>
+      <button class="btn-fuda" type="submit" id="btn-vow" disabled>願いを刻む</button>
+      <p class="wish-limit" id="wish-limit" hidden>願いは三つまで。ひとつ成就させてから、次を刻む。</p>
+    </form>
+
+    <div class="mantra-board">
+      <p class="block-label">呪の帳 — 書き換えた言葉たち</p>
+      <p class="mantra-note">古い思い込みは護摩壇で焼き、代わりの言葉をここに刻む。刻んだ言葉は毎朝、本殿に現れる。</p>
+      <div id="mantra-list"></div>
+      <div class="mantra-add">
+        <input type="text" id="mantra-input" maxlength="100" placeholder="新しい言葉を直接刻む（例: 休むこともまた、前に進む行いである）">
+        <button class="btn-fuda" id="btn-mantra-add" type="button" disabled>刻む</button>
+      </div>
+    </div>
+
+    <p class="ganden-care">深い傷は、ひとりで書き換えなくていい。専門家という同行者も、世界の外にいる。</p>
   </section>
 
   <!-- ═══ 五行の間 ═══ -->
@@ -149,7 +203,13 @@
       </div>
       <div class="goma-after" id="goma-after" hidden>
         <p>その思いは、役目を終えました。</p>
-        <p>空いた場所へ、新しい行動を置いてください。</p>
+        <p>空いた場所へ、新しい言葉と行動を置いてください。</p>
+        <div class="goma-rewrite">
+          <p class="block-label">書き換えの儀 — 代わりに刻む言葉（任意）</p>
+          <input type="text" id="goma-rewrite-input" maxlength="100" placeholder="例: お金は、価値の循環としてぼくのもとへ還ってくる">
+          <button class="btn-fuda" id="btn-goma-rewrite" type="button" disabled>呪として刻む</button>
+          <p class="goma-rewrite-done" id="goma-rewrite-done" hidden>刻まれた。この言葉は毎朝、本殿に現れる。</p>
+        </div>
         <div id="goma-next"></div>
       </div>
     </div>
@@ -187,6 +247,55 @@
     <div id="kudoku-list"></div>
   </section>
 
+  <!-- ═══ 授与所 ═══
+       Items marked is-preparing render non-clickable until a real URL is
+       pasted into data-href (same pattern as the A8 placeholder CTAs:
+       no dead links on the brand site). -->
+  <section class="view" id="view-juyosho" aria-label="授与所" hidden>
+    <h2 class="view-title">授与所</h2>
+    <p class="view-sub">この世界で生まれたものを、外の世界へ授与する。対価は、世界を保つ糧となる</p>
+
+    <div class="juyo-item is-preparing" data-href="">
+      <p class="juyo-kind">記 — note有料記事</p>
+      <p class="juyo-name">天照界の作り方</p>
+      <p class="juyo-desc">理想の世界を先に定義し、儀式と行動で育てる。この世界を組み上げた思想と過程のすべて。真面目すぎて生きづらい人が、じぶんの世界を持つための記。</p>
+      <p class="juyo-price">五百円</p>
+      <span class="juyo-cta">準備中</span>
+    </div>
+
+    <div class="juyo-item is-preparing is-featured" data-href="">
+      <p class="juyo-kind">法具 — 構築キット</p>
+      <p class="juyo-name">MY WORLD 構築キット</p>
+      <p class="juyo-desc">じぶん専用の世界を持つための一式。世界の器（コード）と、じぶんを書き記す仕様書の型、設営の手順。買い切り、月額なし、じぶんの手元で動く。</p>
+      <p class="juyo-price">二千九百八十円</p>
+      <span class="juyo-cta">準備中</span>
+    </div>
+
+    <a class="juyo-item" href="/fortune/">
+      <p class="juyo-kind">占 — 無料診断</p>
+      <p class="juyo-name">間の占い</p>
+      <p class="juyo-desc">「間」を知ると、動くべき時がわかる。占殿にて。</p>
+      <span class="juyo-cta">占殿へ</span>
+    </a>
+
+    <div class="juyo-item is-preparing" data-href="">
+      <p class="juyo-kind">鑑 — 個人鑑定</p>
+      <p class="juyo-name">本鑑定 — じぶんの世界の設計図</p>
+      <p class="juyo-desc">生年月日から複数の占術を束ね、あなたの気質・巡り・動くべき時を一枚の設計図として編む。平易な言葉だけで書く本格鑑定。</p>
+      <p class="juyo-price">五千円</p>
+      <span class="juyo-cta">準備中</span>
+    </div>
+
+    <a class="juyo-item" href="https://note.com/th19930828" target="_blank" rel="noopener me">
+      <p class="juyo-kind">書 — 有料記事</p>
+      <p class="juyo-name">noteの書庫</p>
+      <p class="juyo-desc">解放をめぐる記の数々。五百円より。</p>
+      <span class="juyo-cta">noteへ</span>
+    </a>
+
+    <p class="juyo-note">授与は義務ではありません。この世界は、授与がなくてもすべて使えます。</p>
+  </section>
+
   <!-- ═══ 現世の帳 ═══ -->
   <section class="view" id="view-genjitsu" aria-label="現世の帳" hidden>
     <h2 class="view-title">現世の帳</h2>
@@ -204,6 +313,6 @@
     <p>&copy; 2026 Takuya Hirata</p>
   </footer>
 
-  <script type="module" src="/assets/js/app.js?v=1"></script>
+  <script type="module" src="/assets/js/app.js?v=4"></script>
 </body>
 </html>

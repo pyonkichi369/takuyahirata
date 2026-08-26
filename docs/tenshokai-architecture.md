@@ -45,7 +45,8 @@ graph LR
 
 | File | Responsibility |
 |---|---|
-| `index.html` | SPA shell — all 7 views' markup, meta, JSON-LD |
+| `index.html` | SPA shell — all views' markup (gate, hall, wish hall, elements, goma, shikigami, merit ledger, offering hall, real ledger), meta, JSON-LD |
+| `assets/js/unki.js` | Owner's daily fortune: sexagenary day cycle (two published anchors verified), stem-element relation to the owner's day stem (derived constant only — no raw birth data), 5 day-qualities with no negative grade |
 | `assets/tenshokai.css` | Design system: 漆黒/鈍金/朱 palette, fuda buttons, flame/burn animation, view fades |
 | `assets/js/data.js` | Content layer: oracles, declarations, element map, shikigami seeds, growth constants |
 | `assets/js/state.js` | State layer: LocalStorage store, element scoring, oracle selection, overload detection, reiryoku/level |
@@ -77,3 +78,21 @@ graph LR
   plainly (never beautified) only in 現世の帳.
 - Internal system names are never exposed; shikigami carry poetic public-safe
   names the owner can rename.
+
+## 願殿 — Manifestation as a Loop (not magic)
+
+The wish hall implements attraction as a verifiable loop: wish written in
+already-unfolding phrasing → daily mantra repetition (呪, chanted in the
+main hall) → one small action → evidence in the merit ledger → fulfillment
+(成就) recorded as evidence. Design rules:
+
+- Max 3 active wishes (focus over accumulation); each wish carries a
+  first-step small enough for a low-energy day.
+- Subconscious rewrite = goma ritual extension: the old belief burns
+  (never stored), the replacement belief is inscribed as a mantra and
+  resurfaces every morning. This is cognitive reframing in the world's
+  grammar, not therapy.
+- Explicit boundary line in the wish hall: deep wounds belong with
+  professionals ("専門家という同行者も、世界の外にいる").
+- Nothing is guaranteed anywhere in the copy; the world credits actions
+  and evidence, never promises outcomes.

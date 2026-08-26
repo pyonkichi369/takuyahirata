@@ -110,15 +110,35 @@ export const SHIKIGAMI_STATUSES = ['待機', '稼働', '休眠'];
 // ── 功徳帳 ────────────────────────────────────────────
 export const EVIDENCE_TYPES = [
   '入金', '新規契約', '継続契約', '販売', '問い合わせ', '感謝',
-  '制作物の完成', '自動化', '工数削減', '固定費削減', 'アクセス増加', '新しい縁',
+  '制作物の完成', '自動化', '工数削減', '固定費削減', 'アクセス増加', '新しい縁', '成就',
 ];
 // Which element each evidence type feeds.
 export const EVIDENCE_ELEMENT = {
   '入金': 'metal', '新規契約': 'metal', '継続契約': 'metal', '販売': 'metal',
   '問い合わせ': 'fire', '感謝': 'earth', '制作物の完成': 'wood',
   '自動化': 'water', '工数削減': 'water', '固定費削減': 'metal',
-  'アクセス増加': 'fire', '新しい縁': 'earth',
+  'アクセス増加': 'fire', '新しい縁': 'earth', '成就': 'fire',
 };
+
+// ── 願殿 — wishes written as already unfolding ────────
+// Attraction here is a loop, not magic: word → repetition → action →
+// evidence → the world (and the mind) updates. Nothing is promised.
+export const MAX_ACTIVE_WISHES = 3;
+export const WISH_GUIDE =
+  '「〜したい」ではなく、すでに始まっているものとして書く。' +
+  '例: 「価値と対価が循環し始めている」「作品が世界に届き始めている」';
+export const WISH_LIMIT_LINE = '願いは三つまで。ひとつ成就させてから、次を刻む。';
+export const WISH_VOWED_LINE = '願いは刻まれた。あとは毎日、小さな行動と証拠がこれを現実にする。';
+export const FULFILL_REIRYOKU = 8;
+
+// ── 呪 — personal mantras that overwrite old beliefs ──
+// Born in the goma rewrite ritual or inscribed directly. Repetition is
+// how a borrowed sentence becomes one's own voice.
+export const MANTRA_SEED = [
+  '我が価値は巡り、縁となり、富となり、我がもとへ還る。',
+  'じぶんの人生の主導権は、じぶんにある。',
+];
+export const CHANT_LINE = '唱えた言葉は、少しずつ我の声になる。';
 
 // ── 護摩壇 ────────────────────────────────────────────
 export const GOMA_CATEGORIES = ['恐怖', '執着', '思い込み', '比較', 'その他'];

@@ -4,8 +4,10 @@
 import {
   ELEMENT_ORDER, EVIDENCE_ELEMENT, EVIDENCE_BONUS, REIRYOKU,
   ORACLES, ACTION_SUGGESTIONS, ELEMENT_NUDGES, ELEMENT_STATES,
-  SHIKIGAMI_SEED, levelForReiryoku, dayElement,
+  SHIKIGAMI_SEED, MANTRA_SEED, MAX_ACTIVE_WISHES, FULFILL_REIRYOKU,
+  levelForReiryoku, dayElement,
 } from './data.js';
+import { todayUnki } from './unki.js';
 
 const KEY = 'tenshokai.v1';
 
@@ -21,6 +23,8 @@ function freshState() {
     shikigami: null,             // seeded on first visit to 式神殿
     ledger: {},                  // real numbers, manual entry
     ledgerUpdatedAt: null,
+    wishes: [],                  // {id, text, firstStep, element, vowedAt, fulfilled, fulfilledAt}
+    mantras: null,               // seeded on first use; {id, text, createdAt, from, chants}
   };
 }
 
@@ -160,7 +164,10 @@ export function completeAction() {
   if (r.action && !r.completed) {
     r.completed = true;
     r.completedAt = new Date().toISOString();
-    addReiryoku(REIRYOKU.actionComplete);
+    // 満ちる日 grants one extra reiryoku — acting on a rising day compounds.
+    const bonus = todayUnki().bonus || 0;
+    r.unkiBonus = bonus;
+    addReiryoku(REIRYOKU.actionComplete + bonus);
   }
   save();
 }
@@ -219,6 +226,85 @@ export function setLedger(values) {
   state.ledger = { ...state.ledger, ...values };
   state.ledgerUpdatedAt = new Date().toISOString();
   save();
+}
+
+// ── 願殿 — wishes ────────────────────────────────────
+export function wishes() { return state.wishes || (state.wishes = []); }
+export function activeWishes() { return wishes().filter((w) => !w.fulfilled); }
+
+export function addWish({ text, firstStep, element }) {
+  if (!text || activeWishes().length >= MAX_ACTIVE_WISHES) return null;
+  const w = {
+    id: 'w' + Date.now(),
+    text, firstStep: firstStep || '', element: element || 'fire',
+    vowedAt: new Date().toISOString(),
+    fulfilled: false, fulfilledAt: null,
+  };
+  wishes().push(w);
+  save();
+  return w;
+}
+
+export function fulfillWish(id) {
+  const w = wishes().find((x) => x.id === id);
+  if (!w || w.fulfilled) return null;
+  w.fulfilled = true;
+  w.fulfilledAt = new Date().toISOString();
+  // fulfillment is evidence — it flows into the merit ledger like any other
+  const entry = addEvidence({
+    type: '成就',
+    valueGiven: w.text,
+    valueReturned: '願いがひとつ、現実の側に移った',
+  });
+  addReiryoku(FULFILL_REIRYOKU);
+  save();
+  return entry;
+}
+
+// ── 呪 — mantras (subconscious rewrite by repetition) ──
+export function mantras() {
+  if (!state.mantras) {
+    state.mantras = MANTRA_SEED.map((text, i) => (
+      { id: 'm' + i, text, createdAt: state.createdAt, from: 'seed', chants: 0 }
+    ));
+    save();
+  }
+  return state.mantras;
+}
+
+export function addMantra(text, from = 'direct') {
+  const t = (text || '').trim();
+  if (!t) return null;
+  const m = { id: 'm' + Date.now(), text: t, createdAt: new Date().toISOString(), from, chants: 0 };
+  mantras().push(m);
+  save();
+  return m;
+}
+
+export function removeMantra(id) {
+  state.mantras = mantras().filter((m) => m.id !== id);
+  save();
+}
+
+// Today's mantra rotates through the list; chanting once a day feeds the world.
+export function todayMantra() {
+  const list = mantras();
+  if (!list.length) return null;
+  const dayN = Math.floor(Date.now() / 86400000);
+  return list[dayN % list.length];
+}
+
+export function chantToday() {
+  const r = todayRitual();
+  const m = todayMantra();
+  if (!m) return false;
+  m.chants = (m.chants || 0) + 1;
+  if (!r.chanted) {
+    r.chanted = true;
+    addReiryoku(1);
+  }
+  save();
+  return true;
 }
 
 // ── sound preference ─────────────────────────────────
