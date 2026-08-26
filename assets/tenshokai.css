@@ -1,0 +1,512 @@
+/* ═══════════════════════════════════════════════════════
+   天照界 — MY WORLD
+   古代の霊場が電脳空間に再構築された世界。
+   漆黒 / 鈍金 / 朱。角丸なし。境界は金の細線。動きは遅く重厚に。
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  --ink: #070707;
+  --deep-blue: #071426;
+  --vermilion: #9E1B1B;
+  --gold: #C3A45D;
+  --gold-bright: #F2D58A;
+  --sumi-white: #E8E1D3;
+  --violet: #24143D;
+
+  --el-wood: #4E8C74;
+  --el-fire: #B3402E;
+  --el-earth: #A67B36;
+  --el-metal: #C3A45D;
+  --el-water: #35608C;
+
+  --hairline: rgba(195, 164, 93, 0.35);
+  --serif: 'Shippori Mincho B1', 'Hiragino Mincho ProN', serif;
+  --slow: 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* hidden must win over any display rule (flex views, nav) */
+[hidden] { display: none !important; }
+
+html { background: var(--ink); }
+
+body {
+  font-family: var(--serif);
+  background:
+    radial-gradient(ellipse 120% 70% at 50% -10%, rgba(36, 20, 61, 0.5), transparent 60%),
+    radial-gradient(ellipse 90% 60% at 50% 110%, rgba(7, 20, 38, 0.8), transparent 65%),
+    var(--ink);
+  color: var(--sumi-white);
+  min-height: 100vh;
+  line-height: 1.9;
+  letter-spacing: 0.06em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* faint drifting haze */
+.haze {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 40% 30% at 20% 70%, rgba(232, 225, 211, 0.03), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 80% 30%, rgba(195, 164, 93, 0.025), transparent 70%);
+  animation: haze-drift 40s ease-in-out infinite alternate;
+}
+@keyframes haze-drift {
+  from { transform: translate3d(-2%, 0, 0) scale(1); }
+  to   { transform: translate3d(2%, -2%, 0) scale(1.06); }
+}
+
+/* ── views — places to visit, fading like incense ── */
+.view {
+  position: relative; z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 3.5rem 1.4rem 7rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--slow), transform var(--slow);
+}
+.view.is-active { opacity: 1; transform: none; }
+
+/* ═══ 入界門 ═══ */
+.view-gate {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding-bottom: 3rem;
+}
+.gate-inner { width: 100%; }
+
+.gate-date {
+  font-size: 0.78rem;
+  color: rgba(232, 225, 211, 0.55);
+  letter-spacing: 0.2em;
+  margin-bottom: 2.2rem;
+}
+
+.sigil {
+  width: min(58vw, 240px);
+  height: auto;
+  display: block;
+  margin: 0 auto 2.4rem;
+  transition: filter 2s ease, opacity 2s ease;
+  opacity: 0.85;
+}
+.sigil-lit {
+  filter: drop-shadow(0 0 18px rgba(242, 213, 138, 0.45))
+          drop-shadow(0 0 60px rgba(195, 164, 93, 0.25));
+  animation: sigil-pulse 6s ease-in-out infinite;
+}
+@keyframes sigil-pulse {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 0.75; }
+}
+
+.gate-lines p {
+  font-size: 0.95rem;
+  color: rgba(232, 225, 211, 0.85);
+  letter-spacing: 0.14em;
+}
+.gate-lines { margin-bottom: 2.6rem; }
+
+.gate-actions {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 1.4rem;
+}
+
+/* 札 — the button as a wooden tag bound in gold */
+.btn-fuda {
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  letter-spacing: 0.22em;
+  color: var(--gold-bright);
+  background: linear-gradient(180deg, rgba(36, 20, 61, 0.35), rgba(7, 7, 7, 0.6));
+  border: 1px solid var(--hairline);
+  padding: 0.85rem 2.1rem;
+  cursor: pointer;
+  transition: border-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease, opacity 0.8s ease;
+}
+.btn-fuda:hover:not(:disabled) {
+  border-color: var(--gold-bright);
+  box-shadow: 0 0 22px rgba(195, 164, 93, 0.18), inset 0 0 14px rgba(195, 164, 93, 0.08);
+}
+.btn-fuda:disabled { opacity: 0.3; cursor: default; }
+.btn-gate { border-color: rgba(158, 27, 27, 0.6); }
+.btn-gate:hover:not(:disabled) { border-color: var(--vermilion); }
+
+.gate-sound-note {
+  font-size: 0.72rem;
+  color: rgba(232, 225, 211, 0.4);
+  text-decoration: underline dotted rgba(232, 225, 211, 0.3);
+  text-underline-offset: 4px;
+  cursor: pointer;
+  margin-bottom: 3rem;
+}
+
+.gate-outer-links {
+  display: flex; gap: 1.8rem; justify-content: center;
+  border-top: 1px solid rgba(195, 164, 93, 0.15);
+  padding-top: 1.4rem;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.gate-outer-links a {
+  color: rgba(232, 225, 211, 0.45);
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  transition: color 0.6s ease;
+}
+.gate-outer-links a:hover { color: var(--gold-bright); }
+
+/* ═══ 場所の帳 (nav) ═══ */
+.places {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+  display: flex; justify-content: center; gap: 0.15rem;
+  padding: 0.55rem 0.4rem calc(0.55rem + env(safe-area-inset-bottom));
+  background: linear-gradient(0deg, rgba(7, 7, 7, 0.96) 60%, transparent);
+  border-top: 1px solid rgba(195, 164, 93, 0.2);
+  overflow-x: auto;
+}
+.places button {
+  font-family: var(--serif);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: rgba(232, 225, 211, 0.55);
+  background: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 0.6rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.6s ease, border-color 0.6s ease;
+}
+.places button.is-here { color: var(--gold-bright); border-color: var(--hairline); }
+.places button:hover { color: var(--gold-bright); }
+.places-sound.is-on { color: var(--gold-bright); border-color: var(--hairline); }
+
+/* ═══ 本殿 ═══ */
+.hall-head { text-align: center; margin-bottom: 1.6rem; }
+.hall-world {
+  font-size: 1.5rem; font-weight: 800; letter-spacing: 0.5em;
+  padding-left: 0.5em; /* balance the tracking */
+  color: var(--sumi-white);
+}
+.hall-level {
+  font-size: 0.75rem; color: var(--gold); letter-spacing: 0.2em; margin-top: 0.3rem;
+}
+
+.mandala-wrap { text-align: center; margin-bottom: 2.4rem; }
+.mandala {
+  width: min(80vw, 340px); height: auto;
+  filter: drop-shadow(0 0 30px rgba(195, 164, 93, 0.12));
+  animation: mandala-breathe 12s ease-in-out infinite;
+}
+@keyframes mandala-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+.mandala-state {
+  font-size: 0.78rem; color: rgba(232, 225, 211, 0.5); letter-spacing: 0.15em;
+}
+
+.hall-block {
+  border-top: 1px solid rgba(195, 164, 93, 0.18);
+  padding: 1.6rem 0;
+}
+.block-label {
+  font-size: 0.72rem; color: var(--gold); letter-spacing: 0.3em;
+  margin-bottom: 0.9rem;
+}
+
+.declaration { font-size: 1rem; letter-spacing: 0.1em; }
+
+.oracle {
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+  border-left: 2px solid var(--vermilion);
+  padding-left: 1.1rem;
+  color: var(--sumi-white);
+  white-space: pre-line;
+}
+.oracle.reveal { animation: oracle-in 2.4s ease both; }
+@keyframes oracle-in {
+  from { opacity: 0; filter: blur(6px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+/* actions */
+.action-picker { display: grid; gap: 0.5rem; }
+.action-option {
+  font-family: var(--serif);
+  display: flex; align-items: center; gap: 0.7rem;
+  text-align: left;
+  font-size: 0.88rem;
+  color: rgba(232, 225, 211, 0.85);
+  background: rgba(7, 20, 38, 0.25);
+  border: 1px solid rgba(195, 164, 93, 0.16);
+  padding: 0.7rem 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.6s ease, background 0.6s ease;
+}
+.action-option:hover { border-color: var(--gold); background: rgba(7, 20, 38, 0.45); }
+.action-option.is-recommended { border-color: rgba(242, 213, 138, 0.55); }
+.rec-mark {
+  margin-left: auto;
+  font-size: 0.7rem; color: var(--gold-bright);
+  border: 1px solid var(--hairline);
+  padding: 0.05rem 0.35rem;
+}
+
+.el-mark {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.7rem; height: 1.7rem;
+  border: 1px solid currentColor;
+  font-size: 0.8rem;
+}
+.el-lg { width: 2.4rem; height: 2.4rem; font-size: 1.05rem; }
+.el-wood { color: var(--el-wood); }
+.el-fire { color: var(--el-fire); }
+.el-earth { color: var(--el-earth); }
+.el-metal { color: var(--el-metal); }
+.el-water { color: var(--el-water); }
+.el-bg-wood { background: var(--el-wood); }
+.el-bg-fire { background: var(--el-fire); }
+.el-bg-earth { background: var(--el-earth); }
+.el-bg-metal { background: var(--el-metal); }
+.el-bg-water { background: var(--el-water); }
+.el-text-wood { color: var(--el-wood); }
+.el-text-fire { color: var(--el-fire); }
+.el-text-earth { color: var(--el-earth); }
+.el-text-metal { color: var(--el-metal); }
+.el-text-water { color: var(--el-water); }
+
+.action-card {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 0.8rem;
+  border: 1px solid rgba(195, 164, 93, 0.25);
+  padding: 1rem;
+}
+.action-card p { flex: 1 1 12rem; font-size: 0.95rem; }
+.action-card.is-done { border-color: rgba(242, 213, 138, 0.5); }
+.action-done-line {
+  flex-basis: 100%;
+  font-size: 0.78rem; color: var(--gold-bright); letter-spacing: 0.12em;
+}
+
+/* gogyo mini */
+.gogyo-mini { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+.gogyo-cell { display: flex; align-items: center; gap: 0.45rem; }
+.gogyo-state { font-size: 0.76rem; color: rgba(232, 225, 211, 0.65); }
+.gogyo-nudge {
+  margin-top: 0.9rem;
+  font-size: 0.8rem; color: rgba(232, 225, 211, 0.55);
+}
+
+.hall-close {
+  border-top: 1px solid rgba(195, 164, 93, 0.18);
+  padding-top: 2rem; text-align: center;
+}
+.close-line { margin-top: 1.2rem; font-size: 0.85rem; color: rgba(232, 225, 211, 0.7); }
+
+/* ═══ shared view headers ═══ */
+.view-title {
+  font-size: 1.25rem; font-weight: 700; letter-spacing: 0.4em;
+  text-align: center; margin-bottom: 0.5rem;
+}
+.view-sub {
+  text-align: center; font-size: 0.76rem;
+  color: rgba(232, 225, 211, 0.5);
+  margin-bottom: 2.4rem; letter-spacing: 0.1em;
+}
+
+/* ═══ 五行の間 ═══ */
+.gogyo-row {
+  border-top: 1px solid rgba(195, 164, 93, 0.15);
+  padding: 1.3rem 0;
+}
+.gogyo-row-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.7rem; }
+.gogyo-row .gogyo-state { font-size: 0.92rem; color: var(--sumi-white); }
+.gogyo-domain { font-size: 0.76rem; color: rgba(232, 225, 211, 0.5); }
+.gogyo-bar {
+  height: 2px; background: rgba(232, 225, 211, 0.08);
+}
+.gogyo-fill { display: block; height: 100%; transition: width var(--slow); }
+
+/* ═══ 護摩壇 ═══ */
+.goma-form { display: grid; gap: 1rem; }
+.goma-form textarea {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--sumi-white);
+  background: rgba(7, 20, 38, 0.3);
+  border: 1px solid rgba(195, 164, 93, 0.25);
+  padding: 0.9rem;
+  resize: vertical;
+  letter-spacing: 0.06em;
+}
+.goma-form textarea:focus { outline: none; border-color: var(--gold); }
+.goma-cats { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.goma-cats button {
+  font-family: var(--serif); font-size: 0.76rem;
+  color: rgba(232, 225, 211, 0.6);
+  background: none; border: 1px solid rgba(195, 164, 93, 0.2);
+  padding: 0.35rem 0.8rem; cursor: pointer;
+  transition: color 0.5s ease, border-color 0.5s ease;
+}
+.goma-cats button.is-on { color: var(--gold-bright); border-color: var(--gold); }
+
+.goma-fire {
+  position: relative;
+  min-height: 320px;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 1rem;
+  overflow: hidden;
+}
+.fuda {
+  position: relative; z-index: 2;
+  max-width: 320px;
+  background: rgba(232, 225, 211, 0.92);
+  color: #1a1a1a;
+  padding: 1.3rem 1.1rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  clip-path: polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%);
+}
+.burning .fuda { animation: fuda-burn 3s ease-in forwards; }
+@keyframes fuda-burn {
+  0%   { transform: translateY(0); opacity: 1; filter: brightness(1); }
+  45%  { transform: translateY(90px) scale(0.96); opacity: 1; filter: brightness(1.05) sepia(0.4); }
+  75%  { transform: translateY(170px) scale(0.85); opacity: 0.55; filter: brightness(1.6) sepia(1) hue-rotate(-30deg); }
+  100% { transform: translateY(230px) scale(0.6); opacity: 0; filter: brightness(2.2); }
+}
+.flame {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 140px; height: 150px; z-index: 1;
+}
+.flame span {
+  position: absolute; bottom: -20px; left: 50%;
+  width: 60px; height: 110px;
+  background: radial-gradient(ellipse at 50% 90%, rgba(242, 213, 138, 0.9), rgba(179, 64, 46, 0.75) 45%, transparent 75%);
+  border-radius: 50% 50% 42% 42% / 65% 65% 35% 35%;
+  transform-origin: 50% 100%;
+  filter: blur(3px);
+  animation: flame-sway 1.1s ease-in-out infinite alternate;
+}
+.flame span:nth-child(1) { translate: -42px 0; scale: 0.7; animation-delay: -0.3s; }
+.flame span:nth-child(2) { translate: -30px 0; scale: 1; }
+.flame span:nth-child(3) { translate: -14px 0; scale: 0.6; animation-delay: -0.7s; }
+@keyframes flame-sway {
+  from { transform: rotate(-3deg) scaleY(0.96); }
+  to   { transform: rotate(3deg) scaleY(1.05); }
+}
+
+.goma-after { text-align: center; display: grid; gap: 0.6rem; }
+.goma-after p { font-size: 0.92rem; }
+#goma-next { margin-top: 1.4rem; text-align: left; }
+
+/* ═══ 式神殿 ═══ */
+.shiki-card {
+  border: 1px solid rgba(195, 164, 93, 0.2);
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  display: grid; gap: 0.7rem;
+  background: rgba(7, 20, 38, 0.18);
+}
+.shiki-head { display: flex; gap: 0.8rem; align-items: center; }
+.shiki-name {
+  flex: 1;
+  font-family: var(--serif); font-size: 1.02rem; font-weight: 700;
+  color: var(--gold-bright);
+  background: none; border: none; border-bottom: 1px solid transparent;
+  letter-spacing: 0.08em;
+}
+.shiki-name:focus { outline: none; border-bottom-color: var(--gold); }
+.shiki-role { font-size: 0.78rem; color: rgba(232, 225, 211, 0.55); }
+.shiki-card label {
+  display: grid; gap: 0.25rem;
+  font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em;
+}
+.shiki-card input, .shiki-card select, .kudoku-form input, .kudoku-form select, .ledger-cell input {
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  color: var(--sumi-white);
+  background: rgba(7, 7, 7, 0.5);
+  border: 1px solid rgba(195, 164, 93, 0.2);
+  padding: 0.55rem 0.7rem;
+  letter-spacing: 0.05em;
+}
+.shiki-card input:focus, .shiki-card select:focus,
+.kudoku-form input:focus, .kudoku-form select:focus,
+.ledger-cell input:focus { outline: none; border-color: var(--gold); }
+.shiki-head select {
+  font-family: var(--serif);
+  color: var(--gold-bright);
+  background: rgba(7, 7, 7, 0.5);
+  border: 1px solid rgba(195, 164, 93, 0.25);
+  padding: 0.35rem 0.5rem;
+}
+
+/* ═══ 功徳帳 ═══ */
+.kudoku-form {
+  display: grid; gap: 0.9rem;
+  border: 1px solid rgba(195, 164, 93, 0.2);
+  padding: 1.3rem;
+  margin-bottom: 2.2rem;
+  background: rgba(7, 20, 38, 0.18);
+}
+.kudoku-form label {
+  display: grid; gap: 0.3rem;
+  font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em;
+}
+.kudoku-card {
+  border-top: 1px solid rgba(195, 164, 93, 0.15);
+  padding: 1.1rem 0;
+  font-size: 0.88rem;
+}
+.kudoku-head { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+.kudoku-type { color: var(--gold-bright); letter-spacing: 0.15em; font-size: 0.8rem; }
+.kudoku-date { color: rgba(232, 225, 211, 0.4); font-size: 0.74rem; }
+.kudoku-label {
+  display: inline-block; min-width: 6.5em;
+  color: rgba(232, 225, 211, 0.5); font-size: 0.76rem;
+}
+.kudoku-gain { margin-top: 0.4rem; font-size: 0.78rem; letter-spacing: 0.12em; }
+.empty-line { text-align: center; color: rgba(232, 225, 211, 0.45); font-size: 0.85rem; padding: 2rem 0; }
+
+/* ═══ 現世の帳 ═══ */
+.ledger-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 0.9rem; margin-bottom: 1.4rem;
+}
+.ledger-cell {
+  display: grid; gap: 0.25rem;
+  border: 1px solid rgba(195, 164, 93, 0.18);
+  padding: 0.9rem;
+  background: rgba(7, 20, 38, 0.18);
+}
+.ledger-name { font-size: 0.82rem; color: var(--gold-bright); letter-spacing: 0.12em; }
+.ledger-real { font-size: 0.68rem; color: rgba(232, 225, 211, 0.45); }
+.ledger-summary { margin-top: 1.6rem; font-size: 0.88rem; }
+.ledger-updated { margin-top: 0.4rem; font-size: 0.72rem; color: rgba(232, 225, 211, 0.4); }
+
+/* ═══ footer ═══ */
+.world-footer {
+  position: relative; z-index: 1;
+  max-width: 640px; margin: 0 auto;
+  padding: 2.5rem 1.4rem calc(6rem + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(195, 164, 93, 0.12);
+  text-align: center;
+  font-size: 0.68rem;
+  color: rgba(232, 225, 211, 0.4);
+  display: grid; gap: 0.8rem;
+}
+.world-footer-links { display: flex; gap: 1.4rem; justify-content: center; flex-wrap: wrap; }
+.world-footer a { color: rgba(232, 225, 211, 0.55); text-decoration: none; }
+.world-footer a:hover { color: var(--gold-bright); }
+
+/* reduced motion — the world stays still for those who ask */
+@media (prefers-reduced-motion: reduce) {
+  .haze, .sigil-lit, .mandala, .flame span { animation: none; }
+  .view { transition: opacity 0.4s ease; transform: none; }
+}

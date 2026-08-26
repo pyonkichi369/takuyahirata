@@ -1,0 +1,330 @@
+/* ── Tokens ─────────────────────────────────────────────── */
+:root {
+  --bg:       #0c0a08;
+  --fg:       #ede9e1;
+  --fg-muted: #6b6560;
+  --accent:   #a8936a;
+  --nav-h:    72px;
+  --ease:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-display: 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --font-body:    'Inter', -apple-system, sans-serif;
+}
+
+/* ── Reset ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-weight: 300;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 和紙テクスチャ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+  background-repeat: repeat;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Custom cursor ──────────────────────────────────────── */
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 7px; height: 7px;
+  background: var(--fg);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s var(--ease), opacity 0.3s;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+
+.cursor.expanded {
+  transform: translate(-50%, -50%) scale(6);
+  opacity: 0.2;
+}
+
+/* ── Nav ────────────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(32px, 6vw, 80px);
+  z-index: 100;
+  transition: transform 0.5s var(--ease);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  background: rgba(12, 10, 8, 0.65);
+  border-bottom: 1px solid rgba(168, 147, 106, 0.12);
+}
+
+.nav.hidden { transform: translateY(-100%); }
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+}
+
+/* height:100% + inner flex centering makes the whole nav bar the tap
+   target (var(--nav-h)), not just the text glyph box */
+.nav-links { display: flex; gap: 48px; height: 100%; }
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  font-family: var(--font-body);
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--fg); }
+
+/* ── Hero ───────────────────────────────────────────────── */
+.hero {
+  height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 clamp(32px, 6vw, 80px) clamp(64px, 11vh, 130px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 縦書きタグライン */
+.hero-tagline {
+  position: absolute;
+  top: calc(var(--nav-h) + 56px);
+  right: clamp(32px, 6vw, 80px);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.6vw, 20px);
+  font-weight: 400;
+  color: var(--fg-muted);
+  letter-spacing: 0.46em;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fade-down 1.4s var(--ease-out) 0.7s forwards;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* 金の横線 */
+.hero-rule {
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: var(--accent);
+  margin-bottom: 36px;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: rule-in 1s var(--ease-out) 0.4s forwards;
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 11vw, 140px);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  transform: translateY(52px);
+  animation: fade-up 1.3s var(--ease-out) 0.2s forwards;
+}
+
+/* ── About ──────────────────────────────────────────────── */
+.about {
+  padding: clamp(120px, 18vh, 220px) clamp(32px, 6vw, 80px);
+  border-top: 1px solid rgba(168, 147, 106, 0.1);
+}
+
+.about-content {
+  max-width: 700px;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+}
+
+.about-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about p {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.5vw, 50px);
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: 0.05em;
+}
+
+.about-sub {
+  font-family: var(--font-display) !important;
+  font-size: 12px !important;
+  letter-spacing: 0.5em;
+  color: var(--accent);
+  margin-top: 52px;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+.footer {
+  padding: 64px clamp(32px, 6vw, 80px) 56px;
+  border-top: 1px solid rgba(237, 233, 225, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-links { display: flex; gap: 40px; }
+
+.footer-links a {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  font-family: var(--font-body);
+  transition: color 0.3s;
+}
+
+.footer-links a:hover { color: var(--accent); }
+
+.footer-copy {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: rgba(107, 101, 96, 0.4);
+  letter-spacing: 0.1em;
+}
+
+/* ── YOHAKU Series Teaser ───────────────────────────────── */
+.series-teaser {
+  border-top: 1px solid rgba(168, 147, 106, 0.12);
+  border-bottom: 1px solid rgba(168, 147, 106, 0.12);
+}
+
+.series-link {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 28px clamp(32px, 6vw, 80px);
+  transition: background 0.3s var(--ease);
+}
+
+.series-link:hover { background: rgba(168, 147, 106, 0.04); }
+
+.series-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.series-desc {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--fg-muted);
+  flex: 1;
+}
+
+.series-arrow {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--fg-muted);
+  transition: transform 0.3s var(--ease-out), color 0.3s;
+}
+
+.series-link:hover .series-arrow {
+  transform: translateX(6px);
+  color: var(--accent);
+}
+
+/* ── Contact CTA ────────────────────────────────────────── */
+
+
+
+
+
+
+
+
+
+/* ── Keyframes ──────────────────────────────────────────── */
+@keyframes fade-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-down {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rule-in {
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .nav-links { gap: 24px; }
+  .nav-links a { font-size: 13px; letter-spacing: 0.14em; }
+  .hero-tagline { font-size: 12px; right: 20px; }
+
+  .about { padding: clamp(88px, 14vh, 160px) clamp(24px, 6vw, 80px); }
+
+  .series-link { padding: 24px clamp(24px, 6vw, 80px); gap: 20px; }
+  .series-desc { font-size: 12px; }
+
+  .footer { padding: 48px clamp(24px, 6vw, 80px) 40px; }
+  /* flex-wrap prevents the 4-link row (X / note / Dopamine Lab TV / Essays)
+     from overflowing the viewport at narrow widths (320px) */
+  .footer-links { flex-wrap: wrap; gap: 14px 24px; }
+  .footer-links a {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    padding: 15px 2px;
+    margin: -15px -2px;
+  }
+  .footer-copy { font-size: 11px; }
+
+  body { cursor: auto; }
+  .cursor { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
