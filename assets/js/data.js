@@ -1,118 +1,111 @@
-// 天照界 — content layer.
-// All world text lives here. The world's axis: 解放 —
-// 「じぶんの人生を、じぶんに返す」. Every oracle either returns
-// something to its owner (time, margin, agency) or asks for one
-// small act of creation. Never scarcity, never punishment.
+// 間の庭 — content layer.
+// A brand site and a daily practice in one: the garden of "間".
+// Voice: the owner's own — じぶん / ぼく, plain and warm, never sermon-like.
+// Axis: 解放 — returning time, margin, and agency to yourself.
+// Storage keys are unchanged from the previous version — data survives.
 
-export const WORLD_NAME = '天照界';
-
-export const GATE_LINES = [
-  '此処は、我が意思の及ぶ世界。',
-  '我が生む価値は巡り、姿を変えて我へ還る。',
-];
+export const WORLD_NAME = '間の庭';
 
 export const CREED =
-  '我が価値は世を巡り、縁となり、富となり、我がもとへ還る。' +
-  '我は欠乏を追わず、創造によって満ちる世界を築く。';
+  '価値は巡って、縁になって、じぶんのところへ還ってくる。' +
+  '足りないものを追いかけるより、つくることで満ちていく。';
 
-// 今日の宣言 — rotates daily. Spec voice + 解放 axis.
+// きょうのことば — rotates daily.
 export const DECLARATIONS = [
-  '本日、我は追わず。価値を生み、道を開き、還るべきものを迎える。',
-  '本日、我は背負わず。手放すことで、世界に余白を作る。',
-  '本日、我は比べず。じぶんの時間を、じぶんのために使う。',
-  '本日、我は急がず。ひとつの行いを、確かに刻む。',
-  '本日、我は奪わせず。心の主導権は、我がもとにある。',
-  '本日、我は仕組みに任せ、我は創ることに還る。',
-  '本日、我は小さく試す。学びはすべて、世界の資産となる。',
+  'きょうは、追わない。つくって、ひらいて、還ってくるものを迎える。',
+  'きょうは、背負わない。手放して、余白をつくる。',
+  'きょうは、くらべない。じぶんの時間を、じぶんのために使う。',
+  'きょうは、急がない。ひとつのことを、確かにやる。',
+  '主導権は、じぶんの手の中にある。',
+  '仕組みに任せて、つくることに戻る。',
+  '小さく試す。学びはぜんぶ、資産になる。',
 ];
 
-// ── 五行 ──────────────────────────────────────────────
-// Mapped to the owner's real five domains.
+// ── 五行 — the five currents of the garden ───────────
+// Fortune-culture framing (the owner's own trade), not religion.
 export const ELEMENTS = {
-  wood:  { key: 'wood',  name: '木', color: 'var(--el-wood)',  domain: '創造 — 作品・プロダクト・新しい試み' },
-  fire:  { key: 'fire',  name: '火', color: 'var(--el-fire)',  domain: '発信 — 言葉・映像・世界に示すこと' },
-  earth: { key: 'earth', name: '土', color: 'var(--el-earth)', domain: '基盤 — 心身・暮らし・大切な人' },
-  metal: { key: 'metal', name: '金', color: 'var(--el-metal)', domain: '循環 — 収益・契約・還る対価' },
-  water: { key: 'water', name: '水', color: 'var(--el-water)', domain: '知恵 — AI・自動化・仕組み' },
+  wood:  { key: 'wood',  name: '木', color: 'var(--el-wood)',  domain: 'つくる — 作品・プロダクト・新しい試み' },
+  fire:  { key: 'fire',  name: '火', color: 'var(--el-fire)',  domain: 'ひらく — 言葉・映像・外に見せること' },
+  earth: { key: 'earth', name: '土', color: 'var(--el-earth)', domain: 'ととのえる — 心身・暮らし・大切な人' },
+  metal: { key: 'metal', name: '金', color: 'var(--el-metal)', domain: 'めぐる — 収益・契約・還ってくる対価' },
+  water: { key: 'water', name: '水', color: 'var(--el-water)', domain: 'しくむ — AI・自動化・知恵' },
 };
 export const ELEMENT_ORDER = ['wood', 'fire', 'earth', 'metal', 'water'];
 
-export const ELEMENT_STATES = ['休眠', '目覚め', '巡行', '活性', '満潮'];
+export const ELEMENT_STATES = ['ひと休み', '芽吹き', 'めぐり', 'さかり', '満ち'];
 
-// Gentle nudge when an element is quiet — always an invitation, never a warning.
+// Gentle nudge when a current is quiet — an invitation, never a warning.
 export const ELEMENT_NUDGES = {
-  wood:  '木気が静まっています。今日は小さな創造をひとつ加えましょう。',
-  fire:  '火気が静まっています。作ったものを、ひとつだけ外へ示しましょう。',
-  earth: '土気が静まっています。休むこともまた、世界を守る行いです。',
-  metal: '金気が静まっています。対価が還る道を、ひとつ整えましょう。',
-  water: '水気が静まっています。繰り返しの仕事を、ひとつ仕組みに変えましょう。',
+  wood:  '「つくる」が静かです。きょうは小さくひとつ、作ってみませんか。',
+  fire:  '「ひらく」が静かです。作ったものを、ひとつだけ外に見せてみませんか。',
+  earth: '「ととのえる」が静かです。休むのも、庭の手入れのうちです。',
+  metal: '「めぐる」が静かです。対価が還ってくる道を、ひとつ整えてみませんか。',
+  water: '「しくむ」が静かです。繰り返しの作業を、ひとつ仕組みにしてみませんか。',
 };
 
-// ── 託宣 ──────────────────────────────────────────────
-// Selected by element state + recent activity, not pure random.
+// ── きょうの便り — a short letter from the garden ─────
 export const ORACLES = {
   wood: [
-    '完成を待つな。小さな芽を、世界へ出せ。',
-    '大きく作るな。今日は一枚、一行、一場面でよい。',
-    '発想は財である。今日ひとつ、形の欠片にせよ。',
+    '完成を待たなくていい。小さな芽のまま、外に出してみよう。',
+    '大きく作らなくていい。きょうは一枚、一行、一場面で十分。',
+    '思いつきは財産。きょうひとつ、かたちの欠片にしておこう。',
   ],
   fire: [
-    '知られぬ価値は、まだ眠っている。今日はひとつだけ外へ示せ。',
-    '声を張るな。静かに、確かに、一度だけ灯せ。',
-    '示した言葉は消えぬ。世界に残る資産となる。',
+    'まだ知られていない価値が、手元に眠っている。きょうはひとつだけ、外に見せてみよう。',
+    '大きな声はいらない。静かに、確かに、一度だけ灯せばいい。',
+    '出した言葉は消えない。ぜんぶ、残っていく資産になる。',
   ],
   earth: [
-    '止まることもまた、世界を守る行いである。',
-    '今日の休息は、明日の創造の土である。',
-    '大切な人と食べる一飯は、いかなる富にも勝る。',
+    '止まるのも、庭を守る手入れのひとつ。',
+    'きょうの休みは、あしたつくるための土になる。',
+    '大切な人とのご飯は、どんな売上にも負けない。',
   ],
   metal: [
-    '富を追うな。今日、対価が戻る道をひとつ整えよ。',
-    '小さな入金を軽んじるな。それは還流の証である。',
-    '値を下げて縁を買うな。価値には正しい対価を置け。',
+    'お金を追いかけなくていい。きょうは、対価が還ってくる道をひとつ整えよう。',
+    '小さな入金を軽く見ない。それは巡りはじめた証拠。',
+    '値下げで縁を買わない。価値には、ちゃんとした対価を。',
   ],
   water: [
-    '力で繰り返すな。流れをつくり、一度の仕事を仕組みに変えよ。',
-    '式神に任せられる荷を、まだ我が手で運んでいないか。',
-    '知恵は溜めるものではなく、流すものである。',
+    '力ずくで繰り返さない。流れを作って、一度の仕事を仕組みに変えよう。',
+    'からくりに任せられる荷物を、まだじぶんで運んでいないだろうか。',
+    '知恵はためこむものじゃなく、流すもの。',
   ],
-  // Drawn when the world detects overload (many unfinished days).
+  // Drawn when the garden notices overload.
   release: [
-    '増やすな。今日はひとつ、手放すものを決めよ。',
-    '背負いすぎた荷は、世界を暗くする。降ろすこともまた行いである。',
-    '問うべきは「どう頑張るか」ではない。「何を減らせるか」である。',
-    '動けぬ日は、罪ではない。世界は消えず、待っている。',
+    '増やさなくていい。きょうは、手放すものをひとつ決めよう。',
+    '背負いすぎた荷物は、庭を暗くする。降ろすのも立派な手入れ。',
+    '問いは「どう頑張るか」じゃなくて「何を減らせるか」。',
+    '動けない日は、罪じゃない。庭は消えずに、待っている。',
   ],
 };
 
-// ── 今日の行動 — one per element, small enough for a low-energy day ──
+// ── きょうの一歩 — one per current, small enough for a low day ──
 export const ACTION_SUGGESTIONS = {
-  wood:  ['作品・プロダクトを15分だけ進める', '新しい発想をひとつ書き残す', '試作をひとつ形にする'],
+  wood:  ['作品・プロダクトを15分だけ進める', '思いつきをひとつ書き残す', '試作をひとつかたちにする'],
   fire:  ['ひとつ投稿する（X / note / ブログ）', '作ったものをひとつ公開する', '下書きをひとつ仕上げる'],
-  earth: ['散歩か休息を意図して取る', '大切な人に連絡をひとつ', '暮らしをひとつ整える'],
+  earth: ['散歩か休憩を、ちゃんと取る', '大切な人にひとこと連絡する', '暮らしをひとつ整える'],
   metal: ['請求・提案・出品をひとつ進める', '収益の数字を30秒だけ見る', '対価が還る導線をひとつ直す'],
-  water: ['繰り返し作業をひとつ自動化する', '情報をひとつ整理して仕組みに入れる', '式神（自動化）の様子を見る'],
+  water: ['繰り返し作業をひとつ自動化する', '情報をひとつ整理して仕組みに入れる', 'からくりの様子を見る'],
 };
 
-// ── 式神 ──────────────────────────────────────────────
-// Public-safe poetic names; real systems stay unnamed here.
-// The owner can rename each in 式神殿.
+// ── からくり — the automations working in the garden ──
+// Public-safe names; the owner can rename each.
 export const SHIKIGAMI_SEED = [
-  { name: '千里【探索】', role: '市場・競合・課題の調査', status: '待機' },
-  { name: '筆霊【創作】', role: '文章・画像・映像の生成', status: '待機' },
-  { name: '金烏【商運】', role: '収益機会と販売導線の発見', status: '待機' },
-  { name: '結界【守護】', role: '品質確認・異常検知・数値監視', status: '待機' },
-  { name: '帳面【記録】', role: '成果・知識・データの蓄積', status: '待機' },
-  { name: '倹【節約】',   role: '固定費・API費・無駄の削減', status: '待機' },
+  { name: '千里【しらべ】', role: '市場・競合・課題の調査', status: '待機' },
+  { name: '筆【つくり】',   role: '文章・画像・映像の生成', status: '待機' },
+  { name: '金烏【あきない】', role: '収益機会と販売導線の発見', status: '待機' },
+  { name: '結【まもり】',   role: '品質確認・異常検知・数値の見張り', status: '待機' },
+  { name: '帳【しるし】',   role: '成果・知識・データの記録', status: '待機' },
+  { name: '倹【つづまやか】', role: '固定費・API費・むだの削減', status: '待機' },
 ];
 export const SHIKIGAMI_STATUSES = ['待機', '稼働', '休眠'];
 
-// ── 功徳帳 ────────────────────────────────────────────
+// ── みのり帳 ──────────────────────────────────────────
 export const EVIDENCE_TYPES = [
   '入金', '新規契約', '継続契約', '販売', '問い合わせ', '感謝',
   '制作物の完成', '自動化', '工数削減', '固定費削減', 'アクセス増加', '新しい縁', '成就',
 ];
-// Which element each evidence type feeds.
+// Which current each evidence type feeds.
 export const EVIDENCE_ELEMENT = {
   '入金': 'metal', '新規契約': 'metal', '継続契約': 'metal', '販売': 'metal',
   '問い合わせ': 'fire', '感謝': 'earth', '制作物の完成': 'wood',
@@ -120,33 +113,28 @@ export const EVIDENCE_ELEMENT = {
   'アクセス増加': 'fire', '新しい縁': 'earth', '成就': 'fire',
 };
 
-// ── 願殿 — wishes written as already unfolding ────────
-// Attraction here is a loop, not magic: word → repetition → action →
-// evidence → the world (and the mind) updates. Nothing is promised.
+// ── ねがい — wishes on tanzaku, written as already unfolding ──
 export const MAX_ACTIVE_WISHES = 3;
 export const WISH_GUIDE =
-  '「〜したい」ではなく、すでに始まっているものとして書く。' +
-  '例: 「価値と対価が循環し始めている」「作品が世界に届き始めている」';
-export const WISH_LIMIT_LINE = '願いは三つまで。ひとつ成就させてから、次を刻む。';
-export const WISH_VOWED_LINE = '願いは刻まれた。あとは毎日、小さな行動と証拠がこれを現実にする。';
+  '「〜したい」ではなく、もう始まっているものとして書く。' +
+  '例: 「価値と対価が巡りはじめている」「作品が外に届きはじめている」';
+export const WISH_LIMIT_LINE = 'ねがいは三つまで。ひとつ叶えてから、次を書く。';
 export const FULFILL_REIRYOKU = 8;
 
-// ── 呪 — personal mantras that overwrite old beliefs ──
-// Born in the goma rewrite ritual or inscribed directly. Repetition is
-// how a borrowed sentence becomes one's own voice.
+// ── 合言葉 — words that replace old beliefs ──────────
 export const MANTRA_SEED = [
-  '我が価値は巡り、縁となり、富となり、我がもとへ還る。',
+  '価値は巡って、じぶんのところへ還ってくる。',
   'じぶんの人生の主導権は、じぶんにある。',
 ];
-export const CHANT_LINE = '唱えた言葉は、少しずつ我の声になる。';
+export const CHANT_LINE = '口にした言葉は、少しずつじぶんの声になる。';
 
-// ── 縁起物 — affiliate goods from the outer world ─────
+// ── 縁起物 — affiliate goods from outside the garden ──
 // Catalog source of truth: /blog/products.json (A8 programs, written
 // disclosure-compliant). This map only projects each product onto the
-// world's five elements. A8 Link Manager converts the plain advertiser
-// URLs to affiliate links at runtime (and reverts them if a program ends).
-// Placement rule: 縁起物 appear ONLY in 本殿の運気 and 授与所 — never in
-// 護摩壇 or 願殿 (no ads where fears are released or wishes are made).
+// five currents. A8 Link Manager converts the plain advertiser URLs to
+// affiliate links at runtime (and reverts them if a program ends).
+// Placement rule: 縁起物 appear ONLY in きょうの運気 and みせ — never in
+// たき火 or ねがい (no ads where fears are released or wishes are made).
 export const ENGIMONO_ELEMENT = {
   'awarefy-mental-care': 'earth',
   'hikiutsu-egao': 'earth',
@@ -163,16 +151,12 @@ export const ENGIMONO_ELEMENT = {
   'verni-phone-fortune': 'water',
 };
 export const ENGIMONO_NOTE =
-  '縁起物は外界の品（広告）です。縁が結ばれると、世界に糧が入ります。';
+  '縁起物はよそのお店の品（広告）です。縁が結ばれると、この庭に糧が入ります。';
 
-// ── 護摩壇 ────────────────────────────────────────────
-export const GOMA_CATEGORIES = ['恐怖', '執着', '思い込み', '比較', 'その他'];
-export const GOMA_DONE_LINES = [
-  'その思いは、役目を終えました。',
-  '空いた場所へ、新しい行動を置いてください。',
-];
+// ── たき火 ────────────────────────────────────────────
+export const GOMA_CATEGORIES = ['恐れ', 'こだわり', '思い込み', 'くらべ癖', 'その他'];
 
-// ── 成長ロジック ──────────────────────────────────────
+// ── 庭の育ち ──────────────────────────────────────────
 export const REIRYOKU = {
   morningRitual: 1,
   actionComplete: 3,
@@ -182,7 +166,6 @@ export const REIRYOKU = {
   assetPublished: 5,
   costReduced: 4,
 };
-// Evidence types that grant bonus 霊力 beyond the base log reward.
 export const EVIDENCE_BONUS = {
   '自動化': REIRYOKU.automation,
   '継続契約': REIRYOKU.recurringRevenue,
@@ -193,12 +176,12 @@ export const EVIDENCE_BONUS = {
 
 export const LEVEL_THRESHOLDS = [0, 10, 30, 60, 100, 160]; // L1..L6, then +80/level
 export const LEVEL_STATES = [
-  '暗闇に界紋だけが存在する',
-  '本殿へ光が差す',
-  '五行の間が開く',
-  '式神が現れる',
-  '曼荼羅が完成し始める',
-  '寺院・庭・星空が拡張していく',
+  '静かな更地に、円相だけがある',
+  '芽吹きはじめる',
+  '若葉が茂りだす',
+  '花がひらきはじめる',
+  '実りはじめる',
+  '庭が、森になっていく',
 ];
 
 export function levelForReiryoku(total) {
@@ -213,27 +196,31 @@ export function levelForReiryoku(total) {
   return level;
 }
 
-// ── 現世の帳 — real numbers, plain truth, stored only on this device ──
+// ── 帳場 — real numbers, plain truth, this device only ──
 export const LEDGER_FIELDS = [
-  { key: 'cash',      label: '現世の蓄え',     real: '手元資金', unit: '円' },
-  { key: 'recurring', label: '絶えぬ金脈',     real: '月間継続売上', unit: '円/月' },
-  { key: 'incoming',  label: '還流する価値',   real: '今月の入金予定', unit: '円' },
-  { key: 'outgoing',  label: '今月の支払い',   real: '今月の支払い予定', unit: '円' },
-  { key: 'fixed',     label: '結界維持費',     real: '月間固定費', unit: '円/月' },
-  { key: 'hoursSaved',label: '式神が担った時間', real: '自動化で削減した時間', unit: '時間/月' },
-  { key: 'assets',    label: '世界に残る資産', real: 'デジタル資産数', unit: '個' },
+  { key: 'cash',      label: 'いまの蓄え',       real: '手元資金', unit: '円' },
+  { key: 'recurring', label: 'つづく売上',       real: '月間継続売上', unit: '円/月' },
+  { key: 'incoming',  label: '入ってくる予定',   real: '今月の入金予定', unit: '円' },
+  { key: 'outgoing',  label: '出ていく予定',     real: '今月の支払い予定', unit: '円' },
+  { key: 'fixed',     label: '毎月の固定費',     real: '月間固定費', unit: '円/月' },
+  { key: 'hoursSaved',label: 'からくりが担った時間', real: '自動化で削減した時間', unit: '時間/月' },
+  { key: 'assets',    label: '残っていく資産',   real: 'デジタル資産数', unit: '個' },
 ];
 
-// ── 暦 — day element by simple five-day cycle ─────────
+// ── 暦 — day current by simple five-day cycle ─────────
+// Day numbers use LOCAL midnight, so the garden turns over at 0:00 JST,
+// not 9:00 (the UTC boundary).
+export function localDayNumber(date = new Date()) {
+  return Math.floor((date.getTime() - date.getTimezoneOffset() * 60000) / 86400000);
+}
 export function dayElement(date) {
-  const days = Math.floor(date.getTime() / 86400000);
-  return ELEMENT_ORDER[((days % 5) + 5) % 5];
+  return ELEMENT_ORDER[((localDayNumber(date) % 5) + 5) % 5];
 }
 
-export const CLOSING_MORNING = '儀式は終わりました。世界を動かすのは、この後の一歩です。';
+export const CLOSING_MORNING = 'きょうの手入れはここまで。庭を動かすのは、このあとの一歩。';
 export const CLOSING_NIGHT =
-  '本日の行いは、世界へ刻まれました。眠りの間も、積み上げた仕組みと縁は働き続けます。';
+  'きょうの分は、庭に刻まれた。眠っているあいだも、積み上げた仕組みと縁は働いてくれる。';
 
 export const DISCLAIMER =
-  '本サービスは陰陽道・仏教・密教の世界観に着想を得た創作体験です。' +
-  '特定の宗教団体・宗派とは関係ありません。効果・効能を保証するものではありません。';
+  'このサイトは、陰陽五行や暦の考え方に着想を得た創作です。' +
+  '特定の宗教団体・宗派とは関係なく、効果を保証するものでもありません。';

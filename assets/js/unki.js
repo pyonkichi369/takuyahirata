@@ -1,4 +1,4 @@
-// 天照界 — 界主の運気 engine.
+// 間の庭 — daily fortune engine (the owner's own trade: 占い, not religion).
 // Deterministic sexagenary (干支) day calculation, anchored and verified
 // against two published calendar anchors (1900-01-01 = 甲戌, 2000-01-07 = 甲子).
 // The owner's chart is stored only as a derived constant (day stem index),
@@ -10,7 +10,7 @@ const STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '�
 const BRANCHES = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 const STEM_ELEMENT = ['wood', 'wood', 'fire', 'fire', 'earth', 'earth', 'metal', 'metal', 'water', 'water'];
 
-// 界主 — day stem 辛 (yin metal), derived once from the owner's day pillar.
+// Owner's day stem 辛 (yin metal), derived once from the owner's day pillar.
 const OWNER_STEM = 7;
 const OWNER_ELEMENT = STEM_ELEMENT[OWNER_STEM];
 
@@ -34,27 +34,27 @@ export function dayKanshi(date = new Date()) {
 const READINGS = {
   filled: {
     grade: '満ちる日',
-    line: '世界の気が、我を育てる側に回る。新しいことを始めるのに向く。',
+    line: '流れが味方してくれる日。新しいことを始めるのに向いている。',
     bonus: 1,
   },
   steady: {
     grade: '整う日',
-    line: '気は我と同じ質。続けてきたことを、淡々と積むのに向く。',
+    line: 'いつもと同じ質の気。続けてきたことを、淡々と積むのに向く。',
     bonus: 0,
   },
   giving: {
-    grade: '与える日',
-    line: '我の気が外へ流れ出る。作ったものを世界に示すのに向く。',
+    grade: 'ひらく日',
+    line: '気が外へ流れ出る日。作ったものを、外に見せるのに向いている。',
     bonus: 0,
   },
   forging: {
     grade: '攻める日',
-    line: '我が気を御せる日。商談・提案・値決めなど、攻めの一手に向く。',
+    line: '攻めが決まりやすい日。商談・提案・値決めに向いている。',
     bonus: 0,
   },
   guarding: {
-    grade: '守る日',
-    line: '気が我を試す日。無理に動かず、休息と手入れが最善の一手となる。',
+    grade: '整えの日',
+    line: '無理に動かないほうがいい日。休息と手入れが、いちばんの一手。',
     bonus: 0,
   },
 };

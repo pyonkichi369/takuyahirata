@@ -1,11 +1,21 @@
-# 天照界 (Tenshokai) — MY WORLD Architecture
+# 間の庭 (Ma no Niwa) Architecture — formerly 天照界 MY WORLD
 
-Personal digital sanctuary replacing the takuyahirata.com top page.
+Brand site + personal daily-practice garden replacing the takuyahirata.com top page.
 A "personal world-creation OS": the ideal world is defined first, then
 grown through daily rituals and real-world evidence.
 
 Spec origin: operator-provided MY WORLD specification (2026-08-26).
 Personalization axis: 解放 — returning time, margin, and agency to the owner.
+
+2026-08-27 rebrand (operator directive "too religious; make it 和 + a brand
+site"): all religious framing removed. 天照界→間の庭 (the garden of 間),
+入界門→brand hero (no entry barrier), 本殿→きょうの間, 願殿→ねがい (tanzaku),
+護摩壇→たき火, 式神殿→からくり, 功徳帳→みのり帳, 授与所→みせ, 現世の帳→帳場,
+呪→合言葉, 霊力→歩み. Visuals: pentagram/mandala → ensō (円相, the owner's own
+art motif) + traditional patterns (sprouts, rays, petals, seigaiha) + a
+vermilion seal (落款) as the brand mark. Palette: warm 墨 / 生成り / 朱.
+Voice: じぶん/ぼく (owner's published writing voice), no 我-speak.
+View ids, file names, and ALL storage keys are unchanged — data survives.
 
 ## System Context
 
@@ -47,10 +57,10 @@ graph LR
 |---|---|
 | `index.html` | SPA shell — all views' markup (gate, hall, wish hall, elements, goma, shikigami, merit ledger, offering hall, real ledger), meta, JSON-LD |
 | `assets/js/unki.js` | Owner's daily fortune: sexagenary day cycle (two published anchors verified), stem-element relation to the owner's day stem (derived constant only — no raw birth data), 5 day-qualities with no negative grade |
-| `assets/tenshokai.css` | Design system: 漆黒/鈍金/朱 palette, fuda buttons, flame/burn animation, view fades |
+| `assets/tenshokai.css` | Design system: 墨/生成り/朱 palette, seal-stamp primary buttons, flame/burn animation, view fades |
 | `assets/js/data.js` | Content layer: oracles, declarations, element map, shikigami seeds, growth constants |
 | `assets/js/state.js` | State layer: LocalStorage store, element scoring, oracle selection, overload detection, reiryoku/level |
-| `assets/js/mandala.js` | Procedural SVG: world sigil (界紋) + level-driven mandala |
+| `assets/js/mandala.js` | Procedural SVG: ensō brand mark + level-grown garden (sprouts, rays, petals, seigaiha waves) |
 | `assets/js/audio.js` | WebAudio synthesis: bell, fire crackle, drone — no audio files, never autoplays |
 | `assets/js/app.js` | Application layer: view switching, ritual flows, forms, goma burn sequence |
 

@@ -5,7 +5,7 @@ import {
   ELEMENT_ORDER, EVIDENCE_ELEMENT, EVIDENCE_BONUS, REIRYOKU,
   ORACLES, ACTION_SUGGESTIONS, ELEMENT_NUDGES, ELEMENT_STATES,
   SHIKIGAMI_SEED, MANTRA_SEED, MAX_ACTIVE_WISHES, FULFILL_REIRYOKU,
-  levelForReiryoku, dayElement,
+  levelForReiryoku, dayElement, localDayNumber,
 } from './data.js';
 import { todayUnki } from './unki.js';
 
@@ -290,8 +290,7 @@ export function removeMantra(id) {
 export function todayMantra() {
   const list = mantras();
   if (!list.length) return null;
-  const dayN = Math.floor(Date.now() / 86400000);
-  return list[dayN % list.length];
+  return list[localDayNumber() % list.length];
 }
 
 export function chantToday() {

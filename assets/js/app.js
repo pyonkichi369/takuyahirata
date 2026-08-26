@@ -1,9 +1,9 @@
-// 天照界 — application layer. Views, rituals, transitions.
+// 間の庭 — application layer. Views, daily flow, transitions.
 
 import {
   ELEMENTS, ELEMENT_ORDER, ELEMENT_NUDGES, DECLARATIONS,
   EVIDENCE_TYPES, EVIDENCE_ELEMENT, GOMA_CATEGORIES,
-  LEVEL_STATES, LEDGER_FIELDS, dayElement,
+  LEVEL_STATES, LEDGER_FIELDS, dayElement, localDayNumber,
   CLOSING_MORNING, CLOSING_NIGHT,
 } from './data.js';
 import * as S from './state.js';
@@ -43,28 +43,18 @@ function initGate() {
   const now = new Date();
   const el = ELEMENTS[dayElement(now)];
   $('gate-date').textContent =
-    `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 — 本日の気は「${el.name}」`;
+    `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 — きょうの気は「${el.name}」`;
   drawSigil($('gate-sigil'), { lit: 0 });
 
-  let lit = false;
-  const light = () => {
-    if (lit) return;
-    lit = true;
-    drawSigil($('gate-sigil'), { lit: 1 });
-    $('gate-sigil').classList.add('sigil-lit');
-    $('btn-enter').disabled = false;
-  };
-
+  // The garden has no barrier — the bell is a pleasure, not a lock.
   $('btn-bell').addEventListener('click', () => {
     ringBell();
     if (S.getState().soundEnabled === null) S.setSound(true);
-    light();
-  });
-  $('gate-sound-note').addEventListener('click', () => {
-    if (S.getState().soundEnabled === null) S.setSound(false);
-    light();
+    drawSigil($('gate-sigil'), { lit: 1 });
+    $('gate-sigil').classList.add('sigil-lit');
   });
   $('btn-enter').addEventListener('click', () => {
+    if (S.getState().soundEnabled === null) S.setSound(false);
     S.markEntered();
     document.body.classList.add('entered');
     show('honden');
@@ -74,11 +64,11 @@ function initGate() {
 // ── 本殿 ─────────────────────────────────────────────
 function renderHonden() {
   const lvl = S.level();
-  $('hall-level').textContent = `世界位階 ${lvl} — 霊力 ${S.getState().reiryoku}`;
+  $('hall-level').textContent = `庭の育ち ${lvl} — 歩み ${S.getState().reiryoku}`;
   drawMandala($('mandala'), { level: lvl, reiryoku: S.getState().reiryoku });
   $('mandala-state').textContent = LEVEL_STATES[Math.min(lvl, LEVEL_STATES.length) - 1];
 
-  const dayN = Math.floor(Date.now() / 86400000);
+  const dayN = localDayNumber();
   $('declaration').textContent = DECLARATIONS[dayN % DECLARATIONS.length];
 
   renderUnki();
@@ -96,7 +86,7 @@ function renderMantraBlock() {
   $('btn-chant').disabled = !!done;
   const after = $('mantra-after');
   after.hidden = !done;
-  if (done) after.textContent = '唱えた言葉は、少しずつ我の声になる。';
+  if (done) after.textContent = '口にした言葉は、少しずつじぶんの声になる。';
 }
 $('btn-chant').addEventListener('click', () => {
   const text = $('mantra-text');
@@ -125,7 +115,7 @@ function renderUnki() {
   $('unki-grade').textContent = u.grade;
   $('unki-line').textContent = u.line;
   $('unki-lucky').textContent =
-    `今日の吉の気は「${u.luckyName}」— ${ELEMENTS[u.luckyElement].domain}`;
+    `きょうの追い風は「${u.luckyName}」— ${ELEMENTS[u.luckyElement].domain}`;
   renderUnkiEngi();
 }
 
@@ -139,7 +129,7 @@ function renderOracle() {
     q.textContent = r.oracle;
     share.hidden = false;
     share.href = 'https://x.com/intent/post?text=' +
-      encodeURIComponent('今日の託宣 —「' + r.oracle + '」\n#天照界\nhttps://takuyahirata.com');
+      encodeURIComponent('きょうの便り —「' + r.oracle + '」\n#間の庭\nhttps://takuyahirata.com');
   } else {
     $('btn-oracle').hidden = false;
     $('oracle-text').hidden = true;
@@ -199,8 +189,8 @@ function renderActionZone() {
     const done = document.createElement('p');
     done.className = 'action-done-line';
     done.textContent = r.unkiBonus
-      ? `果たされた。満ちる日の行い、霊力が余分に満ちる（+${3 + r.unkiBonus}）`
-      : '果たされた。世界に霊力が満ちる（+3）';
+      ? `できた。満ちる日のぶん、歩みが少し多く積もる（+${3 + r.unkiBonus}）`
+      : 'できた。庭に歩みが積もる（+3）';
     card.appendChild(done);
   } else {
     const btn = document.createElement('button');
@@ -263,7 +253,7 @@ function renderWishes() {
   if (!all.length) {
     const p = document.createElement('p');
     p.className = 'empty-line';
-    p.textContent = 'まだ願いは刻まれていない。最初の一願を。';
+    p.textContent = 'まだ短冊はありません。最初のひとつを。';
     list.appendChild(p);
   }
 
@@ -278,7 +268,7 @@ function renderWishes() {
     const days = Math.max(0, Math.floor((Date.now() - new Date(w.vowedAt).getTime()) / 86400000));
     const meta = document.createElement('span');
     meta.className = 'wish-meta';
-    meta.textContent = `刻んで${days === 0 ? '今日' : days + '日'}`;
+    meta.textContent = days === 0 ? 'きょう掛けた' : `掛けて${days}日`;
     head.appendChild(mark);
     head.appendChild(meta);
     card.appendChild(head);
@@ -295,7 +285,7 @@ function renderWishes() {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'btn-fuda btn-fulfill';
-    btn.textContent = '成就した';
+    btn.textContent = '叶った';
     btn.addEventListener('click', () => {
       S.fulfillWish(w.id);
       renderGanden();
@@ -307,7 +297,7 @@ function renderWishes() {
   if (fulfilled.length) {
     const label = document.createElement('p');
     label.className = 'block-label wish-done-label';
-    label.textContent = `成就の帳 — ${fulfilled.length}願`;
+    label.textContent = `叶ったねがい — ${fulfilled.length}`;
     list.appendChild(label);
     for (const w of fulfilled.slice().reverse()) {
       const row = document.createElement('p');
@@ -378,7 +368,7 @@ function renderMantraBoard() {
     const del = document.createElement('button');
     del.type = 'button';
     del.className = 'mantra-del';
-    del.textContent = '納';
+    del.textContent = '了';
     del.title = 'この言葉は役目を終えた（帳から外す）';
     del.addEventListener('click', () => { S.removeMantra(m.id); renderGanden(); });
     row.appendChild(del);
@@ -495,7 +485,7 @@ function burnGoma() {
     next.replaceChildren();
     const label = document.createElement('p');
     label.className = 'block-label';
-    label.textContent = '手放した後の行動をひとつ';
+    label.textContent = '手放したあとの一歩をひとつ';
     next.appendChild(label);
     next.appendChild(actionPicker((t, el) => {
       const r = S.todayRitual();
@@ -585,7 +575,7 @@ function renderKudoku() {
   if (!entries.length) {
     const p = document.createElement('p');
     p.className = 'empty-line';
-    p.textContent = 'まだ証拠はない。世界は、最初の一筆を待っている。';
+    p.textContent = 'まだ記録はありません。最初のひとつを。';
     list.appendChild(p);
     return;
   }
@@ -620,7 +610,7 @@ function renderKudoku() {
     const el = ev.element || EVIDENCE_ELEMENT[ev.type] || 'metal';
     const gain = document.createElement('p');
     gain.className = 'kudoku-gain el-text-' + el;
-    gain.textContent = ELEMENTS[el].name + '気がひとつ満ちた';
+    gain.textContent = ELEMENTS[el].name + 'のめぐりが、ひとつ増えた';
     card.appendChild(gain);
     list.appendChild(card);
   }
@@ -659,7 +649,7 @@ function renderLedger() {
   const save = document.createElement('button');
   save.className = 'btn-fuda';
   save.type = 'button';
-  save.textContent = '帳を更新する';
+  save.textContent = '帳面をつける';
   save.addEventListener('click', () => {
     const values = {};
     for (const [k, i] of Object.entries(inputs)) {
@@ -679,14 +669,14 @@ function renderLedger() {
   const runway = document.createElement('p');
   if (fixed > 0 || recurring > 0) {
     runway.textContent = burn <= 0
-      ? '絶えぬ金脈が結界維持費を上回っている。世界は自らを保っている。'
-      : `守護される月数 — およそ ${(cash / burn).toFixed(1)} ヶ月`;
+      ? 'つづく売上が固定費を上回っている。この庭は、自分の足で立っている。'
+      : `このままなら、あと ${(cash / burn).toFixed(1)} ヶ月は立っていられる。`;
     summary.appendChild(runway);
   }
   if (S.getState().ledgerUpdatedAt) {
     const upd = document.createElement('p');
     upd.className = 'ledger-updated';
-    upd.textContent = '最終記帳 ' + S.getState().ledgerUpdatedAt.slice(0, 10);
+    upd.textContent = '前回つけた日 ' + S.getState().ledgerUpdatedAt.slice(0, 10);
     summary.appendChild(upd);
   }
   wrap.appendChild(summary);
@@ -767,11 +757,10 @@ async function renderUnkiEngi() {
   const lucky = todayUnki().luckyElement;
   const pool = items.filter((p) => p.element === lucky);
   const list = pool.length ? pool : items;
-  const dayN = Math.floor(Date.now() / 86400000);
-  const pick = list[dayN % list.length];
+  const pick = list[localDayNumber() % list.length];
   const label = document.createElement('p');
   label.className = 'engi-day-label';
-  label.textContent = '今日の縁起物';
+  label.textContent = 'きょうの縁起物';
   zone.appendChild(label);
   zone.appendChild(engiCard(pick, true));
 }
