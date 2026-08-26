@@ -140,6 +140,31 @@ export const MANTRA_SEED = [
 ];
 export const CHANT_LINE = '唱えた言葉は、少しずつ我の声になる。';
 
+// ── 縁起物 — affiliate goods from the outer world ─────
+// Catalog source of truth: /blog/products.json (A8 programs, written
+// disclosure-compliant). This map only projects each product onto the
+// world's five elements. A8 Link Manager converts the plain advertiser
+// URLs to affiliate links at runtime (and reverts them if a program ends).
+// Placement rule: 縁起物 appear ONLY in 本殿の運気 and 授与所 — never in
+// 護摩壇 or 願殿 (no ads where fears are released or wishes are made).
+export const ENGIMONO_ELEMENT = {
+  'awarefy-mental-care': 'earth',
+  'hikiutsu-egao': 'earth',
+  'kimochi-counseling': 'earth',
+  'atgp-jobtore-utsu': 'earth',
+  'totonoe-light': 'earth',
+  'kitano-daichi-yumeshizuku': 'earth',
+  'highfive-creative-career': 'wood',
+  'consul-databank-freelance': 'metal',
+  'potepan-freelance-engineer': 'metal',
+  'shikaku-square': 'metal',
+  'fastcampus-learning': 'water',
+  'estore-sns-school': 'fire',
+  'verni-phone-fortune': 'water',
+};
+export const ENGIMONO_NOTE =
+  '縁起物は外界の品（広告）です。縁が結ばれると、世界に糧が入ります。';
+
 // ── 護摩壇 ────────────────────────────────────────────
 export const GOMA_CATEGORIES = ['恐怖', '執着', '思い込み', '比較', 'その他'];
 export const GOMA_DONE_LINES = [

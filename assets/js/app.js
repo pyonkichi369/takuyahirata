@@ -126,6 +126,7 @@ function renderUnki() {
   $('unki-line').textContent = u.line;
   $('unki-lucky').textContent =
     `今日の吉の気は「${u.luckyName}」— ${ELEMENTS[u.luckyElement].domain}`;
+  renderUnkiEngi();
 }
 
 function renderOracle() {
@@ -707,8 +708,84 @@ const RENDERERS = {
   gogyo: renderGogyo,
   shikigami: renderShikigami,
   kudoku: renderKudoku,
+  juyosho: renderEngiBoard,
   genjitsu: renderLedger,
 };
+
+// ── 縁起物 — affiliate goods, catalog fetched from /blog/products.json ──
+import { ENGIMONO_ELEMENT } from './data.js';
+
+let engimonoCache = null;
+async function loadEngimono() {
+  if (engimonoCache) return engimonoCache;
+  try {
+    const res = await fetch('/blog/products.json');
+    const items = await res.json();
+    engimonoCache = items.map((p) => ({
+      ...p, element: ENGIMONO_ELEMENT[p.id] || 'earth',
+    }));
+  } catch (_) {
+    engimonoCache = []; // offline or missing catalog — the world stays quiet
+  }
+  return engimonoCache;
+}
+
+function engiCard(p, compact) {
+  const a = document.createElement('a');
+  a.className = 'engi-card' + (compact ? ' is-compact' : '');
+  a.href = p.url;
+  a.target = '_blank';
+  a.rel = 'sponsored noopener';
+  const badge = document.createElement('span');
+  badge.className = 'engi-badge';
+  badge.textContent = '広告';
+  const mark = document.createElement('span');
+  mark.className = 'el-mark el-' + p.element;
+  mark.textContent = ELEMENTS[p.element].name;
+  const body = document.createElement('span');
+  body.className = 'engi-body';
+  const name = document.createElement('span');
+  name.className = 'engi-name';
+  name.textContent = p.name;
+  const blurb = document.createElement('span');
+  blurb.className = 'engi-blurb';
+  blurb.textContent = p.blurb;
+  body.appendChild(name);
+  body.appendChild(blurb);
+  a.appendChild(mark);
+  a.appendChild(body);
+  a.appendChild(badge);
+  return a;
+}
+
+// One good per day, matched to today's lucky element.
+async function renderUnkiEngi() {
+  const zone = $('unki-engi');
+  const items = await loadEngimono();
+  zone.replaceChildren();
+  if (!items.length) return;
+  const lucky = todayUnki().luckyElement;
+  const pool = items.filter((p) => p.element === lucky);
+  const list = pool.length ? pool : items;
+  const dayN = Math.floor(Date.now() / 86400000);
+  const pick = list[dayN % list.length];
+  const label = document.createElement('p');
+  label.className = 'engi-day-label';
+  label.textContent = '今日の縁起物';
+  zone.appendChild(label);
+  zone.appendChild(engiCard(pick, true));
+}
+
+async function renderEngiBoard() {
+  const list = $('engi-list');
+  const items = await loadEngimono();
+  list.replaceChildren();
+  for (const key of ELEMENT_ORDER) {
+    const group = items.filter((p) => p.element === key);
+    if (!group.length) continue;
+    for (const p of group) list.appendChild(engiCard(p, false));
+  }
+}
 
 // ── 授与所 — a preparing item wakes up once data-href holds a real URL ──
 function initJuyosho() {

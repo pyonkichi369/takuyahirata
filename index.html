@@ -45,7 +45,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/tenshokai.css?v=4">
+  <link rel="stylesheet" href="/assets/tenshokai.css?v=5">
+
+  <!-- A8 Link Manager: converts advertiser-site links to affiliate links; reverts on program end (no broken links) -->
+  <script src="https://statics.a8.net/a8link/a8linkmgr.js"></script>
+  <script>a8linkmgr({"config_id":"CcLQKK8BtWjhciW0pGU4"});</script>
 </head>
 <body>
   <div class="haze" aria-hidden="true"></div>
@@ -109,6 +113,7 @@
         <p class="unki-head"><span class="unki-kanshi" id="unki-kanshi"></span><span class="unki-grade" id="unki-grade"></span></p>
         <p class="unki-line" id="unki-line"></p>
         <p class="unki-lucky" id="unki-lucky"></p>
+        <div id="unki-engi"></div>
         <p class="unki-more"><a href="/fortune/">深く知りたい時は、占殿へ</a></p>
       </div>
     </div>
@@ -293,6 +298,12 @@
       <span class="juyo-cta">noteへ</span>
     </a>
 
+    <div class="engi-board">
+      <p class="block-label">縁起物 — 外界の品</p>
+      <p class="engi-note">縁起物は外界の品（広告）です。縁が結ばれると、世界に糧が入ります。</p>
+      <div id="engi-list"></div>
+    </div>
+
     <p class="juyo-note">授与は義務ではありません。この世界は、授与がなくてもすべて使えます。</p>
   </section>
 
@@ -313,6 +324,6 @@
     <p>&copy; 2026 Takuya Hirata</p>
   </footer>
 
-  <script type="module" src="/assets/js/app.js?v=4"></script>
+  <script type="module" src="/assets/js/app.js?v=5"></script>
 </body>
 </html>

@@ -1018,6 +1018,70 @@ a.juyo-item:hover {
   font-size: 0.72rem; color: var(--text-3);
 }
 
+/* ═══ 縁起物 — affiliate goods (広告バッジ必須) ═══ */
+.engi-day-label {
+  font-family: var(--sans);
+  font-size: 0.64rem; font-weight: 700;
+  color: var(--text-3); letter-spacing: 0.28em;
+  margin: 1.1rem 0 0.5rem;
+}
+.engi-card {
+  display: flex; align-items: flex-start; gap: 0.8rem;
+  position: relative;
+  background: rgba(8, 8, 12, 0.45);
+  border: 1px solid var(--hairline-dim);
+  border-radius: var(--r);
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.6rem;
+  color: var(--text-1);
+  text-decoration: none;
+  transition: border-color var(--quick), background var(--quick),
+              transform var(--quick), box-shadow var(--quick);
+}
+.engi-card:hover {
+  border-color: rgba(242, 213, 138, 0.55);
+  background: rgba(22, 20, 34, 0.7);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+}
+.engi-card .el-mark { margin-top: 0.1rem; }
+.engi-body { display: grid; gap: 0.2rem; padding-right: 2.6rem; }
+.engi-name { font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em; }
+.engi-blurb {
+  font-family: var(--sans);
+  font-size: 0.74rem; color: var(--text-2); line-height: 1.7;
+}
+.engi-card.is-compact .engi-blurb {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.engi-badge {
+  position: absolute; top: 0.7rem; right: 0.75rem;
+  font-family: var(--sans);
+  font-size: 0.58rem; font-weight: 700;
+  color: var(--text-3);
+  border: 1px solid rgba(237, 231, 218, 0.22);
+  border-radius: 4px;
+  padding: 0.08rem 0.35rem;
+  letter-spacing: 0.12em;
+}
+.engi-board {
+  margin-top: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--hairline-dim);
+  border-radius: calc(var(--r) + 2px);
+  padding: 1.4rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.engi-note {
+  font-family: var(--sans);
+  font-size: 0.72rem; color: var(--text-3);
+  margin-bottom: 1rem;
+}
+
 /* ═══ 現世の帳 ═══ */
 .ledger-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
