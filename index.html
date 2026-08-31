@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="平田拓也（Takuya Hirata）— 間で生きる。人とAIの間に立ち、じぶんの時間と心と人生の主導権を取り戻す方法を考えている。エッセイ、占い、そして毎日を手入れする「間の庭」。">
+  <meta name="description" content="平田拓也（Takuya Hirata）— 間で生きる。真面目すぎて二度うつになり、会社を辞めて、じぶんの時間と心を取り戻しはじめた。解放とキャリア、退職・独立、エッセイ、占い、AI×ものづくり。同じ問いを持つ人と一緒に答えを探す探究の場。">
   <meta name="theme-color" content="#171412">
 
   <!-- OGP -->
@@ -54,7 +54,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/tenshokai.css?v=7">
+  <link rel="stylesheet" href="/assets/tenshokai.css?v=8">
 
   <!-- A8 Link Manager: converts advertiser-site links to affiliate links; reverts on program end (no broken links) -->
   <script src="https://statics.a8.net/a8link/a8linkmgr.js"></script>
@@ -63,33 +63,166 @@
 <body>
   <div class="haze" aria-hidden="true"></div>
 
-  <!-- ═══ 玄関 — brand hero ═══ -->
+  <!-- ═══ ハブ — 探究者の入口 (fan-site home) ═══ -->
   <section class="view view-gate is-active" id="view-gate" aria-label="ホーム">
-    <div class="gate-inner">
-      <p class="gate-date" id="gate-date"></p>
-      <svg class="sigil" id="gate-sigil" viewBox="0 0 200 200" aria-hidden="true"></svg>
-      <h1 class="brand-name">Takuya Hirata</h1>
-      <p class="brand-tagline">間で生きる。</p>
-      <div class="gate-lines">
-        <p>人とAIの間に立って、考えている。</p>
-        <p>じぶんの時間と心と人生の主導権を、じぶんに返す方法を。</p>
-      </div>
-      <div class="gate-actions">
-        <button class="btn-fuda btn-gate" id="btn-enter" type="button">間の庭に入る</button>
-        <button class="btn-fuda" id="btn-bell" type="button">風鈴を鳴らす</button>
-      </div>
-      <p class="gate-sound-note" id="gate-sound-note">庭は、じぶんを手入れする毎日の道具。記録はこの端末にだけ残ります</p>
-      <nav class="gate-outer-links" aria-label="コンテンツ">
-        <a href="/blog/">エッセイ</a>
-        <a href="https://mirumon.net/" target="_blank" rel="noopener">みるもん占い</a>
-        <a href="https://note.com/th19930828" target="_blank" rel="noopener me">note</a>
-        <a href="https://x.com/th19930828" target="_blank" rel="noopener me">X</a>
-      </nav>
+    <div class="hub">
+
+      <!-- ── ヒーロー ── -->
+      <header class="hub-hero">
+        <p class="gate-date" id="gate-date"></p>
+        <svg class="sigil" id="gate-sigil" viewBox="0 0 200 200" aria-hidden="true"></svg>
+        <h1 class="brand-name">Takuya Hirata</h1>
+        <p class="brand-tagline">間で生きる。</p>
+        <div class="gate-lines">
+          <p>真面目すぎて、二度うつになった。</p>
+          <p>会社を辞めて、じぶんの時間と心を、じぶんに返しはじめた。</p>
+          <p>その途中を、ここに置いていく。</p>
+        </div>
+        <div class="gate-actions">
+          <a class="btn-fuda btn-gate" href="#tankyu">探究を読む</a>
+          <button class="btn-fuda" id="btn-bell" type="button">風鈴を鳴らす</button>
+        </div>
+        <nav class="gate-outer-links" aria-label="リンク">
+          <a href="https://x.com/th19930828" target="_blank" rel="noopener me">X</a>
+          <a href="https://note.com/th19930828" target="_blank" rel="noopener me">note</a>
+          <a href="/blog/">エッセイ</a>
+        </nav>
+        <p class="hub-scroll" aria-hidden="true">↓</p>
+      </header>
+
+      <!-- ── 探究 ── -->
+      <section class="hub-sec" id="tankyu">
+        <p class="hub-eyebrow">探究</p>
+        <h2 class="hub-h">じぶんを、じぶんに返す</h2>
+        <div class="hub-lede">
+          <p>ぼくは、答えを知っている人じゃない。真面目すぎて、断れなくて、背負いすぎて、じぶんを後回しにして、二度うつになった一人の人間だ。</p>
+          <p>会社を辞めて気づいたのは、問題は仕事でもテクノロジーでもなくて、それらに<strong>主導権を奪われた状態</strong>のほうだった、ということ。</p>
+          <p>だからぼくは、時間と心と選ぶ力を、その人自身に返す方法を探している。占いも、文章も、映像も、AIでものを作ることも、ぜんぶ<strong>「人がじぶんを取り戻す」</strong>の一本でつながっている。</p>
+          <p>同じ問いを持つ人と、一緒に答えを探したい。</p>
+        </div>
+      </section>
+
+      <!-- ── 解放とキャリア ── -->
+      <section class="hub-sec" id="career">
+        <p class="hub-eyebrow">解放とキャリア</p>
+        <h2 class="hub-h">会社を辞める、という選択肢</h2>
+        <p class="hub-sub">辞めることを勧めたいわけじゃない。ただ「辞めてもいい」と知っているだけで、心の余裕は変わる。真面目すぎて生きづらい人へ、ぼくの実体験をそのまま置いていく。</p>
+        <div class="works-grid">
+          <a class="work-card" href="/blog/">
+            <span class="work-kind">エッセイ</span>
+            <span class="work-name">辞めるまでと、辞めてから</span>
+            <span class="work-desc">二度のうつ、独立、そしてじぶんの時間が返ってきた話。</span>
+          </a>
+        </div>
+        <div class="engi-board career-aff">
+          <p class="block-label">道しるべ — よその窓口</p>
+          <p class="engi-note">下は転職・退職の外部サービス（広告）。焦って登録するものじゃない。心に余裕があるとき、選択肢として覗くくらいでちょうどいい。</p>
+          <div class="juyo-item is-preparing" data-href="" data-cta="見てみる" data-rel="sponsored noopener">
+            <p class="juyo-kind">退 — 間に立ってもらう <span class="ad-inline">広告</span></p>
+            <p class="juyo-name">退職代行サービス</p>
+            <p class="juyo-desc">じぶんで言い出せないとき、間に立ってくれる人がいる。使う使わないは別として、まず知っておくだけで心は軽くなる。</p>
+            <span class="juyo-cta">準備中</span>
+          </div>
+          <div class="juyo-item is-preparing" data-href="" data-cta="見てみる" data-rel="sponsored noopener">
+            <p class="juyo-kind">転 — 外の選択肢を知る <span class="ad-inline">広告</span></p>
+            <p class="juyo-name">転職エージェント</p>
+            <p class="juyo-desc">辞める前に、外にどんな道があるかを知っておく。動くかどうかは、あとで、じぶんのペースで決めればいい。</p>
+            <span class="juyo-cta">準備中</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 作品と道具 ── -->
+      <section class="hub-sec" id="works">
+        <p class="hub-eyebrow">つくったもの</p>
+        <h2 class="hub-h">作品と道具</h2>
+        <div class="works-grid works-grid--2">
+          <a class="work-card" href="/blog/">
+            <span class="work-kind">エッセイ</span>
+            <span class="work-name">解放をめぐる文章</span>
+            <span class="work-desc">生きづらさ、メンタル、AI、ものづくり、お金。ぜんぶ一本の軸で。</span>
+          </a>
+          <a class="work-card" href="https://mirumon.net/" target="_blank" rel="noopener">
+            <span class="work-kind">占い</span>
+            <span class="work-name">みるもん占い</span>
+            <span class="work-desc">やさしい言葉で読み解く鑑定。LINEで受け取れる。</span>
+          </a>
+          <a class="work-card" href="/fortune/">
+            <span class="work-kind">無料診断</span>
+            <span class="work-name">間の占い</span>
+            <span class="work-desc">「間」を知ると、動くべき時がわかる。無料で。</span>
+          </a>
+          <a class="work-card" href="https://dopaminelabtv.com" target="_blank" rel="noopener me">
+            <span class="work-kind">映像</span>
+            <span class="work-name">Dopamine Lab TV</span>
+            <span class="work-desc">脳と、集中と、じぶんを取り戻すための映像。</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ── 支える (FANBOX) ── -->
+      <section class="hub-sec hub-support" id="support">
+        <p class="hub-eyebrow">支える</p>
+        <h2 class="hub-h">この探究に、伴走する</h2>
+        <p class="hub-sub">囲うためじゃなく、続けるために。支えてくれる人には、探究の舞台裏——葛藤、回復の実験、AIでものを作る過程——と、作品の先行・限定を。いつ離れても、罰はない。</p>
+        <div class="juyo-item is-preparing is-featured" data-href="" data-cta="伴走する" data-rel="noopener">
+          <p class="juyo-kind">月額 — 伴走</p>
+          <p class="juyo-name">pixivFANBOX</p>
+          <p class="juyo-desc">探究の舞台裏と、作品の先行公開。同じ問いを持つ人の居場所。支えるのは、支えたいと思ったときだけでいい。</p>
+          <span class="juyo-cta">準備中</span>
+        </div>
+      </section>
+
+      <!-- ── 手にとる (単発) ── -->
+      <section class="hub-sec" id="shop">
+        <p class="hub-eyebrow">手にとる</p>
+        <h2 class="hub-h">一つずつ</h2>
+        <p class="hub-sub">買うことは義務じゃない。必要なときだけ、手にとってください。</p>
+
+        <a class="juyo-item" href="https://mirumon.net/" target="_blank" rel="noopener">
+          <p class="juyo-kind">占 — 本格鑑定</p>
+          <p class="juyo-name">みるもん占い</p>
+          <p class="juyo-desc">恋愛・仕事・人間関係・人生の悩みを、やさしい言葉で読み解く鑑定。</p>
+          <p class="juyo-price">初回五百円</p>
+          <span class="juyo-cta">みるもんへ</span>
+        </a>
+
+        <div class="juyo-item is-preparing" data-href="" data-cta="読む">
+          <p class="juyo-kind">記 — note有料記事</p>
+          <p class="juyo-name">辞めるまでの、ぜんぶ</p>
+          <p class="juyo-desc">二度うつになって、会社を辞めて、じぶんを取り戻すまで。真面目すぎて生きづらい人のための記。</p>
+          <p class="juyo-price">五百円</p>
+          <span class="juyo-cta">準備中</span>
+        </div>
+
+        <div class="juyo-item is-preparing" data-href="" data-cta="受け取る">
+          <p class="juyo-kind">鑑 — 個人鑑定</p>
+          <p class="juyo-name">本鑑定 — じぶんの設計図</p>
+          <p class="juyo-desc">生年月日からいくつもの占術を束ねて、気質・巡り・動くべき時を一枚の設計図に。むずかしい言葉は使わない。</p>
+          <p class="juyo-price">五千円（税込）</p>
+          <span class="juyo-cta">準備中</span>
+        </div>
+
+        <p class="hub-note"><a href="/legal/tokusho.html">特定商取引法に基づく表記</a> ／ <a href="/legal/privacy.html">プライバシーポリシー</a></p>
+      </section>
+
+      <!-- ── 間の庭 (毎日の道具) ── -->
+      <section class="hub-sec hub-garden" id="garden">
+        <p class="hub-eyebrow">毎日の道具</p>
+        <h2 class="hub-h">間の庭</h2>
+        <p class="hub-sub">じぶんを手入れする、毎日の小さな庭。願いを掛け、恐れを手放し、一日ひとつだけ進む。streakも罰もない。記録はこの端末にだけ残る。</p>
+        <div class="gate-actions">
+          <button class="btn-fuda btn-gate" id="btn-enter" type="button">間の庭に入る</button>
+        </div>
+        <p class="gate-sound-note" id="gate-sound-note">記録はこの端末にだけ残ります</p>
+      </section>
+
     </div>
   </section>
 
   <!-- ═══ 庭の間取り (nav) ═══ -->
   <nav class="places" id="places" aria-label="庭の間取り" hidden>
+    <button data-view="gate" class="places-home" type="button">ホーム</button>
     <button data-view="honden" class="is-here" type="button">きょう</button>
     <button data-view="ganden" type="button">ねがい</button>
     <button data-view="gogyo" type="button">めぐり</button>
@@ -340,6 +473,6 @@
     <p>&copy; 2026 Takuya Hirata</p>
   </footer>
 
-  <script type="module" src="/assets/js/app.js?v=7"></script>
+  <script type="module" src="/assets/js/app.js?v=8"></script>
 </body>
 </html>

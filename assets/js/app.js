@@ -782,12 +782,12 @@ function initJuyosho() {
     const href = (item.dataset.href || '').trim();
     if (!href) return;
     const a = document.createElement('a');
-    a.className = 'juyo-item';
+    a.className = 'juyo-item' + (item.classList.contains('is-featured') ? ' is-featured' : '');
     a.href = href;
     a.target = '_blank';
-    a.rel = 'noopener';
+    a.rel = item.dataset.rel || 'noopener';
     while (item.firstChild) a.appendChild(item.firstChild);
-    a.querySelector('.juyo-cta').textContent = '授与を受ける';
+    a.querySelector('.juyo-cta').textContent = item.dataset.cta || '授与を受ける';
     item.replaceWith(a);
   });
 }
