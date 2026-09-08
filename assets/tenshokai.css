@@ -1304,6 +1304,361 @@ a.juyo-item:hover {
 /* anchor rendered as a 札 button (hero "探究を読む") */
 a.btn-fuda { display: inline-block; text-align: center; text-decoration: none; }
 
+/* ═══════════════════════════════════════════════════════
+   頑張らせない自己啓発 — modern light home
+   Scoped to the home (body:not(.entered) + .view-gate) so the
+   dark daily-practice tool is untouched. 和ミニマル: 生成りの紙 /
+   墨 / 一点の朱 / 広い余白 / 明朝の見出し.
+   ═══════════════════════════════════════════════════════ */
+
+/* the brand site is light; entering the garden turns the world dark */
+body:not(.entered) {
+  background: #F7F4ED;
+  color: #211D19;
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+}
+body:not(.entered) .haze { display: none; }
+
+/* ── top bar ── */
+.sd-top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem clamp(1.2rem, 5vw, 2.4rem);
+  background: rgba(247, 244, 237, 0.82);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom: 1px solid rgba(33, 29, 25, 0.08);
+}
+body.entered .sd-top { display: none; }
+.sd-word {
+  font-family: var(--serif);
+  font-size: 1.02rem; font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #211D19; text-decoration: none;
+}
+.sd-topnav { display: flex; gap: clamp(0.9rem, 3vw, 1.7rem); }
+.sd-topnav a {
+  font-family: var(--sans);
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #6B6156; text-decoration: none;
+  transition: color var(--quick);
+}
+.sd-topnav a:hover { color: #C0392B; }
+@media (max-width: 460px) {
+  .sd-topnav a:nth-child(2) { display: none; }
+}
+
+/* ── home canvas: full-bleed light, its own rhythm ── */
+.view-gate {
+  /* the ensō brand mark reads as dark brush + red seal on paper */
+  --brush: #232019;
+  --shu: #C0392B;
+  --paper: #F7F4ED;
+  --paper-2: #FFFFFF;
+  --sumi: #211D19;
+  --sumi-2: #574E44;
+  --sumi-3: #8B8175;
+  --sd-shu: #C0392B;
+  --sd-line: rgba(33, 29, 25, 0.11);
+  --sd-line-soft: rgba(33, 29, 25, 0.06);
+
+  max-width: none;
+  margin: 0;
+  padding: 0 0 4rem;
+  background: var(--paper);
+  color: var(--sumi);
+  transform: none;
+  min-height: 100vh;
+}
+.view-gate .hub { max-width: 720px; margin: 0 auto; padding: 0 clamp(1.3rem, 5vw, 2rem); }
+
+/* ── hero ── */
+.sd-hero {
+  min-height: min(92vh, 780px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 6.5rem 0 3.5rem;
+}
+.sd-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--sd-shu);
+  margin-bottom: 1.8rem;
+}
+.sd-mark {
+  width: min(30vw, 118px); height: auto;
+  display: block; margin: 0 auto 1.9rem;
+  transition: filter 1.2s ease;
+}
+.sd-mark.sigil-lit { filter: drop-shadow(0 3px 10px rgba(33, 29, 25, 0.14)); }
+.sd-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 8.5vw, 3.35rem);
+  font-weight: 700;
+  line-height: 1.42;
+  letter-spacing: 0.04em;
+  color: var(--sumi);
+  margin-bottom: 1.6rem;
+}
+.sd-lede {
+  max-width: 34rem; margin: 0 auto 2.2rem;
+}
+.sd-lede p {
+  font-family: var(--sans);
+  font-size: clamp(0.9rem, 2.6vw, 1rem);
+  color: var(--sumi-2);
+  line-height: 2;
+  margin-bottom: 0.6rem;
+}
+.sd-lede em {
+  font-style: normal;
+  color: var(--sumi);
+  font-weight: 700;
+  box-shadow: inset 0 -0.5em 0 rgba(192, 57, 43, 0.12);
+}
+
+/* ── buttons ── */
+.sd-cta { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+.sd-btn {
+  font-family: var(--sans);
+  font-size: 0.86rem; font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--sumi);
+  background: var(--paper-2);
+  border: 1px solid var(--sd-line);
+  border-radius: 9px;
+  padding: 0.92rem 1.7rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block; text-align: center;
+  transition: border-color var(--quick), transform var(--quick),
+              box-shadow var(--quick), background var(--quick), color var(--quick);
+}
+.sd-btn:hover {
+  border-color: rgba(33, 29, 25, 0.28);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(33, 29, 25, 0.08);
+}
+.sd-btn--primary {
+  color: #FBF7EF;
+  background: var(--sd-shu);
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgba(192, 57, 43, 0.22);
+}
+.sd-btn--primary:hover {
+  background: #A9301F;
+  border-color: transparent;
+  box-shadow: 0 10px 26px rgba(192, 57, 43, 0.32);
+}
+
+.sd-hero-foot {
+  margin-top: 2.6rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+}
+.sd-chime {
+  font-family: var(--sans);
+  font-size: 0.74rem; letter-spacing: 0.14em;
+  color: var(--sumi-3);
+  background: none; border: none; cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-bottom: 1px solid transparent;
+  transition: color var(--quick), border-color var(--quick);
+}
+.sd-chime:hover { color: var(--sd-shu); border-color: rgba(192, 57, 43, 0.4); }
+.sd-date {
+  font-family: var(--sans);
+  font-size: 0.68rem; letter-spacing: 0.14em;
+  color: var(--sumi-3);
+}
+
+/* ── section rhythm ── */
+.sd-sec {
+  padding-top: 3.4rem;
+  margin-top: 3.4rem;
+  border-top: 1px solid var(--sd-line-soft);
+}
+.sd-sec-eye {
+  font-family: var(--sans);
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--sd-shu);
+  margin-bottom: 0.9rem;
+}
+.sd-h {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 4.8vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: 0.04em;
+  color: var(--sumi);
+  margin-bottom: 1.1rem;
+}
+.sd-sub {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  color: var(--sumi-2);
+  line-height: 1.95;
+  margin-bottom: 1.6rem;
+  max-width: 40rem;
+}
+.sd-body p {
+  font-family: var(--sans);
+  font-size: 0.94rem;
+  color: var(--sumi-2);
+  line-height: 2.05;
+  margin-bottom: 1.15rem;
+}
+.sd-body em {
+  font-style: normal; font-weight: 700; color: var(--sumi);
+}
+.sd-textlink {
+  display: inline-block; margin-top: 0.4rem;
+  font-family: var(--sans);
+  font-size: 0.84rem; font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--sd-shu); text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--quick), opacity var(--quick);
+}
+.sd-textlink:hover { border-color: rgba(192, 57, 43, 0.5); opacity: 0.85; }
+
+/* ── work cards ── */
+.sd-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 0.9rem;
+}
+.sd-card {
+  display: grid; gap: 0.4rem; align-content: start;
+  background: var(--paper-2);
+  border: 1px solid var(--sd-line);
+  border-radius: 14px;
+  padding: 1.35rem 1.4rem;
+  text-decoration: none;
+  color: var(--sumi);
+  transition: border-color var(--quick), transform var(--quick), box-shadow var(--quick);
+}
+.sd-card:hover {
+  border-color: rgba(33, 29, 25, 0.22);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(33, 29, 25, 0.09);
+}
+.sd-card-kind {
+  font-family: var(--sans);
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.24em;
+  color: var(--sd-shu);
+}
+.sd-card-name {
+  font-family: var(--serif);
+  font-size: 1.06rem; font-weight: 700; letter-spacing: 0.06em;
+}
+.sd-card-desc {
+  font-family: var(--sans);
+  font-size: 0.8rem; color: var(--sumi-2); line-height: 1.85;
+}
+
+/* ── feature band: 間の庭 ── */
+.sd-feature { border-top: none; }
+.sd-feature-inner {
+  background: linear-gradient(165deg, #FFFFFF, #F1ECE1);
+  border: 1px solid var(--sd-line);
+  border-radius: 18px;
+  padding: clamp(2rem, 6vw, 3rem) clamp(1.4rem, 5vw, 2.4rem);
+  text-align: center;
+}
+.sd-feature-inner .sd-sec-eye,
+.sd-feature-inner .sd-h { margin-left: auto; margin-right: auto; }
+.sd-feature-inner .sd-sub { margin: 0 auto 1.6rem; }
+.sd-feature-inner .sd-h {
+  font-size: clamp(1.7rem, 6vw, 2.3rem);
+  letter-spacing: 0.18em;
+}
+.sd-fine {
+  font-family: var(--sans);
+  font-size: 0.72rem; color: var(--sumi-3);
+  margin-top: 1.2rem;
+}
+.sd-fine a { color: var(--sumi-2); text-decoration: none; border-bottom: 1px dotted var(--sd-line); }
+.sd-fine a:hover { color: var(--sd-shu); }
+
+/* ── offer cards (juyo-item) — light re-skin, scoped to home ── */
+.sd-offers { display: grid; gap: 0.9rem; }
+.view-gate .juyo-item {
+  background: var(--paper-2);
+  border: 1px solid var(--sd-line);
+  border-radius: 14px;
+  color: var(--sumi);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  margin-bottom: 0;
+}
+.view-gate .juyo-item::before { display: none; }
+.view-gate a.juyo-item:hover {
+  border-color: rgba(33, 29, 25, 0.24);
+  background: var(--paper-2);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(33, 29, 25, 0.09);
+}
+.view-gate .juyo-kind {
+  color: var(--sumi-3); letter-spacing: 0.16em; font-size: 0.66rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.view-gate .juyo-name { color: var(--sumi); }
+.view-gate .juyo-desc { color: var(--sumi-2); }
+.view-gate .juyo-price {
+  -webkit-text-fill-color: currentColor;
+  background: none;
+  color: var(--sd-shu);
+  font-weight: 700; letter-spacing: 0.12em;
+}
+.view-gate .juyo-cta {
+  color: var(--sd-shu);
+  border: 1px solid rgba(192, 57, 43, 0.35);
+  background: rgba(192, 57, 43, 0.06);
+}
+.view-gate .juyo-item.is-preparing .juyo-cta {
+  color: var(--sumi-3);
+  border-color: var(--sd-line);
+  background: none;
+}
+.view-gate .juyo-item.is-featured {
+  border-color: rgba(192, 57, 43, 0.3);
+  background: linear-gradient(160deg, rgba(192, 57, 43, 0.05), var(--paper-2) 55%);
+  box-shadow: none;
+}
+.view-gate .juyo-item.is-featured::before { display: none; }
+.view-gate .ad-inline {
+  color: var(--sumi-3);
+  border-color: var(--sd-line);
+  margin-left: 0;
+}
+.view-gate .juyo-flow { color: var(--sumi-3); }
+
+/* ── footer, light variant ── */
+body:not(.entered) .world-footer {
+  border-top-color: var(--sd-line-soft, rgba(33, 29, 25, 0.06));
+  color: #8B8175;
+}
+body:not(.entered) .world-footer a { color: #574E44; }
+body:not(.entered) .world-footer a:hover { color: #C0392B; }
+
+@media (min-width: 760px) {
+  .sd-cards { gap: 1rem; }
+  .sd-sec .sd-offers { grid-template-columns: repeat(2, 1fr); }
+  .sd-sec#support .sd-offers,
+  .sd-sec#shop .sd-offers { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd-btn:hover, .sd-card:hover, .view-gate a.juyo-item:hover { transform: none; }
+}
+
 /* ── "ホーム" — return from the garden tool to the hub ── */
 .places-home { color: var(--text-2); }
 .places-home::after {

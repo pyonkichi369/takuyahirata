@@ -29,6 +29,8 @@ function show(view) {
     }
   }
   $('places').hidden = view === 'gate';
+  // Home is the light brand site; the tool is the dark focus space.
+  document.body.classList.toggle('entered', view !== 'gate');
   document.querySelectorAll('#places [data-view]').forEach((b) => {
     b.classList.toggle('is-here', b.dataset.view === view);
   });
@@ -129,7 +131,7 @@ function renderOracle() {
     q.textContent = r.oracle;
     share.hidden = false;
     share.href = 'https://x.com/intent/post?text=' +
-      encodeURIComponent('きょうの便り —「' + r.oracle + '」\n#間の庭\nhttps://takuyahirata.com');
+      encodeURIComponent('きょうの一言 —「' + r.oracle + '」\n#間の庭\nhttps://takuyahirata.com');
   } else {
     $('btn-oracle').hidden = false;
     $('oracle-text').hidden = true;
