@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://takuyahirata.com/</loc></url>
-  <url><loc>https://takuyahirata.com/blog/</loc></url>
-  <url><loc>https://takuyahirata.com/blog/2026-07-11.html</loc></url>
-  <url><loc>https://takuyahirata.com/blog/2026-07-10.html</loc></url>
+  <url><loc>https://takuyahirata.com/research/</loc></url>
+  <url><loc>https://takuyahirata.com/research/sleep-environment.html</loc></url>
+  <url><loc>https://takuyahirata.com/check.html</loc></url>
+  <url><loc>https://takuyahirata.com/about.html</loc></url>
+  <url><loc>https://takuyahirata.com/methodology.html</loc></url>
+  <url><loc>https://takuyahirata.com/disclosure.html</loc></url>
+  <url><loc>https://takuyahirata.com/legal/privacy.html</loc></url>
+  <url><loc>https://takuyahirata.com/legal/tokusho.html</loc></url>
 </urlset>

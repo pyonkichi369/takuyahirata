@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="3分診断 — 悩み・使える時間・環境から、今のあなたに合う回復行動と記事をご案内します。こころのマッサージ。">
+  <meta name="theme-color" content="#FBF8F2">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://takuyahirata.com/check.html">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>3分診断 | こころのマッサージ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/kokoro.css?v=1">
+</head>
+<body>
+  <header class="site-header page-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="こころのマッサージ ホーム">
+        <svg class="brand-mark" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4C10 5 5 11 5 19c7 0 13-4 15-15Z"/><path d="M5 19C8 14 12 10 17 8"/></svg>
+        <span class="brand-text"><span class="brand-name">こころのマッサージ</span><span class="brand-tag">調べて、比べて、やさしい毎日を</span></span>
+      </a>
+      <a class="page-back" href="/">← ホームへ</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container page-hero">
+      <p class="page-eyebrow">3-minute check</p>
+      <h1 class="page-title">3分診断</h1>
+      <p class="page-lead">3つの質問に答えると、今のあなたに合う「小さな回復行動」と、読むとよい研究ノートをご案内します。</p>
+    </div>
+
+    <div class="container check-shell section" style="padding-top:16px;">
+      <div class="check-progress" aria-hidden="true">
+        <span class="dot on" data-p="1"></span>
+        <span class="dot" data-p="2"></span>
+        <span class="dot" data-p="3"></span>
+      </div>
+
+      <form id="quiz" aria-live="polite">
+        <!-- Step 1 -->
+        <fieldset class="check-step" data-step="1">
+          <h2>いちばん近い悩みは？</h2>
+          <p class="q-sub">一つ選んでください。</p>
+          <div class="opt-grid">
+            <button type="button" class="opt" data-q="concern" data-v="sleep">
+              <span class="opt-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-4a3 3 0 0 1 3-3h9a4 4 0 0 1 4 4v3"/><path d="M3 15h18"/><path d="M7 11V8a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3"/></svg></span>
+              <span class="opt-label">眠れない<span class="opt-note">寝つき・途中で目が覚める</span></span>
+            </button>
+            <button type="button" class="opt" data-q="concern" data-v="tired">
+              <span class="opt-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 20v-2a4 4 0 0 0 3-4 6 6 0 1 0-11 3v3"/><path d="M9 14c1 .6 2 .6 3 0"/></svg></span>
+              <span class="opt-label">頭が疲れた<span class="opt-note">目・肩・思考の疲れ</span></span>
+            </button>
+            <button type="button" class="opt" data-q="concern" data-v="focus">
+              <span class="opt-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.4"/></svg></span>
+              <span class="opt-label">集中できない<span class="opt-note">気が散る・続かない</span></span>
+            </button>
+            <button type="button" class="opt" data-q="concern" data-v="tense">
+              <span class="opt-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14c3 0 3-2 6-2s3 2 6 2 3-2 4-2"/><path d="M4 18c3 0 3-2 6-2s3 2 6 2 3-2 4-2"/><path d="M8 8c1.5-2 4-2 5.5 0"/></svg></span>
+              <span class="opt-label">緊張が抜けない<span class="opt-note">刺激・気疲れ</span></span>
+            </button>
+          </div>
+        </fieldset>
+
+        <!-- Step 2 -->
+        <fieldset class="check-step" data-step="2" hidden>
+          <h2>いま、使える時間は？</h2>
+          <p class="q-sub">正直なところで大丈夫です。</p>
+          <div class="opt-grid">
+            <button type="button" class="opt" data-q="time" data-v="3">
+              <span class="opt-label">3分だけ<span class="opt-note">すきま時間で</span></span>
+            </button>
+            <button type="button" class="opt" data-q="time" data-v="15">
+              <span class="opt-label">15分ほど<span class="opt-note">ひと息つける</span></span>
+            </button>
+            <button type="button" class="opt" data-q="time" data-v="long">
+              <span class="opt-label">じっくり<span class="opt-note">今夜・週末に整えたい</span></span>
+            </button>
+          </div>
+          <button type="button" class="check-back" data-back>← 前へ戻る</button>
+        </fieldset>
+
+        <!-- Step 3 -->
+        <fieldset class="check-step" data-step="3" hidden>
+          <h2>いま、どこにいますか？</h2>
+          <p class="q-sub">環境に合う方法をご案内します。</p>
+          <div class="opt-grid">
+            <button type="button" class="opt" data-q="place" data-v="home">
+              <span class="opt-label">家<span class="opt-note">横になれる・静かにできる</span></span>
+            </button>
+            <button type="button" class="opt" data-q="place" data-v="work">
+              <span class="opt-label">職場・外<span class="opt-note">席を立ちにくい</span></span>
+            </button>
+            <button type="button" class="opt" data-q="place" data-v="move">
+              <span class="opt-label">移動中<span class="opt-note">電車・すきま</span></span>
+            </button>
+          </div>
+          <button type="button" class="check-back" data-back>← 前へ戻る</button>
+        </fieldset>
+      </form>
+
+      <!-- Result -->
+      <div id="result" hidden>
+        <div class="result-card">
+          <p class="result-eyebrow">あなたへの、小さな一歩</p>
+          <h2 class="result-title" id="resultTitle"></h2>
+          <p class="result-body" id="resultBody"></p>
+          <div class="result-actions" id="resultActions"></div>
+          <p class="result-note">この結果は、一般的な生活習慣の情報にもとづく提案です。効果を保証するものではなく、体調に強い不調が続く場合は医療機関にご相談ください。</p>
+        </div>
+        <button type="button" class="check-back" id="restart" style="margin-top:20px;">↺ もう一度診断する</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>© 2026 こころのマッサージ / 合同会社AJARA</span>
+      <span><a href="/">ホーム</a> ・ <a href="/methodology.html">編集方針</a> ・ <a href="/disclosure.html">広告開示</a></span>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var answers = {};
+    var steps = Array.prototype.slice.call(document.querySelectorAll('.check-step'));
+    var dots = Array.prototype.slice.call(document.querySelectorAll('.check-progress .dot'));
+    var quiz = document.getElementById('quiz');
+    var result = document.getElementById('result');
+    var current = 1;
+
+    function show(step) {
+      current = step;
+      steps.forEach(function (s) { s.hidden = (+s.dataset.step !== step); });
+      dots.forEach(function (d) { d.classList.toggle('on', +d.dataset.p <= step); });
+      quiz.hidden = false;
+      result.hidden = true;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    quiz.addEventListener('click', function (e) {
+      var opt = e.target.closest('.opt');
+      var back = e.target.closest('[data-back]');
+      if (back) { show(Math.max(1, current - 1)); return; }
+      if (!opt) return;
+      answers[opt.dataset.q] = opt.dataset.v;
+      if (current < 3) { show(current + 1); }
+      else { render(); }
+    });
+
+    document.getElementById('restart').addEventListener('click', function () {
+      answers = {}; show(1);
+    });
+
+    // Recovery actions keyed by concern + place. Time tunes the suggested length.
+    var ACTIONS = {
+      sleep: {
+        home:  '寝室の光を一段落とし、深い呼吸を10回。眠りは「環境から」が近道です。',
+        work:  '席で目を閉じ、肩をゆっくり2回だけ回す。夜の眠りは、昼の緊張を抜くことから。',
+        move:  '窓の外の遠くを見て、視線の力を抜く。帰ったら寝室の光を落とす準備を。'
+      },
+      tired: {
+        home:  '画面から目を離し、遠くを20秒見る。首の後ろをやさしく温める。',
+        work:  '20秒だけ遠くを見て、まばたきを意識的に。目と頭の疲れは視線から。',
+        move:  '目を閉じて数呼吸。降りたら少し歩いて血流を戻す。'
+      },
+      focus: {
+        home:  '机の上を一つだけ片づけ、水を一口。集中は「始める前の1分」で決まります。',
+        work:  '通知を3分だけ切って、いちばん小さいタスクから。音が気になるなら耳を守る。',
+        move:  '次の一手だけメモする。着いたら通知を切って最初の3分を守る。'
+      },
+      tense: {
+        home:  '照明を落として、吐く息を長く5回。刺激を減らすと、緊張はゆるみます。',
+        work:  '耳と目に入る刺激を一つ減らす（音・光）。肩の力を抜いて長く吐く。',
+        move:  'イヤホンで環境音をやわらげ、呼吸をゆっくり。人混みの刺激から自分を守る。'
+      }
+    };
+
+    var CONCERN_LABEL = { sleep: '眠れないあなたへ', tired: '頭が疲れたあなたへ', focus: '集中できないあなたへ', tense: '緊張が抜けないあなたへ' };
+    // Which research note to point at (only sleep is live; others go to the index).
+    var ARTICLE = {
+      sleep: { href: '/research/sleep-gadgets-7.html', label: '睡眠の研究ノートを読む' },
+      tired: { href: '/research/', label: '研究ノートを見る' },
+      focus: { href: '/research/', label: '研究ノートを見る' },
+      tense: { href: '/research/', label: '研究ノートを見る' }
+    };
+
+    // Arrow SVG built with namespaced DOM (no innerHTML — safe construction).
+    function arrowSvg() {
+      var NS = 'http://www.w3.org/2000/svg';
+      var svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('class', 'arrow');
+      svg.setAttribute('width', '18'); svg.setAttribute('height', '18');
+      svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '1.6');
+      svg.setAttribute('stroke-linecap', 'round'); svg.setAttribute('stroke-linejoin', 'round');
+      svg.setAttribute('aria-hidden', 'true');
+      ['M5 12h14', 'm13 6 6 6-6 6'].forEach(function (d) {
+        var pth = document.createElementNS(NS, 'path');
+        pth.setAttribute('d', d); svg.appendChild(pth);
+      });
+      return svg;
+    }
+
+    function render() {
+      var c = answers.concern, t = answers.time, p = answers.place;
+      var action = (ACTIONS[c] && ACTIONS[c][p]) || 'ゆっくり息を吐いて、肩の力を抜きましょう。';
+      var timeNote = t === '3' ? 'まずは3分。' : t === '15' ? '15分あれば、もう一歩。' : '今夜・週末に、環境から整えるのがおすすめです。';
+      document.getElementById('resultTitle').textContent = CONCERN_LABEL[c] || 'あなたへ';
+      document.getElementById('resultBody').textContent = action + ' ' + timeNote;
+
+      var art = ARTICLE[c] || ARTICLE.sleep;
+      var acts = document.getElementById('resultActions');
+      while (acts.firstChild) { acts.removeChild(acts.firstChild); }
+
+      var primary = document.createElement('a');
+      primary.className = 'btn-primary';
+      primary.setAttribute('href', art.href);
+      primary.appendChild(document.createTextNode(art.label));
+      primary.appendChild(arrowSvg());
+
+      var ghost = document.createElement('a');
+      ghost.className = 'btn-ghost';
+      ghost.setAttribute('href', '/');
+      ghost.textContent = 'ホームへ戻る';
+
+      acts.appendChild(primary);
+      acts.appendChild(ghost);
+
+      quiz.hidden = true;
+      result.hidden = false;
+      dots.forEach(function (d) { d.classList.add('on'); });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    show(1);
+  })();
+  </script>
+</body>
+</html>
