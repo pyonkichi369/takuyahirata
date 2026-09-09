@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="こころのマッサージの研究ノート一覧。睡眠・休息・集中・水分補給の悩みを、根拠のある比較でやさしくほぐします。">
+  <meta name="description" content="こころのマッサージの研究ノート一覧。睡眠・休息・集中・水分補給の悩みを、根拠のある比較でやさしくほぐす、個人の研究ノート。">
   <meta name="theme-color" content="#FBF8F2">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://takuyahirata.com/research/">
@@ -11,8 +11,8 @@
   <title>研究ノート一覧 | こころのマッサージ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/kokoro.css?v=1">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/kokoro.css?v=3">
 </head>
 <body>
   <div class="disclosure-strip">当サイトは広告（アフィリエイトプログラム）を含みます。掲載順位に広告報酬は反映していません。</div>
@@ -27,65 +27,68 @@
     </div>
   </header>
 
-  <main>
-    <div class="container page-hero">
-      <p class="page-eyebrow">Research Notes</p>
-      <h1 class="page-title">研究ノート</h1>
-      <p class="page-lead">悩みごとに、根拠を確かめてから比べる。効果を断定せず、根拠のレベルと限界を添えてお届けします。</p>
-    </div>
+  <main class="container wrap-narrow">
+    <section class="masthead" aria-label="研究ノート" style="padding-bottom:24px;">
+      <p class="lab-kicker">Research notes / 研究ノート</p>
+      <h1 style="font-size:clamp(30px,4vw,44px);margin-bottom:16px;">研究ノート</h1>
+      <p class="lead" style="margin-bottom:0;">悩みごとに、根拠を確かめてから比べる。効果を断定せず、根拠のレベルと限界を添えてお届けします。</p>
+    </section>
 
-    <div class="container section" style="padding-top: 24px;">
-      <div class="filter-row" aria-label="カテゴリで絞り込み（準備中）">
-        <span class="chip is-active">すべて</span>
-        <span class="chip">睡眠</span>
-        <span class="chip">休息</span>
-        <span class="chip">集中</span>
-        <span class="chip">水分補給</span>
+    <section class="blog-section" aria-label="記事一覧" style="padding-top:24px;">
+      <div class="theme-links" style="margin-bottom:28px;">
+        <a href="#" style="border-color:var(--color-ink);color:var(--color-ink);">すべて</a>
+        <a href="#">睡眠</a>
+        <a href="#">休息</a>
+        <a href="#">集中</a>
+        <a href="#">水分補給</a>
       </div>
 
-      <div class="research-list">
-        <a class="note-card" href="/research/sleep-environment.html">
-          <div class="note-media">
-            <div class="note-media-fill" aria-hidden="true">
-              <svg width="72" height="72" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 54V28"/><path d="M32 34c-8 0-14-5-14-13 8 0 14 5 14 13Z"/><path d="M32 30c6 0 11-4 11-10-6 0-11 4-11 10Z"/></svg>
+      <div class="note-list">
+        <a class="note-row" href="/research/sleep-environment.html">
+          <div class="row-main">
+            <div class="row-meta">
+              <time class="row-date">2026.09.09</time>
+              <span class="badge-inline">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 14 5l2.4-.3.8 2.3 2 1.4-1 2.2 1 2.2-2 1.4-.8 2.3L14 19l-2 1.5L10 19l-2.4.3-.8-2.3-2-1.4 1-2.2-1-2.2 2-1.4.8-2.3L10 5Z"/><path d="m9.3 12 1.8 1.8 3.6-3.6"/></svg>
+                出典を確認済み
+              </span>
             </div>
-            <span class="note-badge">
-              <svg class="dot" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 14 5l2.4-.3.8 2.3 2 1.4-1 2.2 1 2.2-2 1.4-.8 2.3L14 19l-2 1.5L10 19l-2.4.3-.8-2.3-2-1.4 1-2.2-1-2.2 2-1.4.8-2.3L10 5Z"/><path d="m9.3 12 1.8 1.8 3.6-3.6"/></svg>
-              出典を確認済み
-            </span>
+            <h3>睡眠環境を整える <span class="em">— 光・温度・音の3つから</span></h3>
+            <p class="row-desc">夜の光・室温・騒音が睡眠にどう関わるか。査読済み研究3件を出典に、根拠レベルと限界まで明示しました。</p>
+            <div class="row-tags"><span class="tag">睡眠</span><span class="tag">環境</span><span class="tag">出典あり</span></div>
           </div>
-          <div class="note-body">
-            <h3 class="note-title">睡眠環境を整える<br><span class="em">— 光・温度・音の3つから</span></h3>
-            <p class="note-desc">夜の光・室温・騒音が睡眠にどう関わるか。査読済み研究3件を出典に、根拠レベルと限界まで明示した実記事。</p>
-            <div class="note-meta">
-              <time class="note-date">2026.09.09</time>
-              <span class="tag">睡眠</span><span class="tag">環境</span><span class="tag">出典あり</span>
-            </div>
-          </div>
+          <svg class="row-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
         </a>
-        <a class="note-card" href="/research/sleep-gadgets-7.html">
-          <div class="note-media">
-            <div class="note-media-fill" aria-hidden="true">
-              <svg width="72" height="72" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 54V28"/><path d="M32 34c-8 0-14-5-14-13 8 0 14 5 14 13Z"/><path d="M32 30c6 0 11-4 11-10-6 0-11 4-11 10Z"/></svg>
+
+        <a class="note-row" href="/research/work-recovery.html">
+          <div class="row-main">
+            <div class="row-meta">
+              <time class="row-date">2026.09.09</time>
+              <span class="badge-inline pending">レビュー待ち</span>
             </div>
-            <span class="note-badge">
-              <svg class="dot" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 14 5l2.4-.3.8 2.3 2 1.4-1 2.2 1 2.2-2 1.4-.8 2.3L14 19l-2 1.5L10 19l-2.4.3-.8-2.3-2-1.4 1-2.2-1-2.2 2-1.4.8-2.3L10 5Z"/><path d="m9.3 12 1.8 1.8 3.6-3.6"/></svg>
-              テンプレート見本
-            </span>
+            <h3>仕事中の回復 <span class="em">— 短い休憩の取り方を、研究から</span></h3>
+            <p class="row-desc">マイクロブレイクのメタ分析と厚労省ガイドラインをもとに、休憩の目安を根拠レベルつきで。公開前レビュー待ちです。</p>
+            <div class="row-tags"><span class="tag">休息</span><span class="tag">集中</span><span class="tag">出典あり</span></div>
           </div>
-          <div class="note-body">
-            <h3 class="note-title">睡眠の質を上げる寝具・ガジェット7選<br><span class="em">— 研究でわかった本当に効果的なもの</span></h3>
-            <p class="note-desc">記事テンプレート（仕様§3.3の8ブロック構成）の実例。結論→対象→根拠→比較→検証→選択→開示→次の行動。</p>
-            <div class="note-meta">
-              <time class="note-date">見本</time>
-              <span class="tag">睡眠</span><span class="tag">比較</span><span class="tag">生活改善</span>
+          <svg class="row-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+
+        <a class="note-row" href="/research/sleep-gadgets-7.html">
+          <div class="row-main">
+            <div class="row-meta">
+              <time class="row-date">見本</time>
+              <span class="badge-inline pending">テンプレート見本</span>
             </div>
+            <h3>睡眠の質を上げる寝具・ガジェット7選 <span class="em">— 記事テンプレートの実例</span></h3>
+            <p class="row-desc">記事テンプレート（仕様§3.3の8ブロック構成）の実例。結論→対象→根拠→比較→検証→選択→開示→次の行動。</p>
+            <div class="row-tags"><span class="tag">睡眠</span><span class="tag">比較</span><span class="tag">見本</span></div>
           </div>
+          <svg class="row-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
         </a>
       </div>
 
-      <p class="note-desc" style="margin-top: 26px; color: var(--text-muted); font-size: 12.5px;">※ 記事は、AIの調査を人が確認し「出典あり・原文一致・更新日あり・広告開示あり」を満たしたものから順次公開します。「テンプレート見本」は構成を示すためのもので、公開記事ではありません。</p>
-    </div>
+      <p class="row-desc" style="margin-top:22px;color:var(--text-muted);font-size:12.5px;">※ 記事は「出典あり・原文一致・更新日あり・広告開示あり」を満たし、人が確認したものから順に公開します。「レビュー待ち」は執筆済みで承認前、「テンプレート見本」は構成を示すためのもので公開記事ではありません。</p>
+    </section>
   </main>
 
   <footer class="site-footer">

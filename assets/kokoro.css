@@ -24,6 +24,7 @@
   /* Type */
   --font-serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --font-sans: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --fs-body: 16px;
   --lh-body: 1.8;
 
@@ -433,6 +434,173 @@ img { max-width: 100%; display: block; }
   padding: 9px 20px;
   line-height: 1.6;
 }
+
+/* ============================================================
+   Plain personal-blog layout （素朴な個人ブログ × 静かな研究室）
+   Text-led, generous whitespace, single reading column.
+   ============================================================ */
+.wrap-narrow { max-width: 760px; }
+
+/* Masthead hero — calm, text-first, no big image panel */
+.masthead { padding-block: 72px 40px; }
+.masthead .lab-kicker { margin-bottom: 18px; }
+.masthead h1 {
+  font-size: clamp(34px, 4.4vw, 52px);
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: 0.01em;
+  margin: 0 0 20px;
+}
+.masthead .lead {
+  font-size: 18px; color: var(--text-body); line-height: 1.95; margin: 0 0 26px;
+}
+.masthead .hello {
+  font-size: 15px; color: var(--text-body); line-height: 2;
+  border-left: 2px solid var(--color-sage); padding-left: 18px; margin: 0 0 28px;
+}
+.masthead .hello .sign { font-family: var(--font-serif); color: var(--text-strong); }
+.masthead .cta-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.masthead .cta-quiet { font-size: 14px; color: var(--text-muted); }
+.masthead .cta-quiet a { color: var(--color-ink); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Section rhythm for the plain layout */
+.blog-section { padding-block: 40px; border-top: 1px solid var(--line); }
+.blog-section > .lab-kicker { margin-bottom: 18px; }
+.blog-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
+.blog-head h2 { font-size: clamp(22px, 2.6vw, 28px); }
+
+/* Themes as quiet inline links (悩みショートカット) */
+.theme-links { display: flex; flex-wrap: wrap; gap: 10px 12px; }
+.theme-links a {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 15px; color: var(--text-strong);
+  border: 1px solid var(--card-line); border-radius: 999px;
+  padding: 9px 18px; background: var(--card);
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.theme-links a:hover { border-color: var(--color-sage); color: var(--color-ink); }
+.theme-links a svg { color: var(--color-sage); }
+
+/* Research notes as a plain blog list (no image cards) */
+.note-list { display: flex; flex-direction: column; }
+.note-row {
+  display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center;
+  padding: 24px 4px; border-bottom: 1px solid var(--line);
+  transition: background var(--dur) var(--ease);
+}
+.note-row:first-child { border-top: 1px solid var(--line); }
+.note-row:hover { background: rgba(126,155,131,0.05); }
+.note-row .row-meta {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;
+}
+.note-row .row-date { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); letter-spacing: 0.02em; }
+.badge-inline {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11.5px; font-weight: 600; color: var(--color-ink);
+  background: var(--color-sage-soft); padding: 3px 10px; border-radius: 999px;
+}
+.badge-inline.pending { background: var(--color-ivory-warm); color: var(--text-muted); }
+.note-row h3 { font-size: 20px; line-height: 1.5; margin: 0 0 6px; }
+.note-row h3 .em { color: var(--color-ink); }
+.note-row .row-desc { font-size: 14px; color: var(--text-body); line-height: 1.8; margin: 0 0 8px; }
+.note-row .row-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.note-row .row-chev { color: var(--text-muted); transition: transform var(--dur) var(--ease); }
+.note-row:hover .row-chev { transform: translateX(3px); color: var(--color-ink); }
+@media (max-width: 560px) {
+  .note-row { grid-template-columns: 1fr; }
+  .note-row .row-chev { display: none; }
+}
+
+/* Quiet compare box (no saturated band) */
+.compare-quiet {
+  border: 1px solid var(--card-line); border-radius: var(--radius-card);
+  padding: 28px 30px; background: var(--card);
+}
+.compare-quiet h2 { font-size: 22px; margin: 0 0 8px; }
+.compare-quiet p { font-size: 14px; color: var(--text-body); margin: 0 0 20px; }
+.compare-quiet .compare-fields { margin-bottom: 18px; }
+.compare-quiet .field { min-width: 170px; }
+
+/* ============================================================
+   Research-lab / personal-notebook cues
+   （個人ブログ × 静かな研究室）
+   ============================================================ */
+/* Monospace eyebrow label, e.g. "RESEARCH NOTES" */
+.lab-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 10px;
+}
+.lab-kicker::before {
+  content: "";
+  width: 20px; height: 1px;
+  background: var(--color-sage);
+}
+
+/* Faint graph-paper texture (lab notebook) */
+.graph-paper {
+  background-color: var(--color-ivory-warm);
+  background-image:
+    linear-gradient(rgba(126, 155, 131, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 155, 131, 0.10) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Personal researcher note band */
+.lab-note {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--card-line);
+  padding: 34px 36px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 26px;
+  align-items: start;
+}
+.lab-note .stamp {
+  flex: none;
+  width: 58px; height: 58px;
+  border-radius: 999px;
+  background: var(--color-ivory);
+  border: 1px solid var(--card-line);
+  display: grid; place-items: center;
+  color: var(--color-sage);
+}
+.lab-note .lab-kicker { margin-bottom: 8px; }
+.lab-note p { margin: 0 0 12px; color: var(--text-body); font-size: 15px; }
+.lab-note p:last-of-type { margin-bottom: 0; }
+.lab-sign {
+  font-family: var(--font-serif);
+  color: var(--text-strong);
+  font-size: 15px;
+  margin-top: 4px;
+}
+.lab-sign a { color: var(--color-terracotta); text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 640px) {
+  .lab-note { grid-template-columns: 1fr; gap: 16px; padding: 26px 22px; }
+}
+
+/* Note number badge on cards (研究ノート No.) */
+.note-no {
+  position: absolute;
+  top: 14px; right: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-ink);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 3px 9px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* Monospace metadata (dates read like lab entries) */
+.note-date { font-family: var(--font-mono); letter-spacing: 0.02em; }
 
 /* ============================================================
    Sub-pages (about / methodology / disclosure) — prose
