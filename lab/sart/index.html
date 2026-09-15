@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="集中の持続チェック — 数字が次々現れる単調な課題で、3の時だけ反応しないという1つのルールをどれだけ守れるかを見る1〜2分の課題です。結果はこの端末にのみ保存されます。">
+  <meta name="theme-color" content="#FBF8F2">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://takuyahirata.com/lab/sart/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>集中の持続 | 脳の実験室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/brain.css?v=2">
+  <link rel="stylesheet" href="/assets/lab.css?v=2">
+  <link rel="stylesheet" href="/assets/lab-sart.css?v=1">
+</head>
+<body>
+  <header class="site-header page-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="脳の実験室 ホーム">
+        <svg class="brand-mark" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4C10 5 5 11 5 19c7 0 13-4 15-15Z"/><path d="M5 19C8 14 12 10 17 8"/></svg>
+        <span class="brand-text"><span class="brand-name">脳の実験室</span><span class="brand-tag">測って、読んで、試して、また測る</span></span>
+      </a>
+      <a class="page-back" href="/lab/">← ラボへ</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container wrap-narrow page-hero lab-hero--tight">
+      <p class="page-eyebrow lab-kicker">1–2 minutes / 集中の持続</p>
+      <h1 class="page-title">集中の持続</h1>
+      <p class="page-lead">数字が1つずつ、ぽんぽんと現れます。3以外の数字ならタップ（またはスペースキー）、3の時だけ何もしない — ルールはそれだけです。単調な作業のあいだ心がどれだけ彷徨うかを、3で思わず押してしまう回数から見ます。</p>
+    </div>
+
+    <div class="container wrap-narrow section lab-section--tight">
+
+      <!-- Intro -->
+      <section id="intro">
+        <ul class="lab-intro-list">
+          <li>数字が次々に現れます。3以外ならタップまたはスペースキー、3の時だけ何もしません。</li>
+          <li>1つの数字はすぐに消えて、丸い記号に切り替わります。反応はその間ずっと受け付けます。</li>
+          <li>まず練習を8回。正解・不正解のフィードバックが出ます（3は2回出ます）。</li>
+          <li>そのあと本番を90回。ペースは一定で、所要時間は1分45秒ほどです。</li>
+          <li>単調な作業ほど心が彷徨いやすくなり、3が出た瞬間に思わず押してしまいやすくなる、とされる課題の簡易版です。</li>
+        </ul>
+        <div class="lab-start-row">
+          <button type="button" class="btn-primary" id="startBtn">はじめる
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+          <span id="historyHint" class="lab-delta lab-delta--inline"></span>
+        </div>
+      </section>
+
+      <!-- Stage -->
+      <section id="stageWrap" hidden>
+        <div class="lab-stage" id="stage" tabindex="0" role="button" aria-label="3以外の数字ならタップ、3の時は何もしないでください">
+          <span class="lab-trial-counter" id="trialCounter"></span>
+          <span class="lab-practice-badge" id="practiceBadge" hidden>練習</span>
+          <span class="sart-digit" id="sartDigit" aria-hidden="true">&nbsp;</span>
+          <span class="lab-feedback" id="stageFeedback" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- Result -->
+      <section id="result" class="lab-result" hidden aria-live="polite">
+        <div class="lab-result-card">
+          <p class="result-eyebrow">集中の持続の結果</p>
+          <div class="lab-result-headline">
+            <span class="num" id="resHeadline">—</span>
+            <span class="unit" id="resHeadlineUnit">回のうっかり押し（10回中）</span>
+          </div>
+          <div class="delta-row delta-row--primary" id="resDeltaRow"></div>
+          <p class="lab-tier-pill" id="resTier">—</p>
+
+          <div class="lab-stat-grid">
+            <div class="stat-tile"><div class="label">見逃し（反応なし）</div><div class="value" id="resOmissions">—</div></div>
+            <div class="stat-tile"><div class="label">反応時間の平均</div><div class="value" id="resMeanRt">—</div></div>
+            <div class="stat-tile"><div class="label">反応のばらつき</div><div class="value" id="resSdRt">—</div></div>
+          </div>
+
+          <p class="lab-reference-note">
+            <span class="grade-badge grade-C"><span class="g">C</span>参考値</span>
+            <span id="resReference"></span>
+          </p>
+
+          <div class="lab-sources">
+            <p class="lab-sources-title">出典</p>
+            <ul id="resSources"></ul>
+          </div>
+
+          <div class="lab-share-row">
+            <button type="button" class="btn-share btn-share--primary" id="shareBtn">結果をシェアする</button>
+            <a class="btn-share" id="saveLink" download hidden>画像を保存</a>
+            <button type="button" class="btn-share" id="copyBtn">リンクをコピー</button>
+            <a class="btn-share" id="xBtn" target="_blank" rel="noopener">Xでシェア</a>
+          </div>
+
+          <p class="lab-result-note">娯楽・自己観察のためのもので、医学的・心理学的な評価ではありません。</p>
+
+          <div class="lab-result-links">
+            <a class="btn-ghost" href="/research/mind-wandering.html">心はよく彷徨うを読む</a>
+            <a class="btn-ghost" href="/research/work-recovery.html">仕事中の回復を読む</a>
+            <a class="btn-ghost" href="/lab/">実験室へ戻る</a>
+          </div>
+        </div>
+        <button type="button" class="check-back lab-restart-btn" id="restartBtn">↺ もう一度測る</button>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>© 2026 脳の実験室 / 平田拓也</span>
+      <span><a href="/">ホーム</a> ・ <a href="/methodology.html">編集方針</a> ・ <a href="/disclosure.html">広告開示</a></span>
+    </div>
+  </footer>
+
+  <script src="/assets/lab.js?v=1"></script>
+  <script src="/assets/lab-share.js?v=1"></script>
+  <script src="config.js?v=1"></script>
+  <script>
+  (function () {
+    var TEST = 'sart';
+    var config = Lab.tests[TEST]; // registered by config.js
+    var DIGIT_MS = 250;
+    var TRIAL_MS = 1150;
+    var PRACTICE_GAP_MS = 700;
+    var GO_DIGITS = [1, 2, 4, 5, 6, 7, 8, 9];
+
+    var intro = document.getElementById('intro');
+    var stageWrap = document.getElementById('stageWrap');
+    var stage = document.getElementById('stage');
+    var trialCounter = document.getElementById('trialCounter');
+    var practiceBadge = document.getElementById('practiceBadge');
+    var sartDigit = document.getElementById('sartDigit');
+    var stageFeedback = document.getElementById('stageFeedback');
+    var resultSection = document.getElementById('result');
+    var historyHint = document.getElementById('historyHint');
+
+    var deck = [];
+    var deckIndex = 0;
+    var isPractice = true;
+    var running = false;
+    var awaitingResponse = false;
+    var responded = false;
+    var trialStart = 0;
+    var trialResponseMs = null;
+    var digitTimer = null;
+    var trialTimer = null;
+    var results = []; // {isNoGo, pressed, rt}
+
+    var prevEntry = Lab.history.last(TEST);
+    if (prevEntry) {
+      historyHint.textContent = '前回：うっかり押し ' + Math.round(prevEntry.score) + '回（' + Lab.format.date(prevEntry.ts) + '）';
+    }
+
+    // ---- deck building --------------------------------------------
+    // Places `noGoCount` digit-3 trials into a `total`-trial deck:
+    // never within the first `minFirstIndex` trials, never adjacent
+    // to another 3 (gap >= minGap). Retries a bounded number of times
+    // (there is always ample room for these constraints at this
+    // scale) then falls back to an evenly spaced placement.
+    function buildSartDeck(total, noGoCount, minFirstIndex, minGap) {
+      for (var attempt = 0; attempt < 300; attempt++) {
+        var candidates = [];
+        for (var i = minFirstIndex; i < total; i++) candidates.push(i);
+        candidates = Lab.rand.shuffle(candidates);
+        var chosen = [];
+        for (var c = 0; c < candidates.length && chosen.length < noGoCount; c++) {
+          var p = candidates[c], ok = true;
+          for (var k = 0; k < chosen.length; k++) {
+            if (Math.abs(chosen[k] - p) < minGap) { ok = false; break; }
+          }
+          if (ok) chosen.push(p);
+        }
+        if (chosen.length === noGoCount) {
+          var set = {};
+          chosen.forEach(function (p) { set[p] = true; });
+          var goCount = total - noGoCount;
+          var per = Math.floor(goCount / GO_DIGITS.length);
+          var rem = goCount % GO_DIGITS.length;
+          var goPool = [];
+          GO_DIGITS.forEach(function (d, di) {
+            var n = per + (di < rem ? 1 : 0);
+            for (var r = 0; r < n; r++) goPool.push(d);
+          });
+          goPool = Lab.rand.shuffle(goPool);
+          var deckOut = new Array(total);
+          var gi = 0;
+          for (var idx = 0; idx < total; idx++) {
+            deckOut[idx] = set[idx] ? 3 : goPool[gi++];
+          }
+          return deckOut;
+        }
+      }
+      // Fallback: evenly spaced 3s, Go digits cycled in order.
+      var deckFallback = [];
+      for (var f = 0; f < total; f++) deckFallback.push(GO_DIGITS[f % GO_DIGITS.length]);
+      var step = Math.max(minGap, Math.floor((total - minFirstIndex) / noGoCount));
+      for (var n2 = 0; n2 < noGoCount; n2++) {
+        var pos = minFirstIndex + n2 * step;
+        if (pos < total) deckFallback[pos] = 3;
+      }
+      return deckFallback;
+    }
+
+    // ---- stimulus rendering (DOM-safe) -----------------------------
+    function clearStim() {
+      while (sartDigit.firstChild) sartDigit.removeChild(sartDigit.firstChild);
+    }
+    function renderDigit(d) {
+      clearStim();
+      sartDigit.appendChild(document.createTextNode(String(d)));
+    }
+    function renderMask() {
+      clearStim();
+      var mask = document.createElement('span');
+      mask.className = 'sart-mask';
+      sartDigit.appendChild(mask);
+    }
+
+    function showTrial() {
+      stageFeedback.textContent = '';
+      var digit = deck[deckIndex];
+      trialCounter.textContent = (deckIndex + 1) + ' / ' + deck.length;
+      practiceBadge.hidden = !isPractice;
+      awaitingResponse = true;
+      responded = false;
+      trialResponseMs = null;
+      trialStart = Lab.now();
+      renderDigit(digit);
+      digitTimer = setTimeout(renderMask, DIGIT_MS);
+      trialTimer = setTimeout(finalizeTrial, TRIAL_MS);
+    }
+
+    function handleResponse() {
+      if (!running || !awaitingResponse || responded) return;
+      responded = true;
+      trialResponseMs = Math.round(Lab.now() - trialStart);
+    }
+
+    function finalizeTrial() {
+      clearTimeout(digitTimer);
+      awaitingResponse = false;
+      var digit = deck[deckIndex];
+      var isNoGo = digit === 3;
+      var pressed = responded;
+
+      if (isPractice) {
+        var text, ok;
+        if (isNoGo && pressed) { text = '3で反応してしまいました'; ok = false; }
+        else if (isNoGo && !pressed) { text = '正解（我慢できました）'; ok = true; }
+        else if (!isNoGo && pressed) { text = '正解'; ok = true; }
+        else { text = '反応なし（見逃しです）'; ok = false; }
+        stageFeedback.textContent = text;
+        stageFeedback.classList.toggle('is-ok', ok);
+      } else {
+        results.push({ isNoGo: isNoGo, pressed: pressed, rt: pressed ? trialResponseMs : null });
+      }
+
+      deckIndex++;
+      if (deckIndex >= deck.length) {
+        if (isPractice) { setTimeout(startMain, PRACTICE_GAP_MS); } else { finish(); }
+        return;
+      }
+      if (isPractice) {
+        setTimeout(showTrial, PRACTICE_GAP_MS);
+      } else {
+        showTrial();
+      }
+    }
+
+    function startMain() {
+      isPractice = false;
+      deck = buildSartDeck(config.mainTrials, config.noGoCount, 3, 2);
+      deckIndex = 0;
+      results = [];
+      showTrial();
+    }
+
+    stage.addEventListener('click', handleResponse);
+    document.addEventListener('keydown', function (e) {
+      if (!running) return;
+      if (e.code === 'Space' && !e.repeat) { e.preventDefault(); handleResponse(); }
+    });
+
+    document.getElementById('startBtn').addEventListener('click', function () {
+      intro.hidden = true;
+      stageWrap.hidden = false;
+      isPractice = true;
+      running = true;
+      deck = buildSartDeck(8, 2, 2, 2);
+      deckIndex = 0;
+      results = [];
+      stage.focus();
+      showTrial();
+    });
+
+    // Local stdev helper — lab.js only ships mean/median.
+    function stdDev(nums) {
+      if (!nums || nums.length < 2) return null;
+      var m = Lab.mean(nums);
+      var sumSq = 0;
+      for (var i = 0; i < nums.length; i++) { var d = nums[i] - m; sumSq += d * d; }
+      return Math.sqrt(sumSq / (nums.length - 1));
+    }
+
+    // Local delta-row renderer — Lab.format.renderDeltaRow hardcodes
+    // "ms" as its unit, which doesn't fit this test's "回" count.
+    function renderDeltaRowLocal(containerEl, currentScore, previousEntry, measureCount, unit) {
+      while (containerEl.firstChild) containerEl.removeChild(containerEl.firstChild);
+      var label = document.createElement('span');
+      label.className = 'delta-label';
+      if (!previousEntry || previousEntry.score == null || currentScore == null) {
+        label.textContent = '今回が初回の記録です';
+        containerEl.appendChild(label);
+        var firstDetail = document.createElement('span');
+        firstDetail.className = 'delta-detail';
+        firstDetail.textContent = '次回、前回との差が表示されます。';
+        containerEl.appendChild(firstDetail);
+        return;
+      }
+      var diff = Math.round(currentScore - previousEntry.score);
+      label.textContent = '前回との差';
+      containerEl.appendChild(label);
+      var value = document.createElement('span');
+      value.className = 'delta-value';
+      value.textContent = (diff > 0 ? '+' : diff < 0 ? '' : '±') + diff + unit;
+      containerEl.appendChild(value);
+      var detail = document.createElement('span');
+      detail.className = 'delta-detail';
+      var countText = measureCount ? '（' + measureCount + '回目の測定）' : '';
+      detail.textContent = Math.round(previousEntry.score) + unit + ' → ' + Math.round(currentScore) + unit + countText;
+      containerEl.appendChild(detail);
+    }
+
+    function finish() {
+      running = false;
+      stageWrap.hidden = true;
+
+      var commissionErrors = results.filter(function (r) { return r.isNoGo && r.pressed; }).length;
+      var omissions = results.filter(function (r) { return !r.isNoGo && !r.pressed; }).length;
+      var goRts = results.filter(function (r) { return !r.isNoGo && r.pressed && r.rt != null; }).map(function (r) { return r.rt; });
+      var meanRt = Lab.mean(goRts);
+      var sd = stdDev(goRts);
+      var tierInfo = Lab.tier.forValue(TEST, commissionErrors);
+
+      document.getElementById('resHeadline').textContent = commissionErrors;
+      document.getElementById('resTier').textContent = tierInfo.label || '判定不可';
+      document.getElementById('resOmissions').textContent = omissions + '回（80回中）';
+      document.getElementById('resMeanRt').textContent = meanRt != null ? Math.round(meanRt) + 'ms' : '—';
+      document.getElementById('resSdRt').textContent = sd != null ? Math.round(sd) + 'ms' : '—';
+      document.getElementById('resReference').textContent = config.referenceNote;
+      Lab.sources.render(document.getElementById('resSources'), config.sources);
+
+      var previous = Lab.history.add(TEST, { ts: Date.now(), score: commissionErrors, tier: tierInfo.tier, extra: { omissions: omissions, meanRt: meanRt, sdRt: sd } });
+      renderDeltaRowLocal(document.getElementById('resDeltaRow'), commissionErrors, previous, Lab.history.load(TEST).length, '回');
+
+      var shareUrl = location.origin + '/lab/sart/r/' + (tierInfo.tier || 1) + '.html?v=' + commissionErrors;
+      var shareText = config.shareLead + '：うっかり押し ' + commissionErrors + '回（10回中）でした。';
+
+      document.getElementById('xBtn').href = Lab.share.xIntentUrl(shareText, shareUrl);
+
+      document.getElementById('shareBtn').addEventListener('click', function () {
+        var canvas = Lab.share.buildResultCardCanvas({
+          testLabel: config.name,
+          headline: commissionErrors,
+          headlineUnit: '回のうっかり押し（10回中）',
+          tierLabel: tierInfo.label,
+          dateStr: Lab.format.date(Date.now()),
+          url: 'takuyahirata.com/lab/sart/'
+        });
+        Lab.share.present({ canvas: canvas, title: '脳の実験室', text: shareText, url: shareUrl, filenameBase: 'sart-result' }).then(function (res) {
+          if (res.method === 'download') {
+            var link = document.getElementById('saveLink');
+            link.href = res.url;
+            link.download = res.filename;
+            link.hidden = false;
+          }
+        });
+      });
+
+      document.getElementById('copyBtn').addEventListener('click', function (e) {
+        var btn = e.currentTarget;
+        Lab.share.copyLink(shareUrl).then(function (ok) {
+          btn.textContent = ok ? 'コピーしました' : 'コピーできませんでした';
+          btn.dataset.copied = String(ok);
+          setTimeout(function () { btn.textContent = 'リンクをコピー'; btn.dataset.copied = ''; }, 2000);
+        });
+      });
+
+      resultSection.hidden = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('restartBtn').addEventListener('click', function () {
+      resultSection.hidden = true;
+      intro.hidden = false;
+      var prev = Lab.history.last(TEST);
+      historyHint.textContent = prev ? '前回：うっかり押し ' + Math.round(prev.score) + '回（' + Lab.format.date(prev.ts) + '）' : '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="空間の記憶 — 順番に光るマスを、同じ順番でタップして再現する2〜4分の課題です。再現できる長さがどこまで伸びるかを見ます。結果はこの端末にのみ保存されます。">
+  <meta name="theme-color" content="#FBF8F2">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://takuyahirata.com/lab/corsi/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>空間の記憶 | 脳の実験室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/brain.css?v=2">
+  <link rel="stylesheet" href="/assets/lab.css?v=2">
+  <link rel="stylesheet" href="/assets/lab-corsi.css?v=1">
+</head>
+<body>
+  <header class="site-header page-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="脳の実験室 ホーム">
+        <svg class="brand-mark" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4C10 5 5 11 5 19c7 0 13-4 15-15Z"/><path d="M5 19C8 14 12 10 17 8"/></svg>
+        <span class="brand-text"><span class="brand-name">脳の実験室</span><span class="brand-tag">測って、読んで、試して、また測る</span></span>
+      </a>
+      <a class="page-back" href="/lab/">← ラボへ</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container wrap-narrow page-hero lab-hero--tight">
+      <p class="page-eyebrow lab-kicker">2–4 minutes / 空間の記憶</p>
+      <h1 class="page-title">空間の記憶</h1>
+      <p class="page-lead">マスが決まった順番で、ひとつずつ光ります。光り終わったら、同じ順番でタップして再現してください。再現できる長さは少しずつ伸びていき、続けて失敗すると終わりです。</p>
+    </div>
+
+    <div class="container wrap-narrow section lab-section--tight">
+
+      <!-- Intro -->
+      <section id="intro">
+        <ul class="lab-intro-list">
+          <li>マスが順番に光ります。光り終わったら、見た順番のとおりにタップしてください。</li>
+          <li>最初は2つから。正しく再現できると、次は1つ長い順番に進みます。</li>
+          <li>同じ長さで2回とも間違えると、そこで終了です（最長9つまで）。</li>
+        </ul>
+        <div class="lab-start-row">
+          <button type="button" class="btn-primary" id="startBtn">はじめる
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+          <span id="historyHint" class="lab-delta lab-delta--inline"></span>
+        </div>
+      </section>
+
+      <!-- Stage -->
+      <section id="stageWrap" hidden>
+        <div class="lab-stage lab-stage--tight" id="stage">
+          <span class="lab-trial-counter" id="trialCounter"></span>
+          <div class="corsi-board" id="corsiBoard" role="group" aria-label="マスの盤面">
+            <button type="button" class="corsi-block" data-idx="0" aria-label="マス 1"></button>
+            <button type="button" class="corsi-block" data-idx="1" aria-label="マス 2"></button>
+            <button type="button" class="corsi-block" data-idx="2" aria-label="マス 3"></button>
+            <button type="button" class="corsi-block" data-idx="3" aria-label="マス 4"></button>
+            <button type="button" class="corsi-block" data-idx="4" aria-label="マス 5"></button>
+            <button type="button" class="corsi-block" data-idx="5" aria-label="マス 6"></button>
+            <button type="button" class="corsi-block" data-idx="6" aria-label="マス 7"></button>
+            <button type="button" class="corsi-block" data-idx="7" aria-label="マス 8"></button>
+            <button type="button" class="corsi-block" data-idx="8" aria-label="マス 9"></button>
+          </div>
+          <span class="lab-feedback" id="stageFeedback" aria-live="polite"></span>
+          <button type="button" class="corsi-retry-btn" id="retryBtn" hidden>↺ もう一度見る</button>
+        </div>
+      </section>
+
+      <!-- Result -->
+      <section id="result" class="lab-result" hidden aria-live="polite">
+        <div class="lab-result-card">
+          <p class="result-eyebrow">空間の記憶の結果</p>
+          <div class="lab-result-headline">
+            <span class="num" id="resHeadline">—</span>
+            <span class="unit">（スパン）</span>
+          </div>
+          <div class="delta-row delta-row--primary" id="resDeltaRow"></div>
+          <p class="lab-tier-pill" id="resTier">—</p>
+
+          <div class="lab-stat-grid lab-stat-grid--2col">
+            <div class="stat-tile"><div class="label">正解した系列</div><div class="value" id="resCorrect">—</div></div>
+            <div class="stat-tile"><div class="label">最長で挑戦した長さ</div><div class="value" id="resMaxLength">—</div></div>
+          </div>
+
+          <p class="lab-reference-note">
+            <span class="grade-badge grade-D"><span class="g">D</span>参考値</span>
+            <span id="resReference"></span>
+          </p>
+
+          <div class="lab-sources">
+            <p class="lab-sources-title">出典</p>
+            <ul id="resSources"></ul>
+          </div>
+
+          <div class="lab-share-row">
+            <button type="button" class="btn-share btn-share--primary" id="shareBtn">結果をシェアする</button>
+            <a class="btn-share" id="saveLink" download hidden>画像を保存</a>
+            <button type="button" class="btn-share" id="copyBtn">リンクをコピー</button>
+            <a class="btn-share" id="xBtn" target="_blank" rel="noopener">Xでシェア</a>
+          </div>
+
+          <p class="lab-result-note">娯楽・自己観察のためのもので、医学的・心理学的な評価ではありません。</p>
+
+          <div class="lab-result-links">
+            <a class="btn-ghost" href="/lab/nback/">記憶の作業台を試す</a>
+            <a class="btn-ghost" href="/lab/">実験室へ戻る</a>
+          </div>
+        </div>
+        <button type="button" class="check-back lab-restart-btn" id="restartBtn">↺ もう一度測る</button>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>© 2026 脳の実験室 / 平田拓也</span>
+      <span><a href="/">ホーム</a> ・ <a href="/methodology.html">編集方針</a> ・ <a href="/disclosure.html">広告開示</a></span>
+    </div>
+  </footer>
+
+  <script src="/assets/lab.js?v=1"></script>
+  <script src="/assets/lab-share.js?v=1"></script>
+  <script src="config.js?v=1"></script>
+  <script>
+  (function () {
+    var TEST = 'corsi';
+    var config = Lab.tests[TEST]; // registered by config.js
+    var FEEDBACK_MS = 700;
+
+    var intro = document.getElementById('intro');
+    var stageWrap = document.getElementById('stageWrap');
+    var trialCounter = document.getElementById('trialCounter');
+    var stageFeedback = document.getElementById('stageFeedback');
+    var retryBtn = document.getElementById('retryBtn');
+    var resultSection = document.getElementById('result');
+    var historyHint = document.getElementById('historyHint');
+    var blocks = Array.prototype.slice.call(document.querySelectorAll('.corsi-block'));
+
+    var length = config.startLength;
+    var attemptsAtLevel = 0;
+    var currentSeq = [];
+    var tappedSeq = [];
+    var awaitingTaps = false;
+    var running = false;
+    var span = 0;             // longest length with >=1 correct sequence
+    var totalCorrect = 0;     // total correct sequences across the run
+    var maxLengthTried = 0;
+
+    var prevEntry = Lab.history.last(TEST);
+    if (prevEntry) {
+      historyHint.textContent = '前回：スパン' + Math.round(prevEntry.score) + '（' + Lab.format.date(prevEntry.ts) + '）';
+    }
+
+    function blockByIdx(idx) {
+      return blocks[idx];
+    }
+    function lightBlock(idx) { blockByIdx(idx).classList.add('is-lit'); }
+    function unlightBlock(idx) { blockByIdx(idx).classList.remove('is-lit'); }
+
+    function sampleSequence(len) {
+      var order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+      return Lab.rand.shuffle(order).slice(0, len);
+    }
+
+    function playSequence(seq, i) {
+      if (i >= seq.length) {
+        awaitingTaps = true;
+        retryBtn.hidden = false;
+        return;
+      }
+      lightBlock(seq[i]);
+      setTimeout(function () {
+        unlightBlock(seq[i]);
+        setTimeout(function () { playSequence(seq, i + 1); }, config.gapMs);
+      }, config.litMs);
+    }
+
+    function startLevel(len) {
+      length = len;
+      maxLengthTried = Math.max(maxLengthTried, length);
+      attemptsAtLevel = 0;
+      runAttempt();
+    }
+
+    function runAttempt() {
+      attemptsAtLevel++;
+      trialCounter.textContent = '長さ ' + length + ' ・ ' + attemptsAtLevel + '/2回目';
+      stageFeedback.textContent = '';
+      currentSeq = sampleSequence(length);
+      tappedSeq = [];
+      awaitingTaps = false;
+      retryBtn.hidden = true;
+      playSequence(currentSeq, 0);
+    }
+
+    function handleBlockTap(idx) {
+      if (!awaitingTaps) return;
+      if (tappedSeq.length === 0) retryBtn.hidden = true;
+      tappedSeq.push(idx);
+      var block = blockByIdx(idx);
+      block.classList.add('is-tapped');
+      setTimeout(function () { block.classList.remove('is-tapped'); }, 200);
+      if (tappedSeq.length === currentSeq.length) {
+        awaitingTaps = false;
+        evaluateAttempt();
+      }
+    }
+
+    blocks.forEach(function (b) {
+      var idx = Number(b.dataset.idx);
+      Lab.input.onActivate(b, function () { handleBlockTap(idx); });
+    });
+
+    retryBtn.addEventListener('click', function () {
+      if (!awaitingTaps || tappedSeq.length > 0) return;
+      awaitingTaps = false;
+      retryBtn.hidden = true;
+      playSequence(currentSeq, 0);
+    });
+
+    function evaluateAttempt() {
+      var correct = true;
+      for (var i = 0; i < currentSeq.length; i++) {
+        if (tappedSeq[i] !== currentSeq[i]) { correct = false; break; }
+      }
+      if (correct) { totalCorrect++; span = length; }
+      stageFeedback.textContent = correct ? '正解' : '不正解';
+      stageFeedback.classList.toggle('is-ok', correct);
+
+      setTimeout(function () {
+        stageFeedback.textContent = '';
+        if (correct) {
+          if (length >= config.maxLength) { finish(); return; }
+          startLevel(length + 1);
+        } else if (attemptsAtLevel < 2) {
+          runAttempt();
+        } else {
+          finish();
+        }
+      }, FEEDBACK_MS);
+    }
+
+    document.getElementById('startBtn').addEventListener('click', function () {
+      intro.hidden = true;
+      stageWrap.hidden = false;
+      running = true;
+      span = 0;
+      totalCorrect = 0;
+      maxLengthTried = 0;
+      startLevel(config.startLength);
+    });
+
+    // ---------------------------------------------------------
+    // Local delta-row renderer — Lab.format.renderDeltaRow hardcodes
+    // an "ms" unit, which doesn't fit this test's plain-integer span
+    // headline. Same DOM/class contract as the shared helper so
+    // lab.css styling still applies unchanged.
+    // ---------------------------------------------------------
+    function renderDeltaRowSpan(containerEl, currentScore, previousEntry, measureCount) {
+      while (containerEl.firstChild) containerEl.removeChild(containerEl.firstChild);
+      var label = document.createElement('span');
+      label.className = 'delta-label';
+      if (!previousEntry || previousEntry.score == null || currentScore == null) {
+        label.textContent = '今回が初回の記録です';
+        containerEl.appendChild(label);
+        var firstDetail = document.createElement('span');
+        firstDetail.className = 'delta-detail';
+        firstDetail.textContent = '次回、前回との差が表示されます。';
+        containerEl.appendChild(firstDetail);
+        return;
+      }
+      var diff = Math.round(currentScore - previousEntry.score);
+      label.textContent = '前回との差';
+      containerEl.appendChild(label);
+      var value = document.createElement('span');
+      value.className = 'delta-value';
+      value.textContent = (diff > 0 ? '+' : diff < 0 ? '' : '±') + diff;
+      containerEl.appendChild(value);
+      var detail = document.createElement('span');
+      detail.className = 'delta-detail';
+      var countText = measureCount ? '（' + measureCount + '回目の測定）' : '';
+      detail.textContent = 'スパン' + Math.round(previousEntry.score) + ' → ' + 'スパン' + Math.round(currentScore) + countText;
+      containerEl.appendChild(detail);
+    }
+
+    function finish() {
+      running = false;
+      stageWrap.hidden = true;
+
+      var tierValue = config.maxLength - span; // higher span = better = lower tierValue
+      var tierInfo = Lab.tier.forValue(TEST, tierValue);
+
+      document.getElementById('resHeadline').textContent = span;
+      document.getElementById('resTier').textContent = tierInfo.label || '判定不可';
+      document.getElementById('resCorrect').textContent = totalCorrect + '回';
+      document.getElementById('resMaxLength').textContent = maxLengthTried;
+      document.getElementById('resReference').textContent = config.referenceNote;
+      Lab.sources.render(document.getElementById('resSources'), config.sources);
+
+      var previous = Lab.history.add(TEST, { ts: Date.now(), score: span, tier: tierInfo.tier, extra: { totalCorrect: totalCorrect, maxLengthTried: maxLengthTried } });
+      renderDeltaRowSpan(document.getElementById('resDeltaRow'), span, previous, Lab.history.load(TEST).length);
+
+      var shareUrl = location.origin + '/lab/corsi/r/' + (tierInfo.tier || 1) + '.html?v=' + span;
+      var shareText = config.shareLead + '：スパン' + span + '（正解した系列' + totalCorrect + '回）でした。';
+
+      document.getElementById('xBtn').href = Lab.share.xIntentUrl(shareText, shareUrl);
+
+      document.getElementById('shareBtn').addEventListener('click', function () {
+        var canvas = Lab.share.buildResultCardCanvas({
+          testLabel: config.name,
+          headline: span,
+          headlineUnit: config.unit,
+          tierLabel: tierInfo.label,
+          dateStr: Lab.format.date(Date.now()),
+          url: 'takuyahirata.com/lab/corsi/'
+        });
+        Lab.share.present({ canvas: canvas, title: '脳の実験室', text: shareText, url: shareUrl, filenameBase: 'corsi-result' }).then(function (res) {
+          if (res.method === 'download') {
+            var link = document.getElementById('saveLink');
+            link.href = res.url;
+            link.download = res.filename;
+            link.hidden = false;
+          }
+        });
+      });
+
+      document.getElementById('copyBtn').addEventListener('click', function (e) {
+        var btn = e.currentTarget;
+        Lab.share.copyLink(shareUrl).then(function (ok) {
+          btn.textContent = ok ? 'コピーしました' : 'コピーできませんでした';
+          btn.dataset.copied = String(ok);
+          setTimeout(function () { btn.textContent = 'リンクをコピー'; btn.dataset.copied = ''; }, 2000);
+        });
+      });
+
+      resultSection.hidden = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('restartBtn').addEventListener('click', function () {
+      resultSection.hidden = true;
+      intro.hidden = false;
+      var prev = Lab.history.last(TEST);
+      historyHint.textContent = prev ? '前回：スパン' + Math.round(prev.score) + '（' + Lab.format.date(prev.ts) + '）' : '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+  </script>
+</body>
+</html>

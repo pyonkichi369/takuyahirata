@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="図形推論 — 3x3のマスに並んだ図形の規則を読み取り、右下に入る図形を6択から選ぶ全12問の課題です。1問ごとに規則が変わり、後半は2つの規則が重なります。結果はこの端末にのみ保存されます。">
+  <meta name="theme-color" content="#FBF8F2">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://takuyahirata.com/lab/matrix/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>図形推論 | 脳の実験室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/brain.css?v=2">
+  <link rel="stylesheet" href="/assets/lab.css?v=2">
+  <link rel="stylesheet" href="/assets/lab-matrix.css?v=1">
+</head>
+<body>
+  <header class="site-header page-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="脳の実験室 ホーム">
+        <svg class="brand-mark" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4C10 5 5 11 5 19c7 0 13-4 15-15Z"/><path d="M5 19C8 14 12 10 17 8"/></svg>
+        <span class="brand-text"><span class="brand-name">脳の実験室</span><span class="brand-tag">測って、読んで、試して、また測る</span></span>
+      </a>
+      <a class="page-back" href="/lab/">← ラボへ</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container wrap-narrow page-hero lab-hero--tight">
+      <p class="page-eyebrow lab-kicker">5–8 minutes / 図形推論</p>
+      <h1 class="page-title">図形推論</h1>
+      <p class="page-lead">3x3のマスに図形が並んでいます。右下だけが空いていて、そこに入る図形を規則から考え、6つの選択肢から選びます。全12問、後半になるほど規則が複雑になります。</p>
+    </div>
+
+    <div class="container wrap-narrow section lab-section--tight">
+
+      <!-- Intro -->
+      <section id="intro">
+        <ul class="lab-intro-list">
+          <li>マス目の形・数・向き・塗り・大きさのどれかに規則があります。右下の「？」に入るものを6択から選んでください。</li>
+          <li>1問あたり60秒の目安があります。時間が来ると自動的に次の問題に進みます（不正解として記録）。</li>
+          <li>わからない時は「この問題はスキップ」でも進めます（不正解として記録）。</li>
+          <li>全部で12問。はじめの4問は規則が1つ、次の4問はやや難しい規則が1つ、最後の4問は規則が2つ重なります。</li>
+        </ul>
+        <div class="lab-start-row">
+          <button type="button" class="btn-primary" id="startBtn">はじめる
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+          <span id="historyHint" class="lab-delta lab-delta--inline"></span>
+        </div>
+      </section>
+
+      <!-- Stage -->
+      <section id="stageWrap" hidden>
+        <div class="lab-stage" id="stage">
+          <span class="lab-trial-counter" id="itemCounter">1 / 12</span>
+          <div class="matrix-progress-track"><div class="matrix-progress-bar" id="progressBar"></div></div>
+          <div class="matrix-grid" id="matrixGrid" role="img" aria-label="3かける3のマス。右下だけが空いています。"></div>
+          <div class="matrix-options" id="matrixOptions" role="group" aria-label="右下に入る図形の選択肢"></div>
+          <div class="matrix-skip-row">
+            <button type="button" class="matrix-skip-btn" id="skipBtn">この問題はスキップ</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Result -->
+      <section id="result" class="lab-result" hidden aria-live="polite">
+        <div class="lab-result-card">
+          <p class="result-eyebrow">図形推論の結果</p>
+          <div class="lab-result-headline">
+            <span class="num" id="resHeadline">—</span>
+            <span class="unit">/ 12問（正解数）</span>
+          </div>
+          <p class="lab-tier-pill" id="resTier">—</p>
+
+          <p class="lab-reference-note">
+            <span class="grade-badge grade-D"><span class="g">D</span>参考値</span>
+            <span id="resReference"></span>
+          </p>
+
+          <div class="delta-row" id="resDeltaRow"></div>
+
+          <div class="lab-stat-grid">
+            <div class="stat-tile"><div class="label">平均の解答時間</div><div class="value" id="resAvgTime">—</div></div>
+            <div class="stat-tile"><div class="label">スキップ</div><div class="value" id="resSkips">—</div></div>
+            <div class="stat-tile"><div class="label">時間切れ</div><div class="value" id="resTimeouts">—</div></div>
+          </div>
+
+          <div class="lab-sources" id="sourcesBlock">
+            <p class="lab-sources-title">出典</p>
+            <ul id="resSources"></ul>
+          </div>
+
+          <div class="lab-share-row">
+            <button type="button" class="btn-share btn-share--primary" id="shareBtn">結果をシェアする</button>
+            <a class="btn-share" id="saveLink" download hidden>画像を保存</a>
+            <button type="button" class="btn-share" id="copyBtn">リンクをコピー</button>
+            <a class="btn-share" id="xBtn" target="_blank" rel="noopener">Xでシェア</a>
+          </div>
+
+          <p class="lab-result-note">娯楽・自己観察のためのもので、医学的・心理学的な評価ではありません。</p>
+
+          <div class="lab-result-links">
+            <a class="btn-ghost" href="/lab/nback/">Nバックで作業記憶を試す</a>
+            <a class="btn-ghost" href="/lab/">実験室へ戻る</a>
+          </div>
+        </div>
+        <button type="button" class="check-back lab-restart-btn" id="restartBtn">↺ もう一度測る</button>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>© 2026 脳の実験室 / 平田拓也</span>
+      <span><a href="/">ホーム</a> ・ <a href="/methodology.html">編集方針</a> ・ <a href="/disclosure.html">広告開示</a></span>
+    </div>
+  </footer>
+
+  <script src="/assets/lab.js?v=1"></script>
+  <script src="/assets/lab-share.js?v=1"></script>
+  <script src="config.js?v=1"></script>
+  <script>
+  (function () {
+    var TEST = 'matrix';
+    var config = Lab.tests[TEST]; // registered by config.js
+    var TOTAL_ITEMS = config.totalItems;
+    var TIME_LIMIT_MS = config.timeLimitMs;
+    var SVGNS = 'http://www.w3.org/2000/svg';
+
+    var intro = document.getElementById('intro');
+    var stageWrap = document.getElementById('stageWrap');
+    var itemCounter = document.getElementById('itemCounter');
+    var progressBar = document.getElementById('progressBar');
+    var gridEl = document.getElementById('matrixGrid');
+    var optionsEl = document.getElementById('matrixOptions');
+    var skipBtn = document.getElementById('skipBtn');
+    var resultSection = document.getElementById('result');
+    var historyHint = document.getElementById('historyHint');
+
+    var items = [];        // from config.generateItems()
+    var rand = null;
+    var itemIndex = 0;
+    var results = [];      // {correct, rt, timedOut, skipped}
+    var itemStartAt = 0;
+    var itemTimer = null;
+    var awaiting = false;
+    var currentCorrectIndex = -1;
+
+    var prevEntry = Lab.history.last(TEST);
+    if (prevEntry && prevEntry.extra && prevEntry.extra.correct != null) {
+      historyHint.textContent = '前回：' + prevEntry.extra.correct + ' / 12問（' + Lab.format.date(prevEntry.ts) + '）';
+    }
+
+    function todayStr() {
+      var d = new Date();
+      return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    }
+
+    // ---- SVG cell rendering ----
+    function svgEl(tag, attrs) {
+      var el = document.createElementNS(SVGNS, tag);
+      for (var k in attrs) el.setAttribute(k, attrs[k]);
+      return el;
+    }
+    function trianglePoints(cx, cy, r, rotationDeg) {
+      var pts = [];
+      var base = -90 + (rotationDeg || 0);
+      for (var i = 0; i < 3; i++) {
+        var ang = (base + i * 120) * Math.PI / 180;
+        pts.push((cx + r * Math.cos(ang)).toFixed(1) + ',' + (cy + r * Math.sin(ang)).toFixed(1));
+      }
+      return pts.join(' ');
+    }
+    function appendShape(svg, shape, cx, cy, r, rotation, fill) {
+      var cls = 'matrix-shape' + (fill === 'outline' ? ' is-outline' : '');
+      var node;
+      if (shape === 'circle') {
+        node = svgEl('circle', { cx: cx, cy: cy, r: r, 'class': cls });
+      } else if (shape === 'square') {
+        node = svgEl('rect', { x: cx - r, y: cy - r, width: r * 2, height: r * 2, 'class': cls });
+        if (rotation) node.setAttribute('transform', 'rotate(' + rotation + ' ' + cx + ' ' + cy + ')');
+      } else {
+        node = svgEl('polygon', { points: trianglePoints(cx, cy, r, rotation), 'class': cls });
+      }
+      svg.appendChild(node);
+    }
+    function renderCellSVG(desc) {
+      var svg = svgEl('svg', { viewBox: '0 0 64 64', 'aria-hidden': 'true' });
+      var baseR = 15 * (desc.size || 1);
+      if (desc.count && desc.count > 1) {
+        var n = desc.count, smallR = 7, gap = 20;
+        var startX = 32 - (n - 1) * gap / 2;
+        for (var i = 0; i < n; i++) appendShape(svg, desc.shape, startX + i * gap, 32, smallR, desc.rotation, desc.fill);
+      } else {
+        appendShape(svg, desc.shape, 32, 32, baseR, desc.rotation, desc.fill);
+      }
+      return svg;
+    }
+
+    function renderGrid(gridCells) {
+      while (gridEl.firstChild) gridEl.removeChild(gridEl.firstChild);
+      for (var i = 0; i < 9; i++) {
+        var cell = document.createElement('div');
+        cell.className = 'matrix-cell';
+        if (i === 8) {
+          cell.className += ' matrix-cell--hidden';
+          var q = document.createElement('span');
+          q.className = 'qmark';
+          q.textContent = '？';
+          cell.appendChild(q);
+        } else {
+          cell.appendChild(renderCellSVG(gridCells[i]));
+        }
+        gridEl.appendChild(cell);
+      }
+    }
+
+    function renderOptions(options) {
+      while (optionsEl.firstChild) optionsEl.removeChild(optionsEl.firstChild);
+      options.forEach(function (desc, idx) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'matrix-option';
+        btn.setAttribute('aria-label', '選択肢 ' + (idx + 1));
+        btn.appendChild(renderCellSVG(desc));
+        Lab.input.onActivate(btn, function () { handleAnswer(idx, false, false); });
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function startTimer() {
+      clearTimeout(itemTimer);
+      itemStartAt = Lab.now();
+      progressBar.style.transition = 'none';
+      progressBar.style.width = '100%';
+      if (!Lab.reducedMotion()) {
+        void progressBar.offsetWidth; // force reflow before animating
+        progressBar.style.transition = 'width ' + TIME_LIMIT_MS + 'ms linear';
+        progressBar.style.width = '0%';
+      }
+      itemTimer = setTimeout(function () { handleAnswer(-1, true, false); }, TIME_LIMIT_MS);
+    }
+
+    function loadItem(idx) {
+      awaiting = true;
+      var spec = items[idx];
+      var pool = [spec.correct].concat(spec.distractors);
+      var shuffled = config.shuffleWithRand(pool, rand);
+      currentCorrectIndex = shuffled.indexOf(spec.correct);
+      itemCounter.textContent = (idx + 1) + ' / ' + TOTAL_ITEMS;
+      renderGrid(spec.grid);
+      renderOptions(shuffled);
+      startTimer();
+      if (location.hash === '#debug') { window.__lab_debug_correct = currentCorrectIndex; }
+    }
+
+    function handleAnswer(chosenIndex, timedOut, skipped) {
+      if (!awaiting) return;
+      awaiting = false;
+      clearTimeout(itemTimer);
+      var rt = Math.round(Lab.now() - itemStartAt);
+      var correct = !timedOut && !skipped && chosenIndex === currentCorrectIndex;
+      results.push({ correct: correct, rt: rt, timedOut: !!timedOut, skipped: !!skipped });
+      itemIndex++;
+      if (itemIndex >= TOTAL_ITEMS) { finish(); return; }
+      loadItem(itemIndex);
+    }
+
+    skipBtn.addEventListener('click', function () { handleAnswer(-1, false, true); });
+
+    document.getElementById('startBtn').addEventListener('click', function () {
+      intro.hidden = true;
+      stageWrap.hidden = false;
+      var gen = config.generateItems(todayStr());
+      items = gen.items;
+      rand = gen.rand;
+      itemIndex = 0;
+      results = [];
+      loadItem(0);
+    });
+
+    // ---- Local delta-row helper: renderDeltaRow in lab.js assumes a
+    // lower-is-better ms metric ("前回より速い/時間がかかった", unit
+    // "ms" hardcoded), which is wrong for a higher-is-better correct
+    // count in "問". Reuses the same delta-row/-label/-value/-detail
+    // classes from lab.css so it looks identical, with correct wording.
+    function renderMatrixDeltaRow(containerEl, current, previousEntry, measureCount) {
+      while (containerEl.firstChild) containerEl.removeChild(containerEl.firstChild);
+      var label = document.createElement('span');
+      label.className = 'delta-label';
+      if (!previousEntry || previousEntry.extra == null || previousEntry.extra.correct == null) {
+        label.textContent = '今回が初回の記録です';
+        containerEl.appendChild(label);
+        var firstDetail = document.createElement('span');
+        firstDetail.className = 'delta-detail';
+        firstDetail.textContent = '次回、前回との差が表示されます。';
+        containerEl.appendChild(firstDetail);
+        return;
+      }
+      var prevCorrect = previousEntry.extra.correct;
+      var diff = current - prevCorrect;
+      label.textContent = '前回との差';
+      containerEl.appendChild(label);
+      var value = document.createElement('span');
+      value.className = 'delta-value';
+      value.textContent = (diff > 0 ? '+' : diff < 0 ? '' : '±') + diff + '問';
+      containerEl.appendChild(value);
+      var detail = document.createElement('span');
+      detail.className = 'delta-detail';
+      var countText = measureCount ? '（' + measureCount + '回目の測定）' : '';
+      detail.textContent = prevCorrect + '問 → ' + current + '問' + countText;
+      containerEl.appendChild(detail);
+    }
+
+    function finish() {
+      stageWrap.hidden = true;
+      var correctCount = results.filter(function (r) { return r.correct; }).length;
+      var skipCount = results.filter(function (r) { return r.skipped; }).length;
+      var timeoutCount = results.filter(function (r) { return r.timedOut; }).length;
+      var avgRt = Lab.mean(results.map(function (r) { return r.rt; }));
+      var tierValue = TOTAL_ITEMS - correctCount; // inverted: higher correct = lower tierValue
+      var tierInfo = Lab.tier.forValue(TEST, tierValue);
+
+      document.getElementById('resHeadline').textContent = correctCount;
+      document.getElementById('resTier').textContent = tierInfo.label || '判定不可';
+      document.getElementById('resAvgTime').textContent = avgRt != null ? (Math.round(avgRt / 100) / 10) + '秒' : '—';
+      document.getElementById('resSkips').textContent = skipCount + '回';
+      document.getElementById('resTimeouts').textContent = timeoutCount + '回';
+      document.getElementById('resReference').textContent = config.referenceNote;
+      // config.sources is [] — this is a self-authored task with no
+      // published norm to cite, so hide the (otherwise empty) 出典
+      // block rather than showing a heading with nothing under it.
+      if (config.sources && config.sources.length) {
+        Lab.sources.render(document.getElementById('resSources'), config.sources);
+      } else {
+        document.getElementById('sourcesBlock').hidden = true;
+      }
+
+      var previous = Lab.history.add(TEST, { ts: Date.now(), score: correctCount, tier: tierInfo.tier, extra: { correct: correctCount, avgRt: avgRt, skips: skipCount, timeouts: timeoutCount } });
+      renderMatrixDeltaRow(document.getElementById('resDeltaRow'), correctCount, previous, Lab.history.load(TEST).length);
+
+      var shareUrl = location.origin + '/lab/matrix/r/' + (tierInfo.tier || 1) + '.html?v=' + correctCount;
+      var shareText = config.shareLead + '：' + correctCount + ' / 12問（' + tierInfo.label + '）でした。';
+
+      document.getElementById('xBtn').href = Lab.share.xIntentUrl(shareText, shareUrl);
+
+      document.getElementById('shareBtn').addEventListener('click', function () {
+        var canvas = Lab.share.buildResultCardCanvas({
+          testLabel: config.name,
+          headline: correctCount,
+          headlineUnit: config.unit,
+          tierLabel: tierInfo.label,
+          dateStr: Lab.format.date(Date.now()),
+          url: 'takuyahirata.com/lab/matrix/'
+        });
+        Lab.share.present({ canvas: canvas, title: '脳の実験室', text: shareText, url: shareUrl, filenameBase: 'matrix-result' }).then(function (res) {
+          if (res.method === 'download') {
+            var link = document.getElementById('saveLink');
+            link.href = res.url;
+            link.download = res.filename;
+            link.hidden = false;
+          }
+        });
+      });
+
+      document.getElementById('copyBtn').addEventListener('click', function (e) {
+        var btn = e.currentTarget;
+        Lab.share.copyLink(shareUrl).then(function (ok) {
+          btn.textContent = ok ? 'コピーしました' : 'コピーできませんでした';
+          btn.dataset.copied = String(ok);
+          setTimeout(function () { btn.textContent = 'リンクをコピー'; btn.dataset.copied = ''; }, 2000);
+        });
+      });
+
+      resultSection.hidden = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('restartBtn').addEventListener('click', function () {
+      resultSection.hidden = true;
+      intro.hidden = false;
+      var prev = Lab.history.last(TEST);
+      historyHint.textContent = (prev && prev.extra && prev.extra.correct != null) ? '前回：' + prev.extra.correct + ' / 12問（' + Lab.format.date(prev.ts) + '）' : '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+  </script>
+</body>
+</html>

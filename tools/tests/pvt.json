@@ -1,0 +1,29 @@
+{
+  "id": "pvt",
+  "name": "覚醒度チェック",
+  "path": "pvt",
+  "kicker": "RESULT / 結果の目安",
+  "headline_template": "{name}の結果：{label}",
+  "value_label": "反応時間の中央値",
+  "unit": "ms",
+  "reference_grade": "C",
+  "reference_note": "休息十分な成人の反応時間はおよそ200〜300 ms、500 ms以上は「見逃し（ラプス）」と数えるのが研究の慣例です。段階の区切りはこの2点の間を等分した目安で、公表された基準値ではありません（根拠C・簡易版15試行）。医学的な判定には使えません。",
+  "sources": [
+    { "text": "Basner M, Mollicone D, Dinges DF (2011). Validity and sensitivity of a brief psychomotor vigilance test (PVT-B) to total and partial sleep deprivation. Acta Astronautica 69(11-12):949-959.", "url": "https://doi.org/10.1016/j.actaastro.2011.07.015" },
+    { "text": "Basner M, Moore TM, Nasrini J, Gur RC, Dinges DF (2020). Response speed measurements on the psychomotor vigilance test: how precise is precise enough? Sleep 44(1):zsaa121.", "url": "https://doi.org/10.1093/sleep/zsaa121" },
+    { "text": "Basner M, Dinges DF (2011). Maximizing sensitivity of the psychomotor vigilance test (PVT) to sleep loss. Sleep 34(5):581-591. PMID 21532951", "url": "https://pubmed.ncbi.nlm.nih.gov/21532951/" }
+  ],
+  "og_tag": "目安 {tier} / 7・{label}",
+  "back_link_text": "← テストへ",
+  "related_links": [],
+  "og_desc": "画面に現れる合図に反応する30〜60秒の課題。反応時間の中央値から、今の冴え具合の目安を見ます。",
+  "bands": [
+    { "label": "かなり速い", "explanation": "今回の{value_label}は、かなり速い部類でした。休息十分な成人でも珍しくない範囲です。" },
+    { "label": "速い", "explanation": "今回の{value_label}は、速い部類でした。" },
+    { "label": "やや速い", "explanation": "今回の{value_label}は、やや速い部類でした。" },
+    { "label": "平均的", "explanation": "今回の{value_label}は、休息十分な成人でよく見られる平均的な範囲でした。" },
+    { "label": "やや遅い", "explanation": "今回の{value_label}は、やや遅い範囲でした。疲れや眠気のサインのことがあります。" },
+    { "label": "遅い", "explanation": "今回の{value_label}は、遅い範囲でした。休息や環境を見直すきっかけにしてみてください。" },
+    { "label": "注意が必要（見逃し基準を超えている）", "explanation": "今回の{value_label}は、見逃し（ラプス）の基準とされる500ms以上でした。集中が切れていたか、眠気が強かった可能性があります。少し休んでから、もう一度試してみてください。" }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "timing",
+  "name": "時間の感覚",
+  "path": "timing",
+  "kicker": "RESULT / 結果の目安",
+  "headline_template": "{name}の結果：{label}",
+  "value_label": "平均のズレ（実際の10秒との差）",
+  "unit": "%",
+  "reference_grade": "C",
+  "reference_note": "30秒を目標にした時間生成のオンライン大規模実験（N=995）では、平均で目標より15%長め、ばらつき（SD）は44%と報告されています（参考値・根拠C、個人差が非常に大きい）。本サイトは10秒課題なので数値の直接比較はできません。時間の感じ方は注意の向け方に左右されやすいことが古典的レビューで示されています（根拠A）。",
+  "sources": [
+    { "text": "Block RA, Zakay D (1997). Prospective and retrospective duration judgments: A meta-analytic review. Psychonomic Bulletin \u0026 Review 4(2):184-197.", "url": "https://doi.org/10.3758/BF03209393" },
+    { "text": "Pednekar A, Garrido A, Khaluf Y, Simoens P (2024). Predicting change in time production - A machine learning approach to time perception. arXiv:2412.12781 [cs.HC].", "url": "https://arxiv.org/abs/2412.12781" }
+  ],
+  "og_tag": "簡易版（基準値未確認）",
+  "back_link_text": "← テストへ",
+  "related_links": [
+    { "text": "覚醒度チェックへ", "href": "/lab/pvt/" },
+    { "text": "実験室へ戻る", "href": "/lab/" }
+  ],
+  "og_desc": "時計を見ずに「10秒」を自分の感覚だけで計る課題。3回試して、実際の10秒とどれだけズレるかを見ます。",
+  "bands": [
+    { "label": "ズレ 3%未満", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "ズレ 3〜5%", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "ズレ 5〜8%", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "ズレ 8〜12%", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "ズレ 12〜18%", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。注意や覚醒の状態が影響したのかもしれません。" },
+    { "label": "ズレ 18〜25%", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。注意や覚醒の状態が影響したのかもしれません。" },
+    { "label": "ズレ 25%以上", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。かなり大きなズレなので、体調や周りの環境が影響していた可能性があります。" }
+  ]
+}

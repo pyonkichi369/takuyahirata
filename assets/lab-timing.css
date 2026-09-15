@@ -1,0 +1,12 @@
+/* ============================================================
+   時間の感覚 (time production) — page-local styles. Linked after
+   lab.css on lab/timing/ only.
+   ============================================================ */
+.timing-instruction {
+  max-width: 40ch;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin: 0 0 8px;
+}
+.timing-stage .btn-primary { margin-top: 4px; }

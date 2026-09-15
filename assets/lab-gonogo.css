@@ -1,0 +1,28 @@
+/* ============================================================
+   衝動の抑え (Go/No-Go) — page-local styles. Linked after lab.css
+   on lab/gonogo/ only. Stimuli are shape-coded as well as
+   color-coded (circle vs square) so the task doesn't rely on hue
+   alone.
+   ============================================================ */
+.gonogo-stimulus-wrap {
+  min-height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gonogo-shape {
+  width: 110px;
+  height: 110px;
+  box-sizing: border-box;
+}
+.gonogo-shape.is-go {
+  border-radius: 999px;
+  background: #2f5f9e; /* blue circle = Go */
+}
+.gonogo-shape.is-nogo {
+  border-radius: 10px;
+  background: #c1443a; /* red square = No-Go */
+}
+@media (max-width: 420px) {
+  .gonogo-shape { width: 92px; height: 92px; }
+}

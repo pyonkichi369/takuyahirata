@@ -1,0 +1,28 @@
+/* ============================================================
+   集中の持続 (SART) — page-local styles. Linked after lab.css on
+   lab/sart/ only. Digit stimulus + mask (ring), sized to match the
+   Stroop word's clamp scale so the stage feels consistent across
+   tests.
+   ============================================================ */
+.sart-digit {
+  min-height: 1.15em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono, var(--font-mono));
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(64px, 13vw, 108px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink, var(--color-ink));
+}
+.sart-mask {
+  width: 0.85em;
+  height: 0.85em;
+  box-sizing: border-box;
+  border: 6px solid var(--ink-soft, var(--color-ink));
+  border-radius: 999px;
+}
+@media (max-width: 420px) {
+  .sart-mask { border-width: 5px; }
+}

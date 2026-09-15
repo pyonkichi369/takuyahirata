@@ -1,0 +1,32 @@
+{
+  "id": "nback",
+  "name": "記憶の作業台",
+  "path": "nback",
+  "kicker": "RESULT / 結果の目安",
+  "headline_template": "{name}の結果：{label}",
+  "value_label": "正答率",
+  "unit": "%",
+  "reference_grade": "C",
+  "reference_note": "2-back課題の正答率は健常成人でおよそ80%前後という報告があります（参考値・根拠C、単一研究の対照群）。ただしn-back課題は「ワーキングメモリスパン」を測る標準検査との相関が弱く、同一視できないことが知られています（根拠A）。数字は「この課題への慣れ」も含みます。",
+  "sources": [
+    { "text": "Miller KM, Price CC, Okun MS, Montijo H, Bowers D (2009). Is the N-Back Task a Valid Neuropsychological Measure for Assessing Working Memory? Archives of Clinical Neuropsychology.", "url": "https://doi.org/10.1093/arclin/acp063" },
+    { "text": "Jaeggi SM, Buschkuehl M, Perrig WJ, Meier B (2010). The concurrent validity of the N-back task as a working memory measure. Memory 18(4):394-412.", "url": "https://doi.org/10.1080/09658211003702171" },
+    { "text": "Redick TS, Lindsey DZ (2013). Complex span and n-back measures of working memory: a meta-analysis. Psychonomic Bulletin & Review 20(6):1102-1113.", "url": "https://doi.org/10.3758/s13423-013-0453-9" }
+  ],
+  "og_tag": "簡易版（基準値未確認）",
+  "back_link_text": "← テストへ",
+  "related_links": [
+    { "text": "マインドワンダリングの研究ノートを読む", "href": "/research/mind-wandering.html" },
+    { "text": "実験室へ戻る", "href": "/lab/" }
+  ],
+  "og_desc": "3×3のマスに現れる合図の位置が「2つ前と同じか」を判定する2〜3分の作業記憶課題です。",
+  "bands": [
+    { "label": "正答率 95%以上", "explanation": "今回の{value_label}は、この範囲に収まりました。公表された基準値がないため、他の人との比較や良し悪しの判断はできません。自分の中での変化（前回との差）として見るのがおすすめです。" },
+    { "label": "正答率 90〜94%", "explanation": "今回の{value_label}は、この範囲に収まりました。公表された基準値がないため、他の人との比較や良し悪しの判断はできません。自分の中での変化（前回との差）として見るのがおすすめです。" },
+    { "label": "正答率 85〜89%", "explanation": "今回の{value_label}は、この範囲に収まりました。公表された基準値がないため、他の人との比較や良し悪しの判断はできません。自分の中での変化（前回との差）として見るのがおすすめです。" },
+    { "label": "正答率 78〜84%", "explanation": "今回の{value_label}は、この範囲に収まりました。公表された基準値がないため、他の人との比較や良し悪しの判断はできません。自分の中での変化（前回との差）として見るのがおすすめです。" },
+    { "label": "正答率 70〜77%", "explanation": "今回の{value_label}は、この範囲に収まりました。公表された基準値がないため、他の人との比較や良し悪しの判断はできません。自分の中での変化（前回との差）として見るのがおすすめです。" },
+    { "label": "正答率 60〜69%", "explanation": "今回の{value_label}は、この範囲に収まりました。公表された基準値がないため、他の人との比較や良し悪しの判断はできません。自分の中での変化（前回との差）として見るのがおすすめです。" },
+    { "label": "正答率 60%未満", "explanation": "今回の{value_label}は、この範囲に収まりました。公表された基準値がないため、他の人との比較や良し悪しの判断はできません。自分の中での変化（前回との差）として見るのがおすすめです。" }
+  ]
+}

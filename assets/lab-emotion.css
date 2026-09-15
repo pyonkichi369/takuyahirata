@@ -1,0 +1,102 @@
+/* ============================================================
+   感情調整の傾向 (Emotion) — styles lab.css doesn't have: the
+   one-statement-at-a-time question card, the 5-point scale buttons,
+   and the two-score result bars. Built on the same brain.css tokens
+   as lab.css. Load after lab.css.
+   ============================================================ */
+
+.emo-progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  font-family: var(--mono, var(--font-mono));
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.emo-statement-card {
+  min-height: 160px;
+  border: 1px solid var(--card-line);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 22px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.emo-statement-text {
+  font-family: var(--serif, var(--font-serif));
+  font-size: 19px;
+  line-height: 1.9;
+  color: var(--ink, var(--color-ink));
+  max-width: 46ch;
+}
+
+.emo-scale {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.emo-scale-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 68px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  cursor: pointer;
+  padding: 10px 4px;
+  font-family: var(--sans, var(--font-sans));
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: var(--ink-soft, var(--text-body));
+  white-space: pre-line;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.emo-scale-btn .n {
+  font-family: var(--mono, var(--font-mono));
+  font-variant-numeric: tabular-nums;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink, var(--color-ink));
+}
+.emo-scale-btn:hover, .emo-scale-btn:focus-visible { border-color: var(--accent, var(--color-terracotta)); }
+.emo-scale-btn[data-chosen="true"] { border-color: var(--accent-ink, var(--color-terracotta)); background: var(--accent-soft, var(--color-sage-soft)); }
+
+.emo-back-row { text-align: center; margin-top: 18px; }
+.emo-back-btn {
+  font-family: var(--mono, var(--font-mono));
+  font-size: 12px;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  padding: 12px 8px;
+  min-height: 44px;
+}
+.emo-back-btn[disabled] { opacity: 0.4; cursor: default; text-decoration: none; }
+
+.emo-bars { display: flex; flex-direction: column; gap: 22px; margin: 18px 0 24px; }
+.emo-bar-row .label { display: flex; justify-content: space-between; font-size: 13.5px; color: var(--ink-soft, var(--text-body)); margin-bottom: 8px; }
+.emo-bar-row .label .n { font-family: var(--mono, var(--font-mono)); font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink, var(--color-ink)); }
+.emo-bar-track { height: 14px; border-radius: 7px; background: var(--color-ivory-warm); border: 1px solid var(--card-line); overflow: hidden; }
+.emo-bar-fill { height: 100%; background: var(--accent, var(--color-terracotta)); border-radius: 7px 0 0 7px; }
+
+.emo-reading { font-size: 14.5px; color: var(--text-body); line-height: 1.9; margin: 0 0 4px; }
+
+/* Two-score headline: smaller than the single-number tests so the bars stay the focus */
+.lab-result-headline .num {
+  font-size: 30px;
+  line-height: 1.35;
+  letter-spacing: 0;
+}

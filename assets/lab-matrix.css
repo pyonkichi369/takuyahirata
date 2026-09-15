@@ -1,0 +1,89 @@
+/* ============================================================
+   図形推論 (Matrix) — styles lab.css doesn't have: the 3x3
+   puzzle grid, SVG cell shapes, the soft 60s progress line, and the
+   6-option answer grid. Built on the same brain.css tokens as
+   lab.css. Load after lab.css.
+   ============================================================ */
+
+.matrix-progress-track {
+  max-width: 340px;
+  margin: 0 auto 16px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--card-line);
+  overflow: hidden;
+}
+.matrix-progress-bar {
+  height: 100%;
+  width: 100%;
+  background: var(--accent, var(--color-terracotta));
+}
+
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-width: 340px;
+  margin: 0 auto 22px;
+}
+.matrix-cell {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--card-line);
+  border-radius: var(--radius-card);
+  background: var(--card);
+}
+.matrix-cell svg { width: 72%; height: 72%; }
+.matrix-cell--hidden {
+  border-style: dashed;
+  border-color: var(--ink-faint, var(--text-muted));
+  background: var(--color-ivory-warm);
+}
+.matrix-cell--hidden .qmark {
+  font-family: var(--mono, var(--font-mono));
+  font-size: 26px;
+  color: var(--ink-faint, var(--text-muted));
+}
+
+.matrix-shape { fill: var(--ink, var(--color-ink)); }
+.matrix-shape.is-outline { fill: none; stroke: var(--ink, var(--color-ink)); stroke-width: 3; }
+
+.matrix-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+@media (min-width: 520px) { .matrix-options { grid-template-columns: repeat(3, 1fr); } }
+.matrix-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 76px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  cursor: pointer;
+  padding: 8px;
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.matrix-option svg { width: 46px; height: 46px; }
+.matrix-option:hover, .matrix-option:focus-visible { border-color: var(--accent, var(--color-terracotta)); transform: translateY(-1px); }
+.matrix-option[data-chosen="true"] { border-color: var(--accent-ink, var(--color-terracotta)); background: var(--accent-soft, var(--color-sage-soft)); }
+
+.matrix-skip-row { text-align: center; margin-top: 16px; }
+.matrix-skip-btn {
+  font-family: var(--mono, var(--font-mono));
+  font-size: 12px;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  padding: 12px 8px;
+  min-height: 44px;
+}

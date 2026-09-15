@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="感情調整の傾向 — 気持ちとの付き合い方についての12の文に、5段階で答える自己観察の質問です。「見方を変えて整える」傾向と「表に出さない」傾向、2つの目安を見ます。結果はこの端末にのみ保存されます。">
+  <meta name="theme-color" content="#FBF8F2">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://takuyahirata.com/lab/emotion/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>感情調整の傾向 | 脳の実験室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/brain.css?v=2">
+  <link rel="stylesheet" href="/assets/lab.css?v=2">
+  <link rel="stylesheet" href="/assets/lab-emotion.css?v=2">
+</head>
+<body>
+  <header class="site-header page-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="脳の実験室 ホーム">
+        <svg class="brand-mark" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4C10 5 5 11 5 19c7 0 13-4 15-15Z"/><path d="M5 19C8 14 12 10 17 8"/></svg>
+        <span class="brand-text"><span class="brand-name">脳の実験室</span><span class="brand-tag">測って、読んで、試して、また測る</span></span>
+      </a>
+      <a class="page-back" href="/lab/">← ラボへ</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container wrap-narrow page-hero lab-hero--tight">
+      <p class="page-eyebrow lab-kicker">3–5 minutes / 感情調整の傾向</p>
+      <h1 class="page-title">感情調整の傾向</h1>
+      <p class="page-lead">気持ちとの付き合い方についての12の文に、5段階で答えてください。「見方を変えて気持ちを整える」傾向と、「表に出さないようにする」傾向、2つの目安を見ます。</p>
+    </div>
+
+    <div class="container wrap-narrow section lab-section--tight">
+
+      <!-- Intro -->
+      <section id="intro">
+        <ul class="lab-intro-list">
+          <li>1つずつ文が表示されます。「まったく当てはまらない」から「とても当てはまる」までの5段階で答えてください。</li>
+          <li>1つ前の質問に戻ってやり直すこともできます。</li>
+          <li>正解・不正解はありません。いまの自分に近いものを選んでください。</li>
+          <li>全部で12問、3〜5分ほどです。</li>
+        </ul>
+        <div class="lab-start-row">
+          <button type="button" class="btn-primary" id="startBtn">はじめる
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+          <span id="historyHint" class="lab-delta lab-delta--inline"></span>
+        </div>
+      </section>
+
+      <!-- Stage -->
+      <section id="stageWrap" hidden>
+        <div class="lab-stage" id="stage">
+          <div class="emo-progress-row">
+            <span id="qCounter">1 / 12</span>
+          </div>
+          <div class="emo-statement-card">
+            <p class="emo-statement-text" id="statementText" aria-live="polite"></p>
+          </div>
+          <div class="emo-scale" id="scaleButtons" role="group" aria-label="あてはまり度合いを5段階で選ぶ"></div>
+          <div class="emo-back-row">
+            <button type="button" class="emo-back-btn" id="backBtn">← 前の質問に戻る</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Result -->
+      <section id="result" class="lab-result" hidden aria-live="polite">
+        <div class="lab-result-card">
+          <p class="result-eyebrow">感情調整の傾向の結果</p>
+          <div class="lab-result-headline">
+            <span class="num" id="resHeadline">—</span>
+          </div>
+          <p class="lab-tier-pill" id="resTier">—</p>
+
+          <div class="emo-bars">
+            <div class="emo-bar-row">
+              <div class="label">捉え直し（見方を変えて整える傾向）<span class="n" id="barReappraisalNum">—</span></div>
+              <div class="emo-bar-track"><div class="emo-bar-fill" id="barReappraisalFill"></div></div>
+            </div>
+            <div class="emo-bar-row">
+              <div class="label">抑え込み（表に出さないようにする傾向）<span class="n" id="barSuppressionNum">—</span></div>
+              <div class="emo-bar-track"><div class="emo-bar-fill" id="barSuppressionFill"></div></div>
+            </div>
+          </div>
+
+          <div id="readingBlock"></div>
+
+          <p class="lab-reference-note">
+            <span class="grade-badge grade-D"><span class="g">D</span>参考値</span>
+            <span id="resReference"></span>
+          </p>
+
+          <div class="delta-row" id="resDeltaRow"></div>
+
+          <div class="lab-sources" id="sourcesBlock">
+            <p class="lab-sources-title">出典</p>
+            <ul id="resSources"></ul>
+          </div>
+
+          <div class="lab-share-row">
+            <button type="button" class="btn-share btn-share--primary" id="shareBtn">結果をシェアする</button>
+            <a class="btn-share" id="saveLink" download hidden>画像を保存</a>
+            <button type="button" class="btn-share" id="copyBtn">リンクをコピー</button>
+            <a class="btn-share" id="xBtn" target="_blank" rel="noopener">Xでシェア</a>
+          </div>
+
+          <p class="lab-result-note">娯楽・自己観察のためのもので、医学的・心理学的な評価ではありません。気分の不調が続く場合は、専門家に相談することをおすすめします。</p>
+
+          <div class="lab-result-links">
+            <a class="btn-ghost" href="/research/mind-wandering.html">マインドワンダリングの研究ノートを読む</a>
+            <a class="btn-ghost" href="/lab/">実験室へ戻る</a>
+          </div>
+        </div>
+        <button type="button" class="check-back lab-restart-btn" id="restartBtn">↺ もう一度測る</button>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>© 2026 脳の実験室 / 平田拓也</span>
+      <span><a href="/">ホーム</a> ・ <a href="/methodology.html">編集方針</a> ・ <a href="/disclosure.html">広告開示</a></span>
+    </div>
+  </footer>
+
+  <script src="/assets/lab.js?v=1"></script>
+  <script src="/assets/lab-share.js?v=1"></script>
+  <script src="config.js?v=1"></script>
+  <script>
+  (function () {
+    var TEST = 'emotion';
+    var config = Lab.tests[TEST]; // registered by config.js
+    var ITEMS = config.items;
+    var TOTAL = ITEMS.length;
+
+    var intro = document.getElementById('intro');
+    var stageWrap = document.getElementById('stageWrap');
+    var qCounter = document.getElementById('qCounter');
+    var statementText = document.getElementById('statementText');
+    var scaleButtons = document.getElementById('scaleButtons');
+    var backBtn = document.getElementById('backBtn');
+    var resultSection = document.getElementById('result');
+    var historyHint = document.getElementById('historyHint');
+
+    var answers = [];      // answers[i] = 1..5 or undefined
+    var qIndex = 0;
+
+    var prevEntry = Lab.history.last(TEST);
+    if (prevEntry && prevEntry.extra && prevEntry.extra.reappraisal != null) {
+      historyHint.textContent = '前回：捉え直し ' + prevEntry.extra.reappraisal + ' ・ 抑え込み ' + prevEntry.extra.suppression + '（' + Lab.format.date(prevEntry.ts) + '）';
+    }
+
+    function renderScaleButtons() {
+      while (scaleButtons.firstChild) scaleButtons.removeChild(scaleButtons.firstChild);
+      config.scalePoints.forEach(function (pt) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'emo-scale-btn';
+        var n = document.createElement('span');
+        n.className = 'n';
+        n.textContent = String(pt.n);
+        btn.appendChild(n);
+        var label = document.createElement('span');
+        label.textContent = pt.label;
+        btn.appendChild(label);
+        if (answers[qIndex] === pt.n) btn.dataset.chosen = 'true';
+        Lab.input.onActivate(btn, function () { handleAnswer(pt.n); });
+        scaleButtons.appendChild(btn);
+      });
+    }
+
+    function showQuestion(idx) {
+      qIndex = idx;
+      qCounter.textContent = (idx + 1) + ' / ' + TOTAL;
+      statementText.textContent = ITEMS[idx].text;
+      renderScaleButtons();
+      backBtn.disabled = idx === 0;
+    }
+
+    function handleAnswer(value) {
+      answers[qIndex] = value;
+      if (qIndex + 1 >= TOTAL) { finish(); return; }
+      showQuestion(qIndex + 1);
+    }
+
+    backBtn.addEventListener('click', function () {
+      if (qIndex === 0) return;
+      showQuestion(qIndex - 1);
+    });
+
+    document.getElementById('startBtn').addEventListener('click', function () {
+      intro.hidden = true;
+      stageWrap.hidden = false;
+      answers = [];
+      showQuestion(0);
+    });
+
+    function sumScale(scaleName) {
+      var total = 0;
+      ITEMS.forEach(function (item, i) {
+        if (item.scale === scaleName) total += (answers[i] || 0);
+      });
+      return total;
+    }
+
+    function buildReading(reappraisal, suppression) {
+      var lines = [];
+      if (reappraisal > suppression + 4) {
+        lines.push('今回の回答では、状況の見方を変えて気持ちを整えるような答え方が目立ちました。');
+        lines.push('出来事をどう捉えるかで気分の変わり方が違う、と感じやすいタイプかもしれません。');
+      } else if (suppression > reappraisal + 4) {
+        lines.push('今回の回答では、気持ちを表に出さないようにする答え方が目立ちました。');
+        lines.push('感情をいったん内側にとどめておく場面が多い、という自己認識かもしれません。');
+      } else {
+        lines.push('今回の回答では、見方を変えることと表に出さないことの両方が同じくらい見られました。');
+        lines.push('場面によって使い分けている、という感覚に近いかもしれません。');
+      }
+      lines.push('どちらが良い・悪いというものではなく、いまの自分のやり方を言葉にするための目安です。');
+      return lines;
+    }
+
+    // ---- Local delta-row helper: renderDeltaRow in lab.js assumes a
+    // single lower-is-better ms metric, which doesn't fit two
+    // higher/lower-neutral 6-30 scale scores. Reuses the same
+    // delta-row/-label/-value/-detail classes from lab.css.
+    function renderEmotionDeltaRow(containerEl, reappraisal, suppression, previousEntry, measureCount) {
+      while (containerEl.firstChild) containerEl.removeChild(containerEl.firstChild);
+      var label = document.createElement('span');
+      label.className = 'delta-label';
+      if (!previousEntry || previousEntry.extra == null || previousEntry.extra.reappraisal == null) {
+        label.textContent = '今回が初回の記録です';
+        containerEl.appendChild(label);
+        var firstDetail = document.createElement('span');
+        firstDetail.className = 'delta-detail';
+        firstDetail.textContent = '次回、前回との差が表示されます。';
+        containerEl.appendChild(firstDetail);
+        return;
+      }
+      var prevR = previousEntry.extra.reappraisal, prevS = previousEntry.extra.suppression;
+      var dR = reappraisal - prevR, dS = suppression - prevS;
+      label.textContent = '前回との差';
+      containerEl.appendChild(label);
+      var value = document.createElement('span');
+      value.className = 'delta-value';
+      value.textContent = '捉え直し ' + (dR > 0 ? '+' : dR < 0 ? '' : '±') + dR + ' ・ 抑え込み ' + (dS > 0 ? '+' : dS < 0 ? '' : '±') + dS;
+      containerEl.appendChild(value);
+      var detail = document.createElement('span');
+      detail.className = 'delta-detail';
+      var countText = measureCount ? '（' + measureCount + '回目の測定）' : '';
+      detail.textContent = '前回 ' + prevR + '/' + prevS + ' → 今回 ' + reappraisal + '/' + suppression + countText;
+      containerEl.appendChild(detail);
+    }
+
+    function finish() {
+      stageWrap.hidden = true;
+      var reappraisal = sumScale('reappraisal');
+      var suppression = sumScale('suppression');
+      var diff = suppression - reappraisal; // -24..+24
+      var tierValue = Math.max(0, Math.min(48, 24 + diff));
+      var tierInfo = Lab.tier.forValue(TEST, tierValue);
+
+      document.getElementById('resHeadline').textContent = '捉え直し ' + reappraisal + ' ・ 抑え込み ' + suppression;
+      document.getElementById('resTier').textContent = tierInfo.label || '判定不可';
+
+      document.getElementById('barReappraisalNum').textContent = reappraisal + ' / 30';
+      document.getElementById('barReappraisalFill').style.width = Math.round((reappraisal / 30) * 100) + '%';
+      document.getElementById('barSuppressionNum').textContent = suppression + ' / 30';
+      document.getElementById('barSuppressionFill').style.width = Math.round((suppression / 30) * 100) + '%';
+
+      var readingBlock = document.getElementById('readingBlock');
+      while (readingBlock.firstChild) readingBlock.removeChild(readingBlock.firstChild);
+      buildReading(reappraisal, suppression).forEach(function (line) {
+        var p = document.createElement('p');
+        p.className = 'emo-reading';
+        p.textContent = line;
+        readingBlock.appendChild(p);
+      });
+
+      document.getElementById('resReference').textContent = config.referenceNote;
+      // config.sources is [] — self-authored questionnaire, no
+      // published scale to cite — hide the block instead of showing
+      // an empty 出典 heading.
+      if (config.sources && config.sources.length) {
+        Lab.sources.render(document.getElementById('resSources'), config.sources);
+      } else {
+        document.getElementById('sourcesBlock').hidden = true;
+      }
+
+      var previous = Lab.history.add(TEST, { ts: Date.now(), score: null, tier: tierInfo.tier, extra: { reappraisal: reappraisal, suppression: suppression } });
+      renderEmotionDeltaRow(document.getElementById('resDeltaRow'), reappraisal, suppression, previous, Lab.history.load(TEST).length);
+
+      // Share ?v= carries the clamped tierValue (0-48), never the raw
+      // signed diff — the shared tier-page script clamps ?v= to >= 0
+      // and a negative diff would silently read as 0.
+      var shareUrl = location.origin + '/lab/emotion/r/' + (tierInfo.tier || 1) + '.html?v=' + tierValue;
+      var shareText = config.shareLead + '：捉え直し ' + reappraisal + ' ・ 抑え込み ' + suppression + '（' + tierInfo.label + '）でした。';
+
+      document.getElementById('xBtn').href = Lab.share.xIntentUrl(shareText, shareUrl);
+
+      document.getElementById('shareBtn').addEventListener('click', function () {
+        var canvas = Lab.share.buildResultCardCanvas({
+          testLabel: config.name,
+          headline: reappraisal + ' / ' + suppression,
+          headlineUnit: '捉え直し/抑え込み',
+          tierLabel: tierInfo.label,
+          dateStr: Lab.format.date(Date.now()),
+          url: 'takuyahirata.com/lab/emotion/'
+        });
+        Lab.share.present({ canvas: canvas, title: '脳の実験室', text: shareText, url: shareUrl, filenameBase: 'emotion-result' }).then(function (res) {
+          if (res.method === 'download') {
+            var link = document.getElementById('saveLink');
+            link.href = res.url;
+            link.download = res.filename;
+            link.hidden = false;
+          }
+        });
+      });
+
+      document.getElementById('copyBtn').addEventListener('click', function (e) {
+        var btn = e.currentTarget;
+        Lab.share.copyLink(shareUrl).then(function (ok) {
+          btn.textContent = ok ? 'コピーしました' : 'コピーできませんでした';
+          btn.dataset.copied = String(ok);
+          setTimeout(function () { btn.textContent = 'リンクをコピー'; btn.dataset.copied = ''; }, 2000);
+        });
+      });
+
+      resultSection.hidden = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('restartBtn').addEventListener('click', function () {
+      resultSection.hidden = true;
+      intro.hidden = false;
+      var prev = Lab.history.last(TEST);
+      historyHint.textContent = (prev && prev.extra && prev.extra.reappraisal != null) ? '前回：捉え直し ' + prev.extra.reappraisal + ' ・ 抑え込み ' + prev.extra.suppression + '（' + Lab.format.date(prev.ts) + '）' : '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+  </script>
+</body>
+</html>

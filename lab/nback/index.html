@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="記憶の作業台 — 3×3のマスに現れる合図の位置が「2つ前と同じか」を判定する2〜3分の作業記憶課題です。練習12回のあと、本番40回に取り組みます。結果はこの端末にのみ保存されます。">
+  <meta name="theme-color" content="#FBF8F2">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://takuyahirata.com/lab/nback/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>記憶の作業台 | 脳の実験室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/brain.css?v=2">
+  <link rel="stylesheet" href="/assets/lab.css?v=2">
+  <link rel="stylesheet" href="/assets/lab-nback.css?v=1">
+</head>
+<body>
+  <header class="site-header page-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="脳の実験室 ホーム">
+        <svg class="brand-mark" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4C10 5 5 11 5 19c7 0 13-4 15-15Z"/><path d="M5 19C8 14 12 10 17 8"/></svg>
+        <span class="brand-text"><span class="brand-name">脳の実験室</span><span class="brand-tag">測って、読んで、試して、また測る</span></span>
+      </a>
+      <a class="page-back" href="/lab/">← ラボへ</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container wrap-narrow page-hero lab-hero--tight">
+      <p class="page-eyebrow lab-kicker">2–3 minutes / 記憶の作業台</p>
+      <h1 class="page-title">記憶の作業台</h1>
+      <p class="page-lead">3×3のマスのどこかが、ひとつずつ光ります。今光った位置が「2つ前に光った位置」と同じかどうかを、そのつどボタン（またはスペースキー）で答えてください。同じでなければ何もしません。</p>
+    </div>
+
+    <div class="container wrap-narrow section lab-section--tight">
+
+      <!-- Intro -->
+      <section id="intro">
+        <ul class="lab-intro-list">
+          <li>光った位置が「2つ前と同じ」なら、ボタン（またはスペースキー）を押します。違っていれば何もしません。</li>
+          <li>まず練習を12回。正解・不正解のフィードバックが出ます。</li>
+          <li>そのあと本番を40回。1回2.5秒のペースで自動的に進みます。</li>
+        </ul>
+        <div class="lab-start-row">
+          <button type="button" class="btn-primary" id="startBtn">はじめる
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+          <span id="historyHint" class="lab-delta lab-delta--inline"></span>
+        </div>
+      </section>
+
+      <!-- Stage -->
+      <section id="stageWrap" hidden>
+        <div class="lab-stage" id="stage">
+          <span class="lab-trial-counter" id="trialCounter"></span>
+          <span class="lab-practice-badge" id="practiceBadge" hidden>練習</span>
+          <div class="nback-grid" id="nbackGrid" aria-hidden="true">
+            <div class="nback-cell" data-idx="0"></div>
+            <div class="nback-cell" data-idx="1"></div>
+            <div class="nback-cell" data-idx="2"></div>
+            <div class="nback-cell" data-idx="3"></div>
+            <div class="nback-cell" data-idx="4"></div>
+            <div class="nback-cell" data-idx="5"></div>
+            <div class="nback-cell" data-idx="6"></div>
+            <div class="nback-cell" data-idx="7"></div>
+            <div class="nback-cell" data-idx="8"></div>
+          </div>
+          <button type="button" class="nback-respond-btn" id="respondBtn">2つ前と同じ<span class="key">Space</span></button>
+          <span class="lab-feedback" id="stageFeedback" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- Result -->
+      <section id="result" class="lab-result" hidden aria-live="polite">
+        <div class="lab-result-card">
+          <p class="result-eyebrow">記憶の作業台の結果</p>
+          <div class="lab-result-headline">
+            <span class="num" id="resHeadline">—</span>
+            <span class="unit">%（正答率）</span>
+          </div>
+          <div class="delta-row delta-row--primary" id="resDeltaRow"></div>
+          <p class="lab-tier-pill" id="resTier">—</p>
+
+          <div class="lab-stat-grid lab-stat-grid--2col">
+            <div class="stat-tile"><div class="label">見つけた</div><div class="value" id="resHits">—</div></div>
+            <div class="stat-tile"><div class="label">押し間違い</div><div class="value" id="resFalseAlarms">—</div></div>
+          </div>
+
+          <p class="lab-reference-note">
+            <span class="grade-badge grade-C"><span class="g">C</span>参考値</span>
+            <span id="resReference"></span>
+          </p>
+
+          <div class="lab-sources">
+            <p class="lab-sources-title">出典</p>
+            <ul id="resSources"></ul>
+          </div>
+
+          <div class="lab-share-row">
+            <button type="button" class="btn-share btn-share--primary" id="shareBtn">結果をシェアする</button>
+            <a class="btn-share" id="saveLink" download hidden>画像を保存</a>
+            <button type="button" class="btn-share" id="copyBtn">リンクをコピー</button>
+            <a class="btn-share" id="xBtn" target="_blank" rel="noopener">Xでシェア</a>
+          </div>
+
+          <p class="lab-result-note">娯楽・自己観察のためのもので、医学的・心理学的な評価ではありません。</p>
+
+          <div class="lab-result-links">
+            <a class="btn-ghost" href="/research/mind-wandering.html">マインドワンダリングの研究ノートを読む</a>
+            <a class="btn-ghost" href="/lab/">実験室へ戻る</a>
+          </div>
+        </div>
+        <button type="button" class="check-back lab-restart-btn" id="restartBtn">↺ もう一度測る</button>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>© 2026 脳の実験室 / 平田拓也</span>
+      <span><a href="/">ホーム</a> ・ <a href="/methodology.html">編集方針</a> ・ <a href="/disclosure.html">広告開示</a></span>
+    </div>
+  </footer>
+
+  <script src="/assets/lab.js?v=1"></script>
+  <script src="/assets/lab-share.js?v=1"></script>
+  <script src="config.js?v=1"></script>
+  <script>
+  (function () {
+    var TEST = 'nback';
+    var config = Lab.tests[TEST]; // registered by config.js
+
+    var intro = document.getElementById('intro');
+    var stageWrap = document.getElementById('stageWrap');
+    var trialCounter = document.getElementById('trialCounter');
+    var practiceBadge = document.getElementById('practiceBadge');
+    var stageFeedback = document.getElementById('stageFeedback');
+    var resultSection = document.getElementById('result');
+    var historyHint = document.getElementById('historyHint');
+    var respondBtn = document.getElementById('respondBtn');
+    var cells = Array.prototype.slice.call(document.querySelectorAll('.nback-cell'));
+
+    var deck = null;           // { positions: [...], isTarget: [...] }
+    var index = 0;
+    var isPractice = true;
+    var running = false;
+    var trialActive = false;
+    var respondedThisTrial = false;
+    var stimTimer = null;
+    var trialTimer = null;
+    var results = [];          // { target, pressed } — scored trials only
+
+    var prevEntry = Lab.history.last(TEST);
+    if (prevEntry) {
+      historyHint.textContent = '前回：' + Math.round(prevEntry.score) + '%（' + Lab.format.date(prevEntry.ts) + '）';
+    }
+
+    // ---------------------------------------------------------
+    // Sequence generation. Targets are positions equal to the
+    // position 2 trials earlier; non-targets are forced to differ
+    // from that same 2-back position (no accidental lures — the
+    // brief doesn't ask for deliberate near-miss lures). Retries a
+    // fresh random draw if 3 identical positions land in a row.
+    // ---------------------------------------------------------
+    function buildSequence(n, targetCount) {
+      var best = null;
+      for (var attempt = 0; attempt < 300; attempt++) {
+        var candidates = [];
+        for (var i = 2; i < n; i++) candidates.push(i);
+        var shuffled = Lab.rand.shuffle(candidates);
+        var targetIdx = {};
+        for (var t = 0; t < targetCount; t++) targetIdx[shuffled[t]] = true;
+
+        var positions = [];
+        var isTarget = [];
+        var ok = true;
+        for (var i = 0; i < n; i++) {
+          var pos;
+          if (i >= 2 && targetIdx[i]) {
+            pos = positions[i - 2];
+          } else {
+            var forbidden = i >= 2 ? positions[i - 2] : -1;
+            do { pos = Math.floor(Math.random() * 9); } while (pos === forbidden);
+          }
+          positions.push(pos);
+          isTarget.push(!!(i >= 2 && targetIdx[i]));
+          if (i >= 2 && positions[i] === positions[i - 1] && positions[i - 1] === positions[i - 2]) ok = false;
+        }
+        best = { positions: positions, isTarget: isTarget };
+        if (ok) return best;
+      }
+      return best; // 300 retries essentially never exhausted at this scale
+    }
+
+    function lightCell(pos) {
+      cells.forEach(function (c) { c.classList.toggle('is-lit', Number(c.dataset.idx) === pos); });
+    }
+    function unlightAll() {
+      cells.forEach(function (c) { c.classList.remove('is-lit'); });
+    }
+
+    function showTrial() {
+      var pos = deck.positions[index];
+      trialCounter.textContent = (index + 1) + ' / ' + deck.positions.length;
+      practiceBadge.hidden = !isPractice;
+      stageFeedback.textContent = '';
+      respondedThisTrial = false;
+      trialActive = true;
+      lightCell(pos);
+      stimTimer = setTimeout(unlightAll, config.stimulusMs);
+      trialTimer = setTimeout(finalizeTrial, config.stimulusMs + config.blankMs);
+    }
+
+    function finalizeTrial() {
+      trialActive = false;
+      var target = deck.isTarget[index];
+      var pressed = respondedThisTrial;
+
+      if (isPractice) {
+        var correct = (pressed === target);
+        stageFeedback.textContent = (target ? '2つ前と同じでした' : '2つ前とは違いました') + '　' + (correct ? '正解' : '不正解');
+        stageFeedback.classList.toggle('is-ok', correct);
+      } else {
+        results.push({ target: target, pressed: pressed });
+      }
+
+      index++;
+      if (index >= deck.positions.length) {
+        if (isPractice) { startScored(); } else { finish(); }
+        return;
+      }
+      showTrial();
+    }
+
+    function handleResponse() {
+      if (!running || !trialActive || respondedThisTrial) return;
+      respondedThisTrial = true;
+      respondBtn.classList.add('is-active');
+      setTimeout(function () { respondBtn.classList.remove('is-active'); }, 150);
+    }
+
+    Lab.input.onActivate(respondBtn, handleResponse);
+    document.addEventListener('keydown', function (e) {
+      if (!running) return;
+      if (e.code === 'Space' && !e.repeat) { e.preventDefault(); handleResponse(); }
+    });
+
+    document.getElementById('startBtn').addEventListener('click', function () {
+      intro.hidden = true;
+      stageWrap.hidden = false;
+      running = true;
+      isPractice = true;
+      index = 0;
+      results = [];
+      deck = buildSequence(config.practiceN, config.practiceTargets);
+      showTrial();
+    });
+
+    function startScored() {
+      isPractice = false;
+      index = 0;
+      results = [];
+      deck = buildSequence(config.scoredN, config.scoredTargets);
+      showTrial();
+    }
+
+    // ---------------------------------------------------------
+    // Local delta-row renderer — Lab.format.renderDeltaRow hardcodes
+    // an "ms" unit, which doesn't fit this test's "%" headline. Same
+    // DOM/class contract as the shared helper so lab.css styling
+    // still applies unchanged.
+    // ---------------------------------------------------------
+    function renderDeltaRowPct(containerEl, currentScore, previousEntry, measureCount) {
+      while (containerEl.firstChild) containerEl.removeChild(containerEl.firstChild);
+      var label = document.createElement('span');
+      label.className = 'delta-label';
+      if (!previousEntry || previousEntry.score == null || currentScore == null) {
+        label.textContent = '今回が初回の記録です';
+        containerEl.appendChild(label);
+        var firstDetail = document.createElement('span');
+        firstDetail.className = 'delta-detail';
+        firstDetail.textContent = '次回、前回との差が表示されます。';
+        containerEl.appendChild(firstDetail);
+        return;
+      }
+      var diff = Math.round(currentScore - previousEntry.score);
+      label.textContent = '前回との差';
+      containerEl.appendChild(label);
+      var value = document.createElement('span');
+      value.className = 'delta-value';
+      value.textContent = (diff > 0 ? '+' : diff < 0 ? '' : '±') + diff + '%';
+      containerEl.appendChild(value);
+      var detail = document.createElement('span');
+      detail.className = 'delta-detail';
+      var countText = measureCount ? '（' + measureCount + '回目の測定）' : '';
+      detail.textContent = Math.round(previousEntry.score) + '%' + ' → ' + Math.round(currentScore) + '%' + countText;
+      containerEl.appendChild(detail);
+    }
+
+    function finish() {
+      running = false;
+      stageWrap.hidden = true;
+
+      var hits = 0, falseAlarms = 0, correctRejections = 0;
+      results.forEach(function (r) {
+        if (r.target && r.pressed) hits++;
+        else if (!r.target && r.pressed) falseAlarms++;
+        else if (!r.target && !r.pressed) correctRejections++;
+      });
+      var accuracy = Math.round((hits + correctRejections) / results.length * 100);
+      var tierValue = 100 - accuracy; // higher accuracy = better = lower tierValue
+      var tierInfo = Lab.tier.forValue(TEST, tierValue);
+
+      document.getElementById('resHeadline').textContent = accuracy;
+      document.getElementById('resTier').textContent = tierInfo.label || '判定不可';
+      document.getElementById('resHits').textContent = hits + ' / ' + config.scoredTargets;
+      document.getElementById('resFalseAlarms').textContent = falseAlarms + ' / ' + (config.scoredN - config.scoredTargets);
+      document.getElementById('resReference').textContent = config.referenceNote;
+      Lab.sources.render(document.getElementById('resSources'), config.sources);
+
+      var previous = Lab.history.add(TEST, { ts: Date.now(), score: accuracy, tier: tierInfo.tier, extra: { hits: hits, falseAlarms: falseAlarms, correctRejections: correctRejections } });
+      renderDeltaRowPct(document.getElementById('resDeltaRow'), accuracy, previous, Lab.history.load(TEST).length);
+
+      var shareUrl = location.origin + '/lab/nback/r/' + (tierInfo.tier || 1) + '.html?v=' + accuracy;
+      var shareText = config.shareLead + '：正答率' + accuracy + '%でした。';
+
+      document.getElementById('xBtn').href = Lab.share.xIntentUrl(shareText, shareUrl);
+
+      document.getElementById('shareBtn').addEventListener('click', function () {
+        var canvas = Lab.share.buildResultCardCanvas({
+          testLabel: config.name,
+          headline: accuracy,
+          headlineUnit: config.unit,
+          tierLabel: tierInfo.label,
+          dateStr: Lab.format.date(Date.now()),
+          url: 'takuyahirata.com/lab/nback/'
+        });
+        Lab.share.present({ canvas: canvas, title: '脳の実験室', text: shareText, url: shareUrl, filenameBase: 'nback-result' }).then(function (res) {
+          if (res.method === 'download') {
+            var link = document.getElementById('saveLink');
+            link.href = res.url;
+            link.download = res.filename;
+            link.hidden = false;
+          }
+        });
+      });
+
+      document.getElementById('copyBtn').addEventListener('click', function (e) {
+        var btn = e.currentTarget;
+        Lab.share.copyLink(shareUrl).then(function (ok) {
+          btn.textContent = ok ? 'コピーしました' : 'コピーできませんでした';
+          btn.dataset.copied = String(ok);
+          setTimeout(function () { btn.textContent = 'リンクをコピー'; btn.dataset.copied = ''; }, 2000);
+        });
+      });
+
+      resultSection.hidden = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('restartBtn').addEventListener('click', function () {
+      resultSection.hidden = true;
+      intro.hidden = false;
+      var prev = Lab.history.last(TEST);
+      historyHint.textContent = prev ? '前回：' + Math.round(prev.score) + '%（' + Lab.format.date(prev.ts) + '）' : '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+/* ============================================================
+   空間の記憶 (Corsi block-tapping) — fixed irregular block board.
+   Positions are hand-placed (not a grid) and pixel-fixed by design
+   — a stable, memorable layout is the point of the task. The board
+   is 300×230px; combined with the tightened stage padding below,
+   this stays inside a 390px viewport with 16px+ side gutters
+   (container 20px + stage 14px + board 300px = 348px < 390px).
+   Reduced motion is already handled globally by brain.css's
+   prefers-reduced-motion block, so no extra guard is needed here.
+   ============================================================ */
+.lab-stage--tight { padding: 14px; }
+
+.corsi-board {
+  position: relative;
+  width: 300px;
+  max-width: 100%;
+  height: 230px;
+  margin: 8px auto 4px;
+}
+.corsi-block {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-card);
+  border: 2px solid var(--line);
+  background: var(--card);
+  padding: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.corsi-block.is-lit {
+  background: var(--accent, var(--color-terracotta));
+  border-color: var(--accent, var(--color-terracotta));
+}
+.corsi-block.is-tapped {
+  background: var(--accent-soft, var(--color-sage-soft));
+  border-color: var(--accent-ink, var(--color-ink));
+}
+.corsi-block[data-idx="0"] { left: 245px; top: 76px; }
+.corsi-block[data-idx="1"] { left: 51px;  top: 13px; }
+.corsi-block[data-idx="2"] { left: 99px;  top: 175px; }
+.corsi-block[data-idx="3"] { left: 182px; top: 95px; }
+.corsi-block[data-idx="4"] { left: 12px;  top: 174px; }
+.corsi-block[data-idx="5"] { left: 69px;  top: 108px; }
+.corsi-block[data-idx="6"] { left: 167px; top: 169px; }
+.corsi-block[data-idx="7"] { left: 161px; top: 18px; }
+.corsi-block[data-idx="8"] { left: 245px; top: 173px; }
+
+.corsi-retry-btn {
+  margin-top: 6px;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-family: var(--sans, var(--font-sans));
+  padding: 8px 18px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.corsi-retry-btn:hover { color: var(--ink, var(--color-ink)); border-color: var(--ink, var(--color-ink)); }
+
+/* This test shows 2 stat tiles, not lab.css's default 3-column
+   grid — narrow it locally rather than editing the shared rule. */
+.lab-stat-grid--2col { grid-template-columns: repeat(2, 1fr); }

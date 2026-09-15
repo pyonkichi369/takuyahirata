@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="注意の切り替え — 文字の「意味」と「色」がずれたときの反応の遅れを見る2〜3分の課題です。練習8回のあと、本番32回に取り組みます。結果はこの端末にのみ保存されます。">
+  <meta name="theme-color" content="#FBF8F2">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://takuyahirata.com/lab/stroop/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>注意の切り替え | 脳の実験室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/brain.css?v=2">
+  <link rel="stylesheet" href="/assets/lab.css?v=2">
+</head>
+<body>
+  <header class="site-header page-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="脳の実験室 ホーム">
+        <svg class="brand-mark" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4C10 5 5 11 5 19c7 0 13-4 15-15Z"/><path d="M5 19C8 14 12 10 17 8"/></svg>
+        <span class="brand-text"><span class="brand-name">脳の実験室</span><span class="brand-tag">測って、読んで、試して、また測る</span></span>
+      </a>
+      <a class="page-back" href="/lab/">← ラボへ</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container wrap-narrow page-hero lab-hero--tight">
+      <p class="page-eyebrow lab-kicker">2–3 minutes / 注意の切り替え</p>
+      <h1 class="page-title">注意の切り替え</h1>
+      <p class="page-lead">文字が「何の色で書かれているか」を、文字の意味に惑わされずに答える課題です。文字の意味と色がずれたときに反応がどれだけ遅れるかで、注意の切り替えにかかる負荷の目安を見ます。</p>
+    </div>
+
+    <div class="container wrap-narrow section lab-section--tight">
+
+      <!-- Intro -->
+      <section id="intro">
+        <ul class="lab-intro-list">
+          <li>文字の「意味」ではなく「色」を見て、対応するボタン（またはキー1〜4）を押します。</li>
+          <li>まず練習を8回。正解・不正解のフィードバックが出ます。</li>
+          <li>そのあと本番を32回。1.5秒以内に反応がないと不正解として記録されます。</li>
+        </ul>
+        <div class="lab-start-row">
+          <button type="button" class="btn-primary" id="startBtn">はじめる
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+          <span id="historyHint" class="lab-delta lab-delta--inline"></span>
+        </div>
+      </section>
+
+      <!-- Stage -->
+      <section id="stageWrap" hidden>
+        <div class="lab-stage" id="stage">
+          <span class="lab-trial-counter" id="trialCounter"></span>
+          <span class="lab-practice-badge" id="practiceBadge" hidden>練習</span>
+          <span class="stroop-word" id="stroopWord" aria-live="off">&nbsp;</span>
+          <div class="stroop-buttons" id="colorButtons">
+            <button type="button" class="color-btn" data-color="red">赤<span class="key">1</span></button>
+            <button type="button" class="color-btn" data-color="blue">青<span class="key">2</span></button>
+            <button type="button" class="color-btn" data-color="green">緑<span class="key">3</span></button>
+            <button type="button" class="color-btn" data-color="yellow">黄<span class="key">4</span></button>
+          </div>
+          <span class="lab-feedback" id="stageFeedback" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- Result -->
+      <section id="result" class="lab-result" hidden aria-live="polite">
+        <div class="lab-result-card">
+          <p class="result-eyebrow">注意の切り替えの結果</p>
+          <div class="lab-result-headline">
+            <span class="num" id="resHeadline">—</span>
+            <span class="unit">ms（干渉）</span>
+          </div>
+          <div class="delta-row delta-row--primary" id="resDeltaRow"></div>
+          <p class="lab-tier-pill" id="resTier">—</p>
+
+          <div class="lab-stat-grid">
+            <div class="stat-tile"><div class="label">正答率</div><div class="value" id="resAccuracy">—</div></div>
+            <div class="stat-tile"><div class="label">一致条件</div><div class="value" id="resCongruent">—</div></div>
+            <div class="stat-tile"><div class="label">不一致条件</div><div class="value" id="resIncongruent">—</div></div>
+          </div>
+
+          <p class="lab-reference-note">
+            <span class="grade-badge grade-D"><span class="g">D</span>参考値</span>
+            <span id="resReference"></span>
+          </p>
+
+          <div class="lab-sources">
+            <p class="lab-sources-title">出典</p>
+            <ul id="resSources"></ul>
+          </div>
+
+          <div class="lab-share-row">
+            <button type="button" class="btn-share btn-share--primary" id="shareBtn">結果をシェアする</button>
+            <a class="btn-share" id="saveLink" download hidden>画像を保存</a>
+            <button type="button" class="btn-share" id="copyBtn">リンクをコピー</button>
+            <a class="btn-share" id="xBtn" target="_blank" rel="noopener">Xでシェア</a>
+          </div>
+
+          <p class="lab-result-note">娯楽・自己観察のためのもので、医学的・心理学的な評価ではありません。</p>
+
+          <div class="lab-result-links">
+            <a class="btn-ghost" href="/lab/">実験室へ戻る</a>
+            <a class="btn-ghost" href="/research/">研究ノートを見る</a>
+          </div>
+        </div>
+        <button type="button" class="check-back lab-restart-btn" id="restartBtn">↺ もう一度測る</button>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>© 2026 脳の実験室 / 平田拓也</span>
+      <span><a href="/">ホーム</a> ・ <a href="/methodology.html">編集方針</a> ・ <a href="/disclosure.html">広告開示</a></span>
+    </div>
+  </footer>
+
+  <script src="/assets/lab.js?v=1"></script>
+  <script src="/assets/lab-share.js?v=1"></script>
+  <script src="config.js?v=1"></script>
+  <script>
+  (function () {
+    var TEST = 'stroop';
+    var config = Lab.tests[TEST]; // registered by config.js
+    var PRACTICE_N = 8, SCORED_N = 32;
+    var TIMEOUT_MS = config.timeoutMs;
+    var ISI_MS = 450;
+    var COLORS = ['red', 'blue', 'green', 'yellow'];
+    var LABEL = { red: '赤', blue: '青', green: '緑', yellow: '黄' };
+    var HEX = { red: '#c1443a', blue: '#2f5f9e', green: '#2f7d4f', yellow: '#b98a1e' };
+
+    var intro = document.getElementById('intro');
+    var stageWrap = document.getElementById('stageWrap');
+    var stroopWord = document.getElementById('stroopWord');
+    var trialCounter = document.getElementById('trialCounter');
+    var practiceBadge = document.getElementById('practiceBadge');
+    var stageFeedback = document.getElementById('stageFeedback');
+    var resultSection = document.getElementById('result');
+    var historyHint = document.getElementById('historyHint');
+    var colorButtons = Array.prototype.slice.call(document.querySelectorAll('.color-btn'));
+
+    var deck = [];         // {ink, word, congruent}
+    var deckIndex = 0;
+    var isPractice = true;
+    var awaitingResponse = false;
+    var trialStart = 0;
+    var timeoutTimer = null;
+    var results = [];      // {congruent, correct, rt}
+
+    var prevEntry = Lab.history.last(TEST);
+    if (prevEntry) {
+      historyHint.textContent = '前回：' + Math.round(prevEntry.score) + 'ms（' + Lab.format.date(prevEntry.ts) + '）';
+    }
+
+    function buildDeck(n) {
+      var half = Math.floor(n / 2);
+      var items = [];
+      for (var i = 0; i < n; i++) {
+        var congruent = i < half;
+        var ink = COLORS[Math.floor(Math.random() * COLORS.length)];
+        var word;
+        if (congruent) {
+          word = ink;
+        } else {
+          var others = COLORS.filter(function (c) { return c !== ink; });
+          word = others[Math.floor(Math.random() * others.length)];
+        }
+        items.push({ ink: ink, word: word, congruent: congruent });
+      }
+      return Lab.rand.shuffle(items);
+    }
+
+    function showTrial() {
+      var item = deck[deckIndex];
+      stroopWord.textContent = LABEL[item.word];
+      stroopWord.style.color = HEX[item.ink];
+      trialCounter.textContent = (deckIndex + 1) + ' / ' + deck.length;
+      practiceBadge.hidden = !isPractice;
+      awaitingResponse = true;
+      trialStart = Lab.now();
+      timeoutTimer = setTimeout(function () { handleAnswer(null); }, TIMEOUT_MS);
+    }
+
+    function handleAnswer(chosenColor) {
+      if (!awaitingResponse) return;
+      awaitingResponse = false;
+      clearTimeout(timeoutTimer);
+      var item = deck[deckIndex];
+      var rt = chosenColor ? Math.round(Lab.now() - trialStart) : null;
+      var correct = chosenColor === item.ink;
+
+      if (isPractice) {
+        stageFeedback.textContent = chosenColor === null ? 'タイムアウトでした' : (correct ? '正解' : '不正解');
+        stageFeedback.classList.toggle('is-ok', !!correct);
+      } else {
+        results.push({ congruent: item.congruent, correct: correct, rt: rt });
+      }
+
+      stroopWord.textContent = ' ';
+      deckIndex++;
+      setTimeout(advance, ISI_MS);
+    }
+
+    function advance() {
+      stageFeedback.textContent = '';
+      if (deckIndex >= deck.length) {
+        if (isPractice) { startScored(); } else { finish(); }
+        return;
+      }
+      showTrial();
+    }
+
+    function startScored() {
+      isPractice = false;
+      deck = buildDeck(SCORED_N);
+      deckIndex = 0;
+      results = [];
+      showTrial();
+    }
+
+    colorButtons.forEach(function (btn) {
+      Lab.input.onActivate(btn, function () { handleAnswer(btn.dataset.color); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!awaitingResponse || e.repeat) return;
+      var map = { '1': 'red', '2': 'blue', '3': 'green', '4': 'yellow' };
+      if (map[e.key]) { e.preventDefault(); handleAnswer(map[e.key]); }
+    });
+
+    document.getElementById('startBtn').addEventListener('click', function () {
+      intro.hidden = true;
+      stageWrap.hidden = false;
+      isPractice = true;
+      deck = buildDeck(PRACTICE_N);
+      deckIndex = 0;
+      showTrial();
+    });
+
+    function finish() {
+      stageWrap.hidden = true;
+      var correctTrials = results.filter(function (r) { return r.correct && r.rt != null; });
+      var congruentRts = correctTrials.filter(function (r) { return r.congruent; }).map(function (r) { return r.rt; });
+      var incongruentRts = correctTrials.filter(function (r) { return !r.congruent; }).map(function (r) { return r.rt; });
+      var mCong = Lab.mean(congruentRts);
+      var mIncong = Lab.mean(incongruentRts);
+      var interference = (mCong != null && mIncong != null) ? (mIncong - mCong) : null;
+      var roundedInterference = interference != null ? Math.round(interference) : null;
+      var accuracy = Math.round((results.filter(function (r) { return r.correct; }).length / results.length) * 100);
+      var tierInfo = Lab.tier.forValue(TEST, roundedInterference);
+
+      document.getElementById('resHeadline').textContent = roundedInterference != null ? roundedInterference : '—';
+      document.getElementById('resTier').textContent = tierInfo.label || '判定不可';
+      document.getElementById('resAccuracy').textContent = accuracy + '%';
+      document.getElementById('resCongruent').textContent = mCong != null ? Math.round(mCong) + 'ms' : '—';
+      document.getElementById('resIncongruent').textContent = mIncong != null ? Math.round(mIncong) + 'ms' : '—';
+      document.getElementById('resReference').textContent = config.referenceNote;
+      Lab.sources.render(document.getElementById('resSources'), config.sources);
+
+      // The delta (前回との差) is the meaningful comparison for Stroop —
+      // there is no sourced absolute norm, so this is made the primary line.
+      var previous = Lab.history.add(TEST, { ts: Date.now(), score: roundedInterference, tier: tierInfo.tier, extra: { accuracy: accuracy, meanCongruent: mCong, meanIncongruent: mIncong } });
+      var deltaText = Lab.format.delta(roundedInterference, previous);
+      Lab.format.renderDeltaRow(document.getElementById('resDeltaRow'), roundedInterference, previous, Lab.history.load(TEST).length);
+
+      var shareUrl = location.origin + '/lab/stroop/r/' + (tierInfo.tier || 1) + '.html?v=' + (roundedInterference || 0);
+      var shareText = config.shareLead + '：干渉' + roundedInterference + 'ms、正答率' + accuracy + '%でした。';
+
+      document.getElementById('xBtn').href = Lab.share.xIntentUrl(shareText, shareUrl);
+
+      document.getElementById('shareBtn').addEventListener('click', function () {
+        var canvas = Lab.share.buildResultCardCanvas({
+          testLabel: config.name,
+          headline: roundedInterference,
+          headlineUnit: config.unit,
+          tierLabel: deltaText || '今回が初回の記録です',
+          dateStr: Lab.format.date(Date.now()),
+          url: 'takuyahirata.com/lab/stroop/'
+        });
+        Lab.share.present({ canvas: canvas, title: '脳の実験室', text: shareText, url: shareUrl, filenameBase: 'stroop-result' }).then(function (res) {
+          if (res.method === 'download') {
+            var link = document.getElementById('saveLink');
+            link.href = res.url;
+            link.download = res.filename;
+            link.hidden = false;
+          }
+        });
+      });
+
+      document.getElementById('copyBtn').addEventListener('click', function (e) {
+        var btn = e.currentTarget;
+        Lab.share.copyLink(shareUrl).then(function (ok) {
+          btn.textContent = ok ? 'コピーしました' : 'コピーできませんでした';
+          btn.dataset.copied = String(ok);
+          setTimeout(function () { btn.textContent = 'リンクをコピー'; btn.dataset.copied = ''; }, 2000);
+        });
+      });
+
+      resultSection.hidden = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('restartBtn').addEventListener('click', function () {
+      resultSection.hidden = true;
+      intro.hidden = false;
+      var prev = Lab.history.last(TEST);
+      historyHint.textContent = prev ? '前回：' + Math.round(prev.score) + 'ms（' + Lab.format.date(prev.ts) + '）' : '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+  </script>
+</body>
+</html>

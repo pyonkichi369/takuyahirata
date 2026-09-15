@@ -1,0 +1,59 @@
+/* ============================================================
+   記憶の作業台 (2-back) — grid stimulus + response button styles.
+   Loaded after lab.css; reads the same brain.css tokens. Reduced
+   motion is already handled globally by brain.css's
+   prefers-reduced-motion block, so no extra guard is needed here.
+   ============================================================ */
+.nback-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: min(252px, 100%);
+  margin: 0 auto;
+}
+.nback-cell {
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-card);
+  border: 2px solid var(--line);
+  background: var(--card);
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.nback-cell.is-lit {
+  background: var(--accent, var(--color-terracotta));
+  border-color: var(--accent, var(--color-terracotta));
+}
+
+.nback-respond-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 252px;
+  min-height: 56px;
+  margin: 6px auto 0;
+  border-radius: var(--radius-card);
+  border: 2px solid var(--ink, var(--color-ink));
+  background: transparent;
+  color: var(--ink, var(--color-ink));
+  font-family: var(--sans, var(--font-sans));
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.nback-respond-btn .key {
+  font-family: var(--mono, var(--font-mono));
+  font-size: 11px;
+  opacity: 0.75;
+}
+.nback-respond-btn.is-active,
+.nback-respond-btn:active {
+  background: var(--ink, var(--color-ink));
+  color: var(--bg, var(--color-ivory));
+}
+
+/* This test shows 2 stat tiles, not lab.css's default 3-column
+   grid — narrow it locally rather than editing the shared rule. */
+.lab-stat-grid--2col { grid-template-columns: repeat(2, 1fr); }

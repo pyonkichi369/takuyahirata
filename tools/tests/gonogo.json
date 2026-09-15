@@ -1,0 +1,30 @@
+{
+  "id": "gonogo",
+  "name": "衝動の抑え",
+  "path": "gonogo",
+  "kicker": "RESULT / 結果の目安",
+  "headline_template": "{name}の結果：{label}",
+  "value_label": "抑えの失敗（赤い四角の時に反応してしまった回数）",
+  "unit": "回",
+  "reference_grade": "C",
+  "reference_note": "Go/No-Go課題では、健常成人の反応時間はおおむね300ms台前半、押してはいけない刺激への誤反応率は課題の条件によって4〜12%程度と報告されています（参考値・根拠C、単一研究・条件依存）。本サイト版は15回中の回数で表示します。",
+  "sources": [
+    { "text": "Zhao et al. (2016). Male Smokers' and Non-Smokers' Response Inhibition in Go/No-Go Tasks: Effect of Three Task Parameters. PLoS ONE.", "url": "https://doi.org/10.1371/journal.pone.0160595" }
+  ],
+  "og_tag": "簡易版（基準値未確認）",
+  "back_link_text": "← テストへ",
+  "related_links": [
+    { "text": "心はよく彷徨うを読む", "href": "/research/mind-wandering.html" },
+    { "text": "実験室へ戻る", "href": "/lab/" }
+  ],
+  "og_desc": "青い丸が出たら押す、赤い四角の時は押さない。2つのルールをどれだけ守れるかを見る1〜2分の課題です。",
+  "bands": [
+    { "label": "抑えの失敗 0回", "explanation": "今回の{value_label}は0回でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "抑えの失敗 1回", "explanation": "今回の{value_label}は1回でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "抑えの失敗 2回", "explanation": "今回の{value_label}は2回でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "抑えの失敗 3回", "explanation": "今回の{value_label}は3回でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "抑えの失敗 4〜5回", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "抑えの失敗 6〜8回", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。反応時間もあわせて見ると、速さを優先した結果かどうかが分かります。" },
+    { "label": "抑えの失敗 9回以上", "explanation": "今回の{value_label}はこの範囲でした。速く押そうとするあまり、赤い四角でも反応してしまいやすかった可能性があります。公表された基準値はなく、良し悪しの判断はできません。反応時間もあわせてご覧ください。" }
+  ]
+}

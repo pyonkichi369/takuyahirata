@@ -1,0 +1,32 @@
+{
+  "id": "sart",
+  "name": "集中の持続",
+  "path": "sart",
+  "kicker": "RESULT / 結果の目安",
+  "headline_template": "{name}の結果：{label}",
+  "value_label": "うっかり押し（3の時に反応してしまった回数）",
+  "unit": "回",
+  "reference_grade": "C",
+  "reference_note": "持続的注意課題（SART）では、まれな「押してはいけない」刺激に誤って反応する率は研究間で約30〜50%とばらつきが大きいと報告されています（参考値・根拠C、課題の条件で大きく変わります）。本サイト版は10回中の回数で表示します。医学的な判定には使えません。",
+  "sources": [
+    { "text": "Robertson IH, Manly T, Andrade J, Baddeley BT, Yiend J (1997). 'Oops!': performance correlates of everyday attentional failures in traumatic brain injured and normal subjects. Neuropsychologia 35(6):747-758.", "url": "https://doi.org/10.1016/S0028-3932(97)00015-8" },
+    { "text": "Wilson KM, Finkbeiner KM, de Joux NR, Russell PN, Helton WS (2016). Go-stimuli proportion influences response strategy in a sustained attention to response task. Experimental Brain Research.", "url": "https://doi.org/10.1007/s00221-016-4701-x" }
+  ],
+  "og_tag": "簡易版（基準値未確認）",
+  "back_link_text": "← テストへ",
+  "related_links": [
+    { "text": "心はよく彷徨うを読む", "href": "/research/mind-wandering.html" },
+    { "text": "仕事中の回復を読む", "href": "/research/work-recovery.html" },
+    { "text": "実験室へ戻る", "href": "/lab/" }
+  ],
+  "og_desc": "数字が次々現れる単調な課題で、3の時だけ反応しないというルールをどれだけ守れるかを見る1〜2分の課題です。",
+  "bands": [
+    { "label": "うっかり押し 0回", "explanation": "今回の{value_label}は0回でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "うっかり押し 1回", "explanation": "今回の{value_label}は1回でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "うっかり押し 2回", "explanation": "今回の{value_label}は2回でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "うっかり押し 3回", "explanation": "今回の{value_label}は3回でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "うっかり押し 4〜5回", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "うっかり押し 6〜7回", "explanation": "今回の{value_label}はこの範囲でした。公表された基準値はなく、良し悪しの判断はできません。前回との差としてご覧ください。" },
+    { "label": "うっかり押し 8回以上", "explanation": "今回の{value_label}はこの範囲でした。単調な課題のあいだ、心が彷徨っていた瞬間が多かった可能性があります。公表された基準値はなく、良し悪しの判断はできません。少し休んでから、もう一度試してみてください。" }
+  ]
+}

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="覚醒度チェック — 画面に現れる合図に、できるだけ早く反応する30〜60秒の課題です。反応時間の中央値から、今の冴え具合の目安を見ます。結果はこの端末にのみ保存されます。">
+  <meta name="theme-color" content="#FBF8F2">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://takuyahirata.com/lab/pvt/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>覚醒度チェック | 脳の実験室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/brain.css?v=2">
+  <link rel="stylesheet" href="/assets/lab.css?v=2">
+</head>
+<body>
+  <header class="site-header page-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="脳の実験室 ホーム">
+        <svg class="brand-mark" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4C10 5 5 11 5 19c7 0 13-4 15-15Z"/><path d="M5 19C8 14 12 10 17 8"/></svg>
+        <span class="brand-text"><span class="brand-name">脳の実験室</span><span class="brand-tag">測って、読んで、試して、また測る</span></span>
+      </a>
+      <a class="page-back" href="/lab/">← ラボへ</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container wrap-narrow page-hero lab-hero--tight">
+      <p class="page-eyebrow lab-kicker">30–60 seconds / 覚醒度チェック</p>
+      <h1 class="page-title">覚醒度チェック</h1>
+      <p class="page-lead">画面に丸い合図が現れたら、できるだけ早くタップ（またはスペースキー）で反応してください。合図は15回、2〜5秒のランダムな間隔で現れます。反応時間の中央値から、今の冴え具合の目安を見ます。</p>
+    </div>
+
+    <div class="container wrap-narrow section lab-section--tight">
+
+      <!-- Intro -->
+      <section id="intro">
+        <ul class="lab-intro-list">
+          <li>合図（丸）が見えたら、できるだけ早くタップまたはスペースキーを押します。</li>
+          <li>合図が出る前に押すと「早すぎ」として記録され、その回はやり直しになります。</li>
+          <li>全部で15回。所要時間は30〜60秒ほどです。</li>
+          <li>研究で使われる本来のPVTは3〜10分。これは1分ほどの簡易版で、日々の自分の変化を見る用途です。</li>
+        </ul>
+        <div class="lab-start-row">
+          <button type="button" class="btn-primary" id="startBtn">はじめる
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+          <span id="historyHint" class="lab-delta lab-delta--inline"></span>
+        </div>
+      </section>
+
+      <!-- Stage -->
+      <section id="stageWrap" hidden>
+        <div class="lab-stage" id="stage" tabindex="0" role="button" aria-label="合図が見えたらタップ、またはスペースキーを押してください">
+          <span class="lab-trial-counter" id="trialCounter">1 / 15</span>
+          <span class="lab-dot" id="stageDot" aria-hidden="true"></span>
+          <span class="lab-stage-hint" id="stageHint">待ってください…</span>
+          <span class="lab-feedback" id="stageFeedback" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- Result -->
+      <section id="result" class="lab-result" hidden aria-live="polite">
+        <div class="lab-result-card">
+          <p class="result-eyebrow">覚醒度チェックの結果</p>
+          <div class="lab-result-headline">
+            <span class="num" id="resHeadline">—</span>
+            <span class="unit">ms（反応時間・中央値）</span>
+          </div>
+          <p class="lab-tier-pill" id="resTier">—</p>
+
+          <p class="lab-reference-note">
+            <span class="grade-badge grade-C"><span class="g">C</span>参考値</span>
+            <span id="resReference"></span>
+          </p>
+
+          <div class="delta-row" id="resDeltaRow"></div>
+
+          <div class="lab-stat-grid">
+            <div class="stat-tile"><div class="label">平均反応時間</div><div class="value" id="resMean">—</div></div>
+            <div class="stat-tile"><div class="label">見逃し（500ms以上）</div><div class="value" id="resLapses">—</div></div>
+            <div class="stat-tile"><div class="label">早すぎた回数</div><div class="value" id="resFalseStarts">—</div></div>
+          </div>
+
+          <div class="lab-sources">
+            <p class="lab-sources-title">出典</p>
+            <ul id="resSources"></ul>
+          </div>
+
+          <div class="lab-share-row">
+            <button type="button" class="btn-share btn-share--primary" id="shareBtn">結果をシェアする</button>
+            <a class="btn-share" id="saveLink" download hidden>画像を保存</a>
+            <button type="button" class="btn-share" id="copyBtn">リンクをコピー</button>
+            <a class="btn-share" id="xBtn" target="_blank" rel="noopener">Xでシェア</a>
+          </div>
+
+          <p class="lab-result-note">娯楽・自己観察のためのもので、医学的・心理学的な評価ではありません。</p>
+
+          <div class="lab-result-links">
+            <a class="btn-ghost" href="/research/sleep-environment.html">睡眠環境の研究ノートを読む</a>
+            <a class="btn-ghost" href="/research/work-recovery.html">仕事中の回復を読む</a>
+            <a class="btn-ghost" href="/lab/">実験室へ戻る</a>
+          </div>
+        </div>
+        <button type="button" class="check-back lab-restart-btn" id="restartBtn">↺ もう一度測る</button>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>© 2026 脳の実験室 / 平田拓也</span>
+      <span><a href="/">ホーム</a> ・ <a href="/methodology.html">編集方針</a> ・ <a href="/disclosure.html">広告開示</a></span>
+    </div>
+  </footer>
+
+  <script src="/assets/lab.js?v=1"></script>
+  <script src="/assets/lab-share.js?v=1"></script>
+  <script src="config.js?v=1"></script>
+  <script>
+  (function () {
+    var TEST = 'pvt';
+    var config = Lab.tests[TEST]; // registered by config.js
+    var TOTAL_TRIALS = 15;
+    var WAIT_MIN = 2000, WAIT_MAX = 5000;
+    var RESPONSE_TIMEOUT = 3000;
+
+    var intro = document.getElementById('intro');
+    var stageWrap = document.getElementById('stageWrap');
+    var stage = document.getElementById('stage');
+    var stageDot = document.getElementById('stageDot');
+    var stageHint = document.getElementById('stageHint');
+    var stageFeedback = document.getElementById('stageFeedback');
+    var trialCounter = document.getElementById('trialCounter');
+    var resultSection = document.getElementById('result');
+    var historyHint = document.getElementById('historyHint');
+
+    var trials = [];       // {rt}
+    var lapses = 0;
+    var falseStarts = 0;
+    var trialIndex = 0;
+    var phase = 'idle';    // idle | waiting | go | done
+    var waitTimer = null;
+    var timeoutTimer = null;
+    var stimulusAt = 0;
+    var running = false;
+
+    // Show any previous result as a quiet hint before starting.
+    var prevEntry = Lab.history.last(TEST);
+    if (prevEntry) {
+      historyHint.textContent = '前回：' + Math.round(prevEntry.score) + 'ms（' + Lab.format.date(prevEntry.ts) + '）';
+    }
+
+    function setPhase(p) {
+      phase = p;
+      stage.classList.remove('state-wait', 'state-go');
+      if (p === 'waiting') { stage.classList.add('state-wait'); stageHint.textContent = '待ってください…'; }
+      if (p === 'go') { stage.classList.add('state-go'); stageHint.textContent = 'いまタップ！'; }
+    }
+
+    function scheduleWait() {
+      setPhase('waiting');
+      var delay = Lab.rand.between(WAIT_MIN, WAIT_MAX);
+      waitTimer = setTimeout(function () {
+        stimulusAt = Lab.now();
+        setPhase('go');
+        timeoutTimer = setTimeout(handleMiss, RESPONSE_TIMEOUT);
+      }, delay);
+    }
+
+    function handleMiss() {
+      trials.push({ rt: null });
+      nextTrial();
+    }
+
+    function flashFeedback(text, ok) {
+      stageFeedback.textContent = text;
+      stageFeedback.classList.toggle('is-ok', !!ok);
+      setTimeout(function () { stageFeedback.textContent = ''; }, 700);
+    }
+
+    function nextTrial() {
+      trialIndex++;
+      if (trialIndex >= TOTAL_TRIALS) { finish(); return; }
+      trialCounter.textContent = (trialIndex + 1) + ' / ' + TOTAL_TRIALS;
+      scheduleWait();
+    }
+
+    function handleResponse() {
+      if (!running) return;
+      if (phase === 'waiting') {
+        falseStarts++;
+        clearTimeout(waitTimer);
+        flashFeedback('早すぎました', false);
+        scheduleWait();
+        return;
+      }
+      if (phase === 'go') {
+        clearTimeout(timeoutTimer);
+        var rt = Math.round(Lab.now() - stimulusAt);
+        trials.push({ rt: rt });
+        if (rt >= config.lapseMs) lapses++;
+        setPhase('idle');
+        nextTrial();
+      }
+    }
+
+    stage.addEventListener('click', handleResponse);
+    document.addEventListener('keydown', function (e) {
+      if (!running) return;
+      if (e.code === 'Space' && !e.repeat) { e.preventDefault(); handleResponse(); }
+    });
+
+    document.getElementById('startBtn').addEventListener('click', function () {
+      intro.hidden = true;
+      stageWrap.hidden = false;
+      trials = []; lapses = 0; falseStarts = 0; trialIndex = 0;
+      running = true;
+      trialCounter.textContent = '1 / ' + TOTAL_TRIALS;
+      stage.focus();
+      scheduleWait();
+    });
+
+    function finish() {
+      running = false;
+      stageWrap.hidden = true;
+      var valid = trials.filter(function (t) { return t.rt != null; }).map(function (t) { return t.rt; });
+      var med = Lab.median(valid);
+      var roundedMed = med != null ? Math.round(med) : null;
+      var mn = Lab.mean(valid);
+      var tierInfo = Lab.tier.forValue(TEST, roundedMed);
+
+      document.getElementById('resHeadline').textContent = roundedMed != null ? roundedMed : '—';
+      document.getElementById('resTier').textContent = tierInfo.label || '判定不可';
+      document.getElementById('resMean').textContent = mn != null ? Math.round(mn) + 'ms' : '—';
+      document.getElementById('resLapses').textContent = lapses + '回';
+      document.getElementById('resFalseStarts').textContent = falseStarts + '回';
+      document.getElementById('resReference').textContent = config.referenceNote;
+      Lab.sources.render(document.getElementById('resSources'), config.sources);
+
+      var previous = Lab.history.add(TEST, { ts: Date.now(), score: roundedMed, tier: tierInfo.tier, extra: { mean: mn, lapses: lapses, falseStarts: falseStarts } });
+      Lab.format.renderDeltaRow(document.getElementById('resDeltaRow'), roundedMed, previous, Lab.history.load(TEST).length);
+
+      var shareUrl = location.origin + '/lab/pvt/r/' + (tierInfo.tier || 1) + '.html?v=' + (roundedMed || 0);
+      var shareText = config.shareLead + '：' + roundedMed + 'ms（' + tierInfo.label + '）でした。';
+
+      document.getElementById('xBtn').href = Lab.share.xIntentUrl(shareText, shareUrl);
+
+      document.getElementById('shareBtn').addEventListener('click', function () {
+        var canvas = Lab.share.buildResultCardCanvas({
+          testLabel: config.name,
+          headline: roundedMed,
+          headlineUnit: config.unit,
+          tierLabel: tierInfo.label,
+          dateStr: Lab.format.date(Date.now()),
+          url: 'takuyahirata.com/lab/pvt/'
+        });
+        Lab.share.present({ canvas: canvas, title: '脳の実験室', text: shareText, url: shareUrl, filenameBase: 'pvt-result' }).then(function (res) {
+          if (res.method === 'download') {
+            var link = document.getElementById('saveLink');
+            link.href = res.url;
+            link.download = res.filename;
+            link.hidden = false;
+          }
+        });
+      });
+
+      document.getElementById('copyBtn').addEventListener('click', function (e) {
+        var btn = e.currentTarget;
+        Lab.share.copyLink(shareUrl).then(function (ok) {
+          btn.textContent = ok ? 'コピーしました' : 'コピーできませんでした';
+          btn.dataset.copied = String(ok);
+          setTimeout(function () { btn.textContent = 'リンクをコピー'; btn.dataset.copied = ''; }, 2000);
+        });
+      });
+
+      resultSection.hidden = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('restartBtn').addEventListener('click', function () {
+      resultSection.hidden = true;
+      intro.hidden = false;
+      var prev = Lab.history.last(TEST);
+      historyHint.textContent = prev ? '前回：' + Math.round(prev.score) + 'ms（' + Lab.format.date(prev.ts) + '）' : '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+  </script>
+</body>
+</html>

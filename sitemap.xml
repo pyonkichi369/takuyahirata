@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://takuyahirata.com/</loc></url>
+  <url><loc>https://takuyahirata.com/</loc><lastmod>2026-09-15</lastmod></url>
   <url><loc>https://takuyahirata.com/research/</loc></url>
   <url><loc>https://takuyahirata.com/research/sleep-environment.html</loc></url>
   <url><loc>https://takuyahirata.com/research/work-recovery.html</loc></url>
+  <url><loc>https://takuyahirata.com/research/mind-wandering.html</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://takuyahirata.com/lab/</loc></url>
+  <url><loc>https://takuyahirata.com/lab/pvt/</loc></url>
+  <url><loc>https://takuyahirata.com/lab/stroop/</loc></url>
+  <url><loc>https://takuyahirata.com/lab/sart/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://takuyahirata.com/lab/gonogo/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://takuyahirata.com/lab/timing/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://takuyahirata.com/lab/nback/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://takuyahirata.com/lab/corsi/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://takuyahirata.com/lab/matrix/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://takuyahirata.com/lab/emotion/</loc><lastmod>2026-09-15</lastmod></url>
   <url><loc>https://takuyahirata.com/check.html</loc></url>
   <url><loc>https://takuyahirata.com/about.html</loc></url>
   <url><loc>https://takuyahirata.com/methodology.html</loc></url>
