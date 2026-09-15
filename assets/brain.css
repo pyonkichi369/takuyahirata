@@ -227,7 +227,15 @@ img { max-width: 100%; display: block; }
   margin: 0;
 }
 @media (max-width: 1080px) { .header-aside { display: none; } }
-@media (max-width: 900px) { .main-nav { display: none; } }
+@media (max-width: 900px) {
+  /* Mobile header: brand + search on the first row (search pinned right),
+     the nav drops to a second full-width row instead of disappearing. */
+  .header-inner { flex-wrap: wrap; height: auto; padding-block: 12px; gap: 10px 16px; }
+  .brand { order: 0; }
+  .header-search { order: 1; margin-left: auto; }
+  .main-nav { order: 2; flex-basis: 100%; margin-left: 0; gap: 18px; }
+  .main-nav a { font-size: 14px; }
+}
 
 /* ============================================================
    Hero
