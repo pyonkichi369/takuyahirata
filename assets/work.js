@@ -1,6 +1,10 @@
-/* work.html — header scroll shadow, mobile nav toggle, scroll reveal.
-   Scoped to .wk; independent of script.js (Brain Lab's custom-cursor script,
-   which this page does not use). */
+/* HIRATA CREATIVE homepage — header scroll shadow + mobile nav toggle.
+   v2: the IntersectionObserver scroll-reveal system was removed (it made
+   every section opacity:0 until scrolled into view, with a 2.5s JS
+   fallback timer — verified via WebKit screenshot to produce a real
+   ~2.5s blank-page window on load, 2026-10-07). The page now uses a
+   pure-CSS load-time fade (@keyframes in work.css), so content is never
+   dependent on this script to become visible. */
 (() => {
   const root = document.querySelector('.wk');
   const header = document.getElementById('wk-header');
@@ -21,18 +25,4 @@
       burger.setAttribute('aria-expanded', 'false');
     });
   });
-
-  const revealTargets = document.querySelectorAll('[data-reveal]');
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.12 });
-    revealTargets.forEach((el) => observer.observe(el));
-  } else {
-    revealTargets.forEach((el) => el.classList.add('is-visible'));
-  }
 })();
